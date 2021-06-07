@@ -17,7 +17,7 @@
                 <label for="repo">repo</label>
             </div>
             <div class="col-md-4">
-                <input type="text" name="repo" id="repo">
+                <input type="text" name="repo" id="repo" value="https://github.com/mhsenpc/bruno_scraper">
             </div>
         </div>
 

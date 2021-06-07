@@ -1,15 +1,18 @@
-<a href="{{route('sites.create')}}">Add Site</a>
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Domain</th>
-    </tr>
+@extends('layouts.app')
 
-    @foreach($sites as $site)
+@section('content')
+    <a class="btn btn-success" href="{{route('sites.create')}}">Add Site</a>
+    <table class="table">
         <tr>
-            <td>{{$site->name}}</td>
-            <td>{{$site->domain}}</td>
+            <th>Name</th>
+            <th>Domain</th>
         </tr>
-    @endforeach
 
-</table>
+        @foreach($sites as $site)
+            <tr>
+                <td>{{$site->name}}</td>
+                <td>{{$site->domain}}</td>
+            </tr>
+        @endforeach
+    </table>
+@endsection
