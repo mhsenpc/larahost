@@ -35,6 +35,11 @@ class SiteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
+        $request->validate([
+            'name' => 'required|alpha_dash',
+            'repo' => 'required',
+        ]);
+
         $site_service = (new SiteService(Auth::user()));
         $site_service->newSite($request->name, $request->repo);
         return redirect(route('sites.index'));

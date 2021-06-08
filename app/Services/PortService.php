@@ -14,7 +14,6 @@ class PortService
     public function __construct() {
         $used_ports       = Site::query()->whereNotNull('port')->pluck('port')->toArray();
         $this->busy_ports = array_merge($used_ports, $this->reserved_ports);
-        dd($this->busy_ports);
     }
 
     protected function isReserved($port) {
