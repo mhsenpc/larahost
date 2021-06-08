@@ -8,7 +8,7 @@
                 <label for="name">name</label>
             </div>
             <div class="col-md-4">
-                <input type="text" name="name" id="name">
+                <input type="text" name="name" id="name" required>
             </div>
         </div>
 
@@ -18,15 +18,6 @@
             </div>
             <div class="col-md-4">
                 <input type="text" name="repo" id="repo" value="https://github.com/mhsenpc/bruno_scraper">
-            </div>
-        </div>
-
-        <div class="row justify-content-center">
-            <div class="col-md-2">
-                <label for="domain">domain</label>
-            </div>
-            <div class="col-md-4">
-                <input type="text" name="domain" id="domain" placeholder="e.g: amazon.com">
             </div>
         </div>
 

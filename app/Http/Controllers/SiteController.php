@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Site;
-use App\Services\GitService;
+use App\Services\SiteService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,10 +35,8 @@ class SiteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $data            = $request->except('_token');
-        $data['user_id'] = Auth::id();
-        Site::create($data);
-        GitService::cloneRepo(Auth::user()->email, $request->name,$request->repo);
+        $site_service = (new SiteService(Auth::user()));
+        $site_service->newSite($request->name, $request->repo);
         return redirect(route('sites.index'));
     }
 
