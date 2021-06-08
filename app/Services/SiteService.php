@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Jobs\CreateNewSiteJob;
 use App\Models\Site;
 use App\Models\User;
 
@@ -16,12 +17,13 @@ class SiteService
     }
 
     public function newSite(string $name, string $repo_url) {
+        $port = (new PortService())->getAFreePort();
         Site::create([
             'user_id' => $this->user->id,
             'name' => $name,
             'repo' => $repo_url,
-            'port' => (new PortService())->getAFreePort()
+            'port' => $port
         ]);
-        GitService::cloneRepo($this->user->email, $name, $repo_url);
+        CreateNewSiteJob::dispatch($this->user->email, $name, $repo_url, $port);
     }
 }
