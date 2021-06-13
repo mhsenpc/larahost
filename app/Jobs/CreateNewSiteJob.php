@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Services\ConnectionInfoGenerator;
 use App\Services\DockerService;
 use App\Services\GitService;
 use Illuminate\Bus\Queueable;
@@ -52,6 +53,10 @@ class CreateNewSiteJob implements ShouldQueue
      */
     public function handle() {
         $project_dir = GitService::cloneRepo($this->email, $this->name, $this->repo_url);
-        (new DockerService())->newLaravelContainer($this->name, $this->port, $project_dir);
+        $connection_info = ConnectionInfoGenerator::generate($this->name);
+        $docker_service = new DockerService();
+        $docker_service->setConnectionInfo($connection_info);
+        $docker_service->newDBContainer();
+        $docker_service->newLaravelContainer($this->name, $this->port, $project_dir);
     }
 }
