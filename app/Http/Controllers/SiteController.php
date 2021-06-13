@@ -36,7 +36,7 @@ class SiteController extends Controller
      */
     public function store(Request $request) {
         $request->validate([
-            'name' => 'required|alpha_dash',
+            'name' => 'required|alpha_dash|unique:sites',
             'repo' => 'required',
         ]);
 
