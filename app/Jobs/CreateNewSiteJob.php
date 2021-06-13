@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Services\ConnectionInfoGenerator;
 use App\Services\DockerService;
 use App\Services\GitService;
+use App\Services\EnvVariablesService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -52,8 +53,10 @@ class CreateNewSiteJob implements ShouldQueue
      * @return void
      */
     public function handle() {
-        $project_dir = GitService::cloneRepo($this->email, $this->name, $this->repo_url);
         $connection_info = ConnectionInfoGenerator::generate($this->name);
+        $project_dir = GitService::cloneRepo($this->email, $this->name, $this->repo_url);
+        $env_updater = new EnvVariablesService($project_dir,$this->name, $connection_info);
+        $env_updater->updateEnv();
         $docker_service = new DockerService();
         $docker_service->setConnectionInfo($connection_info);
         $docker_service->newDBContainer();

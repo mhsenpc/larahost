@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Classes\ConnectionInfo;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 
 class DockerService
@@ -13,7 +14,7 @@ class DockerService
     protected $connection_info;
 
     public function __construct() {
-        if (config("app.env") == "local") {
+        if (App::environment('local')) {
             $this->binary = "dockerx";
         }
     }

@@ -6,6 +6,7 @@ namespace App\Classes;
 
 class ConnectionInfo
 {
+    public $db_connection;
     public $db_name;
     public $db_host;
     public $db_port;
