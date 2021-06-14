@@ -32,7 +32,7 @@ class DockerService
     }
 
     public function newDBContainer() {
-        exec("{$this->binary} run --name={$this->connection_info->db_host} -e MYSQL_ROOT_PASSWORD={$this->connection_info->db_password} -e MYSQL_DATABASE={$this->connection_info->db_name} mariadb 2>&1", $output, $return_var);
+        exec("{$this->binary} run --name={$this->connection_info->db_host} -e MYSQL_ROOT_PASSWORD={$this->connection_info->db_password} -e MYSQL_DATABASE={$this->connection_info->db_name} -d mariadb 2>&1", $output, $return_var);
         return $output;
     }
 }
