@@ -61,7 +61,6 @@ class CreateNewSiteJob implements ShouldQueue
         $docker_service = new DockerService();
         $docker_service->setConnectionInfo($connection_info);
         $docker_service->newSiteContainer($this->name, $this->port, $project_dir);
-        $docker_service->postCreationCommands($project_dir);
         $post_creation_service = new PostCreationService($this->name, $project_dir);
         $post_creation_service->runCommands();
     }
