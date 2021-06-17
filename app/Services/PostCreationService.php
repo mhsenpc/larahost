@@ -35,7 +35,7 @@ class PostCreationService
     public function runCommands() {
         Log::debug("post run commands");
         foreach ($this->commands as $command) {
-            exec("{$this->binary} exec -it {$this->project_name} $command 2>&1", $output);
+            exec("{$this->binary} exec {$this->project_name} $command 2>&1", $output);
             Log::debug($output);
         }
     }
