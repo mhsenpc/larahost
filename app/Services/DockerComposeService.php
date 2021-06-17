@@ -8,7 +8,7 @@ use App\Classes\ConnectionInfo;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
-class DockerService
+class DockerComposeService
 {
     protected $binary = "/usr/bin/docker-compose";
     protected $connection_info;

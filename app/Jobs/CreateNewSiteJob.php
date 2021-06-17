@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Services\ConnectionInfoGenerator;
-use App\Services\DockerService;
+use App\Services\DockerComposeService;
 use App\Services\EnvVariablesService;
 use App\Services\GitService;
 use App\Services\PostCreationService;
@@ -58,7 +58,7 @@ class CreateNewSiteJob implements ShouldQueue
         $project_dir     = GitService::cloneRepo($this->email, $this->name, $this->repo_url);
         $env_updater     = new EnvVariablesService($project_dir, $this->name, $connection_info);
         $env_updater->updateEnv();
-        $docker_service = new DockerService();
+        $docker_service = new DockerComposeService();
         $docker_service->setConnectionInfo($connection_info);
         $docker_service->newSiteContainer($this->name, $this->port, $project_dir);
         $post_creation_service = new PostCreationService($this->name, $project_dir);
