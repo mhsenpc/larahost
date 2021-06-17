@@ -16,7 +16,7 @@ class DockerService
         $this->connection_info = $connectionInfo;
     }
 
-    public function newLaravelContainer(string $name, int $port, string $project_dir) {
+    public function newSiteContainer(string $name, int $port, string $project_dir) {
         $template = Storage::get('docker_compose.template');
         $template = str_replace('$project_name', $name, $template);
         $template = str_replace('$port', $port, $template);

@@ -59,7 +59,6 @@ class CreateNewSiteJob implements ShouldQueue
         $env_updater->updateEnv();
         $docker_service = new DockerService();
         $docker_service->setConnectionInfo($connection_info);
-        $docker_service->newDBContainer();
-        $docker_service->newLaravelContainer($this->name, $this->port, $project_dir);
+        $docker_service->newSiteContainer($this->name, $this->port, $project_dir);
     }
 }
