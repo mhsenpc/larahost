@@ -21,7 +21,7 @@ class PostCreationService
 
     protected $commands
         = [
-            'chown -R www-data:www-data * .*',
+            'chown -R www-data:www-data ./',
             'composer install',
             'php artisan key:generate',
             'php artisan migrate'
