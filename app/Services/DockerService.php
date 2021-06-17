@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Classes\ConnectionInfo;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class DockerService
@@ -23,7 +24,7 @@ class DockerService
         $template = str_replace('$db_password', $this->connection_info->db_password, $template);
         file_put_contents($project_dir . '/docker-compose.yml', $template);
         exec("cd $project_dir;{$this->binary} up -d", $output);
-        \Log::debug("output of compose up");
-        \Log::debug($output);
+        Log::debug("output of compose up");
+        Log::debug($output);
     }
 }
