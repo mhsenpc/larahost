@@ -23,7 +23,7 @@ class EnvVariablesService
             copy($project_dir . "/.env.example", $project_dir . "/.env");
         } else {
             // create default .env
-            copy(Storage::path('defaultenv'), $project_dir . "/.env");
+            copy(Storage::path('env.template'), $project_dir . "/.env");
         }
         $this->env_path = $project_dir . "/.env";
     }

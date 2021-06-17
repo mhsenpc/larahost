@@ -5,34 +5,25 @@ namespace App\Services;
 
 
 use App\Classes\ConnectionInfo;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class DockerService
 {
-    protected $binary = "/usr/bin/docker";
+    protected $binary = "/usr/bin/docker-compose";
     protected $connection_info;
-
-    public function __construct() {
-        if (App::environment('local')) {
-            $this->binary = "dockerx";
-        }
-    }
 
     public function setConnectionInfo(ConnectionInfo $connectionInfo) {
         $this->connection_info = $connectionInfo;
     }
 
     public function newLaravelContainer(string $name, int $port, string $project_dir) {
-        Log::debug("trying to docker run $project_dir on port $port");
-        $command = "{$this->binary} run --link={$this->connection_info->db_host} -v $project_dir:/var/www/html --name=$name -d -p $port:80  bitnami/laravel:8 2>&1";
-        Log::debug($command);
-        exec($command, $output, $return_var);
-        return $output;
-    }
-
-    public function newDBContainer() {
-        exec("{$this->binary} run --name={$this->connection_info->db_host} -e MYSQL_ROOT_PASSWORD={$this->connection_info->db_password} -e MYSQL_DATABASE={$this->connection_info->db_name} -d mariadb 2>&1", $output, $return_var);
-        return $output;
+        $template = Storage::get('docker_compose.template');
+        $template = str_replace('$project_name', $name, $template);
+        $template = str_replace('$port', $port, $template);
+        $template = str_replace('$db_password', $this->connection_info->db_password, $template);
+        file_put_contents($project_dir . '/docker-compose.yml', $template);
+        exec("cd $project_dir;{$this->binary} up -d", $output);
+        \Log::debug("output of compose up");
+        \Log::debug($output);
     }
 }

@@ -1,0 +1,22 @@
+version: "3.3"
+services:
+  $project_name:
+    image: larahost_php
+    container_name: $project_name
+    restart: unless-stopped
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - $port:80
+
+  $project_name_db:
+    image: mariadb
+    container_name: $project_name_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: $project_name
+      MYSQL_ROOT_PASSWORD: "$db_password"
+
+  $project_name_redis:
+    image: redis
+    container_name: $project_name_redis
