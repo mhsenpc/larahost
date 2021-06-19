@@ -32,7 +32,9 @@ class ReverseProxyService
     }
 
     protected function reloadNginx() {
-        exec("{$this->binary} -s reload");
+        exec("{$this->binary} -s reload 2>&1",$output);
+        \Log::debug("nginx reload");
+        \Log::debug($output);
     }
 
     public function setupNginx(){
