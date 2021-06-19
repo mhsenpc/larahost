@@ -6,7 +6,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Log;
 
-class PostCreationService
+class PostCreationCommandsService
 {
     protected $binary = "/usr/bin/docker";
 

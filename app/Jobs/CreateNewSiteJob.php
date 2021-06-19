@@ -6,7 +6,8 @@ use App\Services\ConnectionInfoGenerator;
 use App\Services\DockerComposeService;
 use App\Services\EnvVariablesService;
 use App\Services\GitService;
-use App\Services\PostCreationService;
+use App\Services\PostCreationCommandsService;
+use App\Services\ReverseProxyService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -61,7 +62,9 @@ class CreateNewSiteJob implements ShouldQueue
         $docker_service = new DockerComposeService();
         $docker_service->setConnectionInfo($connection_info);
         $docker_service->newSiteContainer($this->name, $this->port, $project_dir);
-        $post_creation_service = new PostCreationService($this->name, $project_dir);
+        $post_creation_service = new PostCreationCommandsService($this->name, $project_dir);
         $post_creation_service->runCommands();
+        $reverse_proxy_service = new ReverseProxyService($this->name, $this->port);
+        $reverse_proxy_service->setupNginx();
     }
 }
