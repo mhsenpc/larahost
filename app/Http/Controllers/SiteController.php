@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Site;
+use App\Services\ContainerInfoService;
+use App\Services\ContainerService;
 use App\Services\ReservedNamesService;
 use App\Services\SiteService;
 use Illuminate\Http\Request;
@@ -55,7 +57,8 @@ class SiteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Site $site) {
-        //
+        $running = ContainerInfoService::getPowerStatus($site->name);
+        return view('site.show',compact('site','running'));
     }
 
     /**
@@ -87,5 +90,20 @@ class SiteController extends Controller
      */
     public function destroy(Site $site) {
         //
+    }
+
+    public function start(Request $request){
+        ContainerService::start($request->name);
+        return redirect()->back();
+    }
+
+    public function stop(Request $request){
+        ContainerService::stop($request->name);
+        return redirect()->back();
+    }
+
+    public function restart(Request $request){
+        ContainerService::restart($request->name);
+        return redirect()->back();
     }
 }
