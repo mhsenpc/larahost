@@ -12,12 +12,12 @@
 
     <p>
         @if($running)
-            <a class="btn btn-warning" href="{{route('sites.stop',['name'=>$site->name])}}">Stop Site</a>
+            <a class="btn btn-warning" href="{{route('site.stop',['name'=>$site->name])}}">Stop Site</a>
         @else
-            <a class="btn btn-success" href="{{route('sites.start',['name'=>$site->name])}}">Start Site</a>
+            <a class="btn btn-success" href="{{route('site.start',['name'=>$site->name])}}">Start Site</a>
         @endif
 
-        <a class="btn btn-secondary" href="{{route('sites.restart',['name'=>$site->name])}}">Restart Site</a>
+        <a class="btn btn-secondary" href="{{route('site.restart',['name'=>$site->name])}}">Restart Site</a>
     </p>
 
     <p>

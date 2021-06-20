@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,9 +18,9 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     Route::resource('sites', App\Http\Controllers\SiteController::class);
-    Route::prefix('sites')->group(function () {
-        Route::get('/start',[\App\Http\Controllers\SiteController::class,'start'])->name('sites.start');
-        Route::get('/stop',[\App\Http\Controllers\SiteController::class,'stop'])->name('sites.stop');
-        Route::get('/restart',[\App\Http\Controllers\SiteController::class,'restart'])->name('sites.restart');
+    Route::prefix('site')->group(function () {
+        Route::get('/start',[SiteController::class,'start'])->name('site.start');
+        Route::get('/stop',[SiteController::class,'stop'])->name('site.stop');
+        Route::get('/restart',[SiteController::class,'restart'])->name('site.restart');
     });
 });
