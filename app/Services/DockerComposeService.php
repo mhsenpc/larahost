@@ -37,7 +37,7 @@ class DockerComposeService
     }
 
     public function stop(string $project_dir) {
-        exec("cd {$project_dir}/docker-compose;{$this->binary} down -d", $output);
+        exec("cd {$project_dir}/docker-compose;{$this->binary} down", $output);
     }
 
     public function restart(string $project_dir) {
