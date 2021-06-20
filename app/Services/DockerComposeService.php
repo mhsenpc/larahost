@@ -34,6 +34,7 @@ class DockerComposeService
 
     public function start(string $project_dir) {
         exec("cd {$project_dir}/docker-compose;{$this->binary} up -d", $output);
+        Log::debug("cd {$project_dir}/docker-compose;{$this->binary} up -d");
         Log::debug("docker compose start");
         Log::debug($output);
     }
