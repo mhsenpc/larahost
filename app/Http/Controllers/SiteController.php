@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Site;
 use App\Services\ContainerInfoService;
-use App\Services\ContainerService;
+use App\Services\DockerComposeService;
 use App\Services\ReservedNamesService;
 use App\Services\SiteService;
 use Illuminate\Http\Request;
@@ -42,7 +42,7 @@ class SiteController extends Controller
             'name' => 'required|alpha_dash|unique:sites',
             'repo' => 'required',
         ]);
-        if(ReservedNamesService::isNameReserved($request->name)){
+        if (ReservedNamesService::isNameReserved($request->name)) {
             return redirect()->back()->withInput()->withErrors(['This name is used. Please choose another name']);
         }
         $site_service = (new SiteService(Auth::user()));
@@ -58,7 +58,7 @@ class SiteController extends Controller
      */
     public function show(Site $site) {
         $running = ContainerInfoService::getPowerStatus($site->name);
-        return view('site.show',compact('site','running'));
+        return view('site.show', compact('site', 'running'));
     }
 
     /**
@@ -92,18 +92,24 @@ class SiteController extends Controller
         //
     }
 
-    public function start(Request $request){
-        ContainerService::start($request->name);
+    public function start(Request $request) {
+        $project_dir            = Auth::user()->email . '\\' . $request->name;
+        $docker_compose_service = new DockerComposeService();
+        $docker_compose_service->start($project_dir);
         return redirect()->back();
     }
 
-    public function stop(Request $request){
-        ContainerService::stop($request->name);
+    public function stop(Request $request) {
+        $project_dir            = Auth::user()->email . '\\' . $request->name;
+        $docker_compose_service = new DockerComposeService();
+        $docker_compose_service->stop($project_dir);
         return redirect()->back();
     }
 
-    public function restart(Request $request){
-        ContainerService::restart($request->name);
+    public function restart(Request $request) {
+        $project_dir            = Auth::user()->email . '\\' . $request->name;
+        $docker_compose_service = new DockerComposeService();
+        $docker_compose_service->restart($project_dir);
         return redirect()->back();
     }
 }
