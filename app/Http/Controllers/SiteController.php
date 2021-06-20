@@ -93,21 +93,21 @@ class SiteController extends Controller
     }
 
     public function start(Request $request) {
-        $project_dir            = config('larahost.repos_dir').'\\'. Auth::user()->email . '\\' . $request->name;
+        $project_dir            = config('larahost.repos_dir').'/'. Auth::user()->email . '/' . $request->name;
         $docker_compose_service = new DockerComposeService();
         $docker_compose_service->start($project_dir);
         return redirect()->back();
     }
 
     public function stop(Request $request) {
-        $project_dir            = config('larahost.repos_dir').'\\'. Auth::user()->email . '\\' . $request->name;
+        $project_dir            = config('larahost.repos_dir').'/'. Auth::user()->email . '/' . $request->name;
         $docker_compose_service = new DockerComposeService();
         $docker_compose_service->stop($project_dir);
         return redirect()->back();
     }
 
     public function restart(Request $request) {
-        $project_dir            = config('larahost.repos_dir').'\\'. Auth::user()->email . '\\' . $request->name;
+        $project_dir            = config('larahost.repos_dir').'/'. Auth::user()->email . '/' . $request->name;
         $docker_compose_service = new DockerComposeService();
         $docker_compose_service->restart($project_dir);
         return redirect()->back();
