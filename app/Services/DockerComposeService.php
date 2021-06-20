@@ -22,8 +22,12 @@ class DockerComposeService
         $template = str_replace('$project_name', $name, $template);
         $template = str_replace('$port', $port, $template);
         $template = str_replace('$db_password', $this->connection_info->db_password, $template);
-        file_put_contents($project_dir . '/docker-compose.yml', $template);
-        exec("cd $project_dir;{$this->binary} up -d", $output);
+        $template = str_replace('$source_dir', $project_dir.'/source', $template);
+        $template = str_replace('$db_dir', $project_dir.'/db', $template);
+        $compose_dir = $project_dir.'/docker-compose';
+        mkdir($compose_dir);
+        file_put_contents($compose_dir . '/docker-compose.yml', $template);
+        exec("cd $compose_dir;{$this->binary} up -d", $output);
         Log::debug("output of compose up");
         Log::debug($output);
     }

@@ -6,15 +6,16 @@ namespace App\Services;
 
 class GitService
 {
-    public static function cloneRepo(string $email, string $repo_name, string $url) {
-        $repos_dir = config('larahost.repos_dir');
-        self::checkForRequiredDirectories($email, $repo_name, $repos_dir);
-        $project_dir  = "$repos_dir/$email/$repo_name";
-        exec("git clone $url $project_dir");
-        return $project_dir;
+    public $source_dir;
+    public $project_base_dir;
+
+    public function cloneRepo(string $email, string $repo_name, string $url) {
+        $this->checkForRequiredDirectories($email, $repo_name);
+        exec("git clone $url {$this->source_dir}");
     }
 
-    protected static function checkForRequiredDirectories(string $email, string $repo_name, string $repos_dir) {
+    protected function checkForRequiredDirectories(string $email, string $repo_name) {
+        $repos_dir = config('larahost.repos_dir');
         /*
          * check if required directories exist
          */
@@ -24,8 +25,15 @@ class GitService
         if (!is_dir($repos_dir . '/' . $email)) {
             mkdir($repos_dir . '/' . $email);
         }
-        if (!is_dir($repos_dir . '/' . $email . '/' . $repo_name)) {
-            mkdir($repos_dir . '/' . $email . '/' . $repo_name);
+
+        $this->project_base_dir = $repos_dir . '/' . $email . '/' . $repo_name;
+        if (!is_dir($this->project_base_dir)) {
+            mkdir($this->project_base_dir);
+        }
+
+        $this->source_dir = $repos_dir . '/' . $email . '/' . $repo_name . '/source';
+        if (!is_dir($this->source_dir)) {
+            mkdir($this->source_dir);
         }
     }
 }

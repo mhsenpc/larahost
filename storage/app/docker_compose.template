@@ -5,7 +5,7 @@ services:
     container_name: $project_name
     restart: unless-stopped
     volumes:
-      - ./:/var/www/html
+      - $source_dir:/var/www/html
     ports:
       - $port:80
 
@@ -16,6 +16,8 @@ services:
     environment:
       MYSQL_DATABASE: $project_name
       MYSQL_ROOT_PASSWORD: "$db_password"
+    volumes:
+      - $db_dir:/var/lib/mysql
 
   $project_name_redis:
     image: redis

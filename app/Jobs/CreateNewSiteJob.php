@@ -56,13 +56,14 @@ class CreateNewSiteJob implements ShouldQueue
      */
     public function handle() {
         $connection_info = ConnectionInfoGenerator::generate($this->name);
-        $project_dir     = GitService::cloneRepo($this->email, $this->name, $this->repo_url);
-        $env_updater     = new EnvVariablesService($project_dir, $this->name, $connection_info);
+        $git_service = new GitService();
+        $git_service->cloneRepo($this->email, $this->name, $this->repo_url);
+        $env_updater     = new EnvVariablesService($git_service->source_dir, $this->name, $connection_info);
         $env_updater->updateEnv();
         $docker_service = new DockerComposeService();
         $docker_service->setConnectionInfo($connection_info);
-        $docker_service->newSiteContainer($this->name, $this->port, $project_dir);
-        $post_creation_service = new PostCreationCommandsService($this->name, $project_dir);
+        $docker_service->newSiteContainer($this->name, $this->port, $git_service->project_base_dir);
+        $post_creation_service = new PostCreationCommandsService($this->name, $git_service->source_dir);
         $post_creation_service->runCommands();
         $reverse_proxy_service = new ReverseProxyService($this->name, $this->port);
         $reverse_proxy_service->setupNginx();
