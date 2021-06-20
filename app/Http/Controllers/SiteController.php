@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Site;
+use App\Services\ReservedNamesService;
 use App\Services\SiteService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,7 +40,9 @@ class SiteController extends Controller
             'name' => 'required|alpha_dash|unique:sites',
             'repo' => 'required',
         ]);
-
+        if(ReservedNamesService::isNameReserved($request->name)){
+            return redirect()->back()->withInput()->withErrors(['This name is used. Please choose another name']);
+        }
         $site_service = (new SiteService(Auth::user()));
         $site_service->newSite($request->name, $request->repo);
         return redirect(route('sites.index'));
