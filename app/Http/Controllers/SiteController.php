@@ -94,7 +94,7 @@ class SiteController extends Controller
         $site = Site::find($id);
         $site_destroyer = new SiteDestroyerService($site);
         $site_destroyer->destroy();
-        return redirect()->back();
+        return redirect(route('sites.index'));
     }
 
     public function start(Request $request) {
