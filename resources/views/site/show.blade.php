@@ -20,7 +20,8 @@
         <a class="btn btn-secondary" href="{{route('site.restart',['name'=>$site->name])}}">Restart Site</a>
     </p>
 
-    <p>
-        <a class="btn btn-danger" href="">Remove Site</a>
-    </p>
+    <form method="post" action="{{route('sites.remove',['id'=> $site->id])}}"  >
+        @csrf
+        <input type="submit" class="btn btn-danger" value="Remove Site" onclick="return confirm('Are you sure? This action is irreversible')"/>
+    </form>
 @stop

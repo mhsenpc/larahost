@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Site;
 use App\Services\ContainerInfoService;
 use App\Services\DockerComposeService;
+use App\Services\PathHelper;
 use App\Services\ReservedNamesService;
+use App\Services\SiteDestroyerService;
 use App\Services\SiteService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -88,26 +90,29 @@ class SiteController extends Controller
      * @param \App\Models\Site $site
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Site $site) {
-        //
+    public function destroy($id) {
+        $site = Site::find($id);
+        $site_destroyer = new SiteDestroyerService($site);
+        $site_destroyer->destroy();
+        return redirect()->back();
     }
 
     public function start(Request $request) {
-        $project_dir            = config('larahost.repos_dir').'/'. Auth::user()->email . '/' . $request->name;
+        $project_dir            = PathHelper::getProjectBasePath(Auth::user()->email,$request->name);
         $docker_compose_service = new DockerComposeService();
         $docker_compose_service->start($project_dir);
         return redirect()->back();
     }
 
     public function stop(Request $request) {
-        $project_dir            = config('larahost.repos_dir').'/'. Auth::user()->email . '/' . $request->name;
+        $project_dir            = PathHelper::getProjectBasePath(Auth::user()->email,$request->name);
         $docker_compose_service = new DockerComposeService();
         $docker_compose_service->stop($project_dir);
         return redirect()->back();
     }
 
     public function restart(Request $request) {
-        $project_dir            = config('larahost.repos_dir').'/'. Auth::user()->email . '/' . $request->name;
+        $project_dir            = PathHelper::getProjectBasePath(Auth::user()->email,$request->name);
         $docker_compose_service = new DockerComposeService();
         $docker_compose_service->restart($project_dir);
         return redirect()->back();

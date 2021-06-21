@@ -65,7 +65,7 @@ class CreateNewSiteJob implements ShouldQueue
         $docker_service->newSiteContainer($this->name, $this->port, $git_service->project_base_dir);
         $post_creation_service = new PostCreationCommandsService($this->name, $git_service->source_dir);
         $post_creation_service->runCommands();
-        $reverse_proxy_service = new ReverseProxyService($this->name, $this->port);
-        $reverse_proxy_service->setupNginx();
+        $reverse_proxy_service = new ReverseProxyService($this->name);
+        $reverse_proxy_service->setupNginx($this->port);
     }
 }
