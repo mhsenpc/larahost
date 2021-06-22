@@ -4,6 +4,8 @@
 namespace App\Services;
 
 
+use Illuminate\Support\Facades\Log;
+
 class GitService
 {
     public $source_dir;
@@ -12,6 +14,8 @@ class GitService
     public function cloneRepo(string $email, string $repo_name, string $url) {
         $this->createSourceDirForProject($email, $repo_name);
         exec("git clone $url {$this->source_dir}");
+        Log::debug('git clone');
+        Log::debug("git clone $url {$this->source_dir}");
     }
 
     protected function createSourceDirForProject(string $email, string $project_name) {
