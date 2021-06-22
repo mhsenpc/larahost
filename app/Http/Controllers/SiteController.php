@@ -100,7 +100,7 @@ class SiteController extends Controller
     public function start(Request $request) {
         $project_dir            = PathHelper::getProjectBasePath(Auth::user()->email,$request->name);
         $docker_compose_service = new DockerComposeService();
-        $docker_compose_service->start($project_dir);
+        $docker_compose_service->start($request->name,$project_dir);
         return redirect()->back();
     }
 
@@ -114,7 +114,7 @@ class SiteController extends Controller
     public function restart(Request $request) {
         $project_dir            = PathHelper::getProjectBasePath(Auth::user()->email,$request->name);
         $docker_compose_service = new DockerComposeService();
-        $docker_compose_service->restart($project_dir);
+        $docker_compose_service->restart($request->name,$project_dir);
         return redirect()->back();
     }
 }

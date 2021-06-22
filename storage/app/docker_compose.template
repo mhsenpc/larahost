@@ -1,4 +1,4 @@
-version: "3.3"
+version: "2.2"
 services:
   $project_name:
     image: larahost_php
@@ -9,9 +9,9 @@ services:
     ports:
       - $port:80
     mem_limit: 1G
-        cpus: 0.5
-        storage_opt:
-          size: '20G'
+    cpus: 0.5
+    storage_opt:
+      size: '20G'
 
   $project_name_db:
     image: mariadb

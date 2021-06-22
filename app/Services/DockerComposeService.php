@@ -18,13 +18,13 @@ class DockerComposeService
     }
 
     public function newSiteContainer(string $name, int $port, string $project_dir) {
-        $template = Storage::get('docker_compose.template');
-        $template = str_replace('$project_name', $name, $template);
-        $template = str_replace('$port', $port, $template);
-        $template = str_replace('$db_password', $this->connection_info->db_password, $template);
-        $template = str_replace('$source_dir', $project_dir.'/source', $template);
-        $template = str_replace('$db_dir', $project_dir.'/db', $template);
-        $compose_dir = $project_dir.'/docker-compose';
+        $template    = Storage::get('docker_compose.template');
+        $template    = str_replace('$project_name', $name, $template);
+        $template    = str_replace('$port', $port, $template);
+        $template    = str_replace('$db_password', $this->connection_info->db_password, $template);
+        $template    = str_replace('$source_dir', $project_dir . '/source', $template);
+        $template    = str_replace('$db_dir', $project_dir . '/db', $template);
+        $compose_dir = $project_dir . '/docker-compose';
         mkdir($compose_dir);
         file_put_contents($compose_dir . '/docker-compose.yml', $template);
         exec("cd $compose_dir;{$this->binary} --project-name {$name} up -d", $output);
@@ -32,8 +32,8 @@ class DockerComposeService
         Log::debug($output);
     }
 
-    public function start(string $project_dir) {
-        exec("cd {$project_dir}/docker-compose;{$this->binary} up -d", $output);
+    public function start(string $project_name, string $project_dir) {
+        exec("cd {$project_dir}/docker-compose;{$this->binary} --project-name $project_name up -d", $output);
         Log::debug("cd {$project_dir}/docker-compose;{$this->binary} up -d");
         Log::debug("docker compose start");
         Log::debug($output);
@@ -45,8 +45,8 @@ class DockerComposeService
         Log::debug($output);
     }
 
-    public function restart(string $project_dir) {
+    public function restart(string $project_name, string $project_dir) {
         $this->stop($project_dir);
-        $this->start($project_dir);
+        $this->start($project_name, $project_dir);
     }
 }
