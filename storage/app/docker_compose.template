@@ -8,6 +8,10 @@ services:
       - $source_dir:/var/www/html
     ports:
       - $port:80
+    mem_limit: 1G
+        cpus: 0.5
+        storage_opt:
+          size: '20G'
 
   $project_name_db:
     image: mariadb

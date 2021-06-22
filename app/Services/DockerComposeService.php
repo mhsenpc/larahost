@@ -27,7 +27,7 @@ class DockerComposeService
         $compose_dir = $project_dir.'/docker-compose';
         mkdir($compose_dir);
         file_put_contents($compose_dir . '/docker-compose.yml', $template);
-        exec("cd $compose_dir;{$this->binary} up -d", $output);
+        exec("cd $compose_dir;{$this->binary} --project-name {$name} up -d", $output);
         Log::debug("output of compose up");
         Log::debug($output);
     }
