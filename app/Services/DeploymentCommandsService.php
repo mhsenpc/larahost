@@ -42,10 +42,14 @@ class DeploymentCommandsService
             Log::debug($output);
             $file_contents .= implode('\r\n', $output);
         }
+        $this->saveDeploymentLog($file_contents);
+    }
+
+    protected function saveDeploymentLog(string $log){
         $dep_logs_dir = $this->project_dir . '/deployment_logs';
         mkdir($dep_logs_dir);
         $file_name = date('YmdHis.log');
-        file_put_contents($dep_logs_dir . '/' . $file_name, $file_contents);
+        file_put_contents($dep_logs_dir . '/' . $file_name, $log);
         Deployment::create([
             'site_id' => $this->site->id,
             'log_file' => $file_name,
