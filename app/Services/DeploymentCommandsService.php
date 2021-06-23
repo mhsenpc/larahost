@@ -43,6 +43,7 @@ class DeploymentCommandsService
             $file_contents .= $command."\r\n";
             $file_contents .= implode("\r\n", $output);
             $file_contents .= "\r\n";
+            $output = "";
         }
         $this->saveDeploymentLog($file_contents);
     }
