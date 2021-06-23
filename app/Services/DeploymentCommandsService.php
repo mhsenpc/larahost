@@ -40,6 +40,7 @@ class DeploymentCommandsService
         foreach ($this->commands as $command) {
             exec("{$this->binary} exec {$this->site->name} $command 2>&1", $output);
             Log::debug($output);
+            $file_contents .= $command."\r\n";
             $file_contents .= implode("\r\n", $output);
         }
         $this->saveDeploymentLog($file_contents);
