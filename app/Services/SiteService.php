@@ -18,12 +18,12 @@ class SiteService
 
     public function newSite(string $name, string $repo_url) {
         $port = (new PortService())->getAFreePort();
-        Site::create([
+        $site = Site::create([
             'user_id' => $this->user->id,
             'name' => $name,
             'repo' => $repo_url,
             'port' => $port
         ]);
-        CreateNewSiteJob::dispatch($this->user->email, $name, $repo_url, $port);
+        CreateNewSiteJob::dispatch($site);
     }
 }

@@ -2,11 +2,12 @@
 
 namespace App\Jobs;
 
+use App\Models\Site;
 use App\Services\ConnectionInfoGenerator;
 use App\Services\DockerComposeService;
 use App\Services\EnvVariablesService;
 use App\Services\GitService;
-use App\Services\PostCreationCommandsService;
+use App\Services\DeploymentCommandsService;
 use App\Services\ReverseProxyService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -18,35 +19,17 @@ class CreateNewSiteJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     /**
-     * @var string
+     * @var Site
      */
-    private $email;
-    /**
-     * @var string
-     */
-    private $name;
-    /**
-     * @var string
-     */
-    private $repo_url;
-    /**
-     * @var int
-     */
-    private $port;
+    private $site;
 
     /**
      * Create a new job instance.
      *
-     * @param string $email
-     * @param string $name
-     * @param string $repo_url
-     * @param int $port
+     * @param Site $site
      */
-    public function __construct(string $email, string $name, string $repo_url, int $port) {
-        $this->email    = $email;
-        $this->name     = $name;
-        $this->repo_url = $repo_url;
-        $this->port     = $port;
+    public function __construct(Site $site) {
+        $this->site = $site;
     }
 
     /**
@@ -55,17 +38,17 @@ class CreateNewSiteJob implements ShouldQueue
      * @return void
      */
     public function handle() {
-        $connection_info = ConnectionInfoGenerator::generate($this->name);
-        $git_service = new GitService();
-        $git_service->cloneRepo($this->email, $this->name, $this->repo_url);
-        $env_updater     = new EnvVariablesService($git_service->source_dir, $this->name, $connection_info);
+        $connection_info = ConnectionInfoGenerator::generate($this->site->name);
+        $git_service     = new GitService();
+        $git_service->cloneRepo($this->site->user->email, $this->site->name, $this->site->repo);
+        $env_updater = new EnvVariablesService($git_service->source_dir, $this->site->name, $connection_info);
         $env_updater->updateEnv();
         $docker_service = new DockerComposeService();
         $docker_service->setConnectionInfo($connection_info);
-        $docker_service->newSiteContainer($this->name, $this->port, $git_service->project_base_dir);
-        $post_creation_service = new PostCreationCommandsService($this->name, $git_service->source_dir);
+        $docker_service->newSiteContainer($this->site->name, $this->site->port, $git_service->project_base_dir);
+        $post_creation_service = new DeploymentCommandsService($this->site->name, $git_service->source_dir);
         $post_creation_service->runCommands();
-        $reverse_proxy_service = new ReverseProxyService($this->name);
-        $reverse_proxy_service->setupNginx($this->port);
+        $reverse_proxy_service = new ReverseProxyService($this->site->name);
+        $reverse_proxy_service->setupNginx($this->site->port);
     }
 }
