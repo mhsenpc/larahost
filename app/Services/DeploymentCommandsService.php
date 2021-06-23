@@ -40,7 +40,7 @@ class DeploymentCommandsService
         foreach ($this->commands as $command) {
             exec("{$this->binary} exec {$this->site->name} $command 2>&1", $output);
             Log::debug($output);
-            $file_contents .= implode('\r\n', $output);
+            $file_contents .= implode("\r\n", $output);
         }
         $this->saveDeploymentLog($file_contents);
     }
@@ -48,7 +48,7 @@ class DeploymentCommandsService
     protected function saveDeploymentLog(string $log){
         $dep_logs_dir = $this->project_dir . '/deployment_logs';
         mkdir($dep_logs_dir);
-        $file_name = date('YmdHis.log');
+        $file_name = date('YmdHis').'.log';
         file_put_contents($dep_logs_dir . '/' . $file_name, $log);
         Deployment::create([
             'site_id' => $this->site->id,
