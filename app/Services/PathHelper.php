@@ -14,11 +14,15 @@ class PathHelper
 
     }
 
-    public static function getDockerComposePath(string $email, string $project_name) {
-        return self::getProjectBasePath($email, $project_name) . '/docker-compose';
+    public static function getDockerComposeDir(string $email, string $project_name) {
+        return self::getProjectBasePath($email, $project_name) . '/'.config('larahost.dir_names.docker-compose');
     }
 
-    public static function getSourceFolderPath(string $email, string $project_name) {
-        return self::getProjectBasePath($email, $project_name) . '/source';
+    public static function getSourceDir(string $email, string $project_name) {
+        return self::getProjectBasePath($email, $project_name) . '/'.config('larahost.dir_names.source');
+    }
+
+    public static function getDeploymentLogsDir(string $email, string $project_name) {
+        return self::getProjectBasePath($email, $project_name) . '/'.config('larahost.dir_names.deployment_logs');
     }
 }

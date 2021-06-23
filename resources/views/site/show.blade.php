@@ -24,4 +24,6 @@
         @csrf
         <input type="submit" class="btn btn-danger" value="Remove Site" onclick="return confirm('Are you sure? This action is irreversible')"/>
     </form>
+
+    <a href="{{route('sites.deployments',['site_id'=>$site->id])}}">Deployments</a>
 @stop

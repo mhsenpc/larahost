@@ -47,7 +47,7 @@ class DeploymentCommandsService
     }
 
     protected function saveDeploymentLog(string $log){
-        $dep_logs_dir = $this->project_dir . '/deployment_logs';
+        $dep_logs_dir = $this->project_dir . '/'.config('larahost.dir_names.deployment_logs');
         mkdir($dep_logs_dir);
         $file_name = date('YmdHis').'.log';
         file_put_contents($dep_logs_dir . '/' . $file_name, $log);

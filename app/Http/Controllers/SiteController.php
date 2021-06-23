@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Deployment;
 use App\Models\Site;
 use App\Services\ContainerInfoService;
 use App\Services\DockerComposeService;
@@ -91,30 +92,35 @@ class SiteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $site = Site::find($id);
+        $site           = Site::find($id);
         $site_destroyer = new SiteDestroyerService($site);
         $site_destroyer->destroy();
         return redirect(route('sites.index'));
     }
 
     public function start(Request $request) {
-        $project_dir            = PathHelper::getProjectBasePath(Auth::user()->email,$request->name);
+        $project_dir            = PathHelper::getProjectBasePath(Auth::user()->email, $request->name);
         $docker_compose_service = new DockerComposeService();
-        $docker_compose_service->start($request->name,$project_dir);
+        $docker_compose_service->start($request->name, $project_dir);
         return redirect()->back();
     }
 
     public function stop(Request $request) {
-        $project_dir            = PathHelper::getProjectBasePath(Auth::user()->email,$request->name);
+        $project_dir            = PathHelper::getProjectBasePath(Auth::user()->email, $request->name);
         $docker_compose_service = new DockerComposeService();
         $docker_compose_service->stop($project_dir);
         return redirect()->back();
     }
 
     public function restart(Request $request) {
-        $project_dir            = PathHelper::getProjectBasePath(Auth::user()->email,$request->name);
+        $project_dir            = PathHelper::getProjectBasePath(Auth::user()->email, $request->name);
         $docker_compose_service = new DockerComposeService();
-        $docker_compose_service->restart($request->name,$project_dir);
+        $docker_compose_service->restart($request->name, $project_dir);
         return redirect()->back();
+    }
+
+    public function deployments(int $site_id) {
+        $deployments = Deployment::query()->where('site_id', $site_id)->get();
+        return view('site.deployments', compact('deployments'));
     }
 }

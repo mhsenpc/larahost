@@ -33,7 +33,8 @@ class DockerComposeService
     }
 
     public function start(string $project_name, string $project_dir) {
-        exec("cd {$project_dir}/docker-compose;{$this->binary} --project-name $project_name up -d", $output);
+        $docker_compose_dir = config('larahost.dir_names.docker-compose');
+        exec("cd {$project_dir}/{$docker_compose_dir};{$this->binary} --project-name $project_name up -d", $output);
         Log::debug("cd {$project_dir}/docker-compose;{$this->binary} up -d");
         Log::debug("docker compose start");
         Log::debug($output);
