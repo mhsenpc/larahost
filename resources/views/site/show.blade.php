@@ -20,10 +20,17 @@
         <a class="btn btn-secondary" href="{{route('site.restart',['name'=>$site->name])}}">Restart Site</a>
     </p>
 
-    <form method="post" action="{{route('sites.remove',['id'=> $site->id])}}"  >
+    <form method="post" action="{{route('sites.remove',['id'=> $site->id])}}">
         @csrf
-        <input type="submit" class="btn btn-danger" value="Remove Site" onclick="return confirm('Are you sure? This action is irreversible')"/>
+        <input type="submit" class="btn btn-danger" value="Remove Site"
+               onclick="return confirm('Are you sure? This action is irreversible')"/>
     </form>
 
+    <p>
     <a href="{{route('sites.deployments',['site_id'=>$site->id])}}">Deployments</a>
+    </p>
+
+    <p>
+    <a href="{{route('sites.logs',['site_id'=>$site->id])}}">Laravel Logs</a>
+    </p>
 @stop

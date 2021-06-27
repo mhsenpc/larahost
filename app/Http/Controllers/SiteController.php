@@ -123,4 +123,22 @@ class SiteController extends Controller
         $deployments = Deployment::query()->where('site_id', $site_id)->get();
         return view('site.deployments', compact('deployments'));
     }
+
+    public function logs(int $id) {
+        $site = Site::find($id);
+        $logs_dir = PathHelper::getLaravelLogsDir(Auth::user()->email, $site->name);
+        $logs = scandir($logs_dir);
+
+        $logs = array_diff($logs, array('..', '.','.gitignore')); //remove invalid files
+
+        if(count($logs) == 1 && reset($logs) == "laravel.log"){
+            $logs_dir = PathHelper::getLaravelLogsDir(Auth::user()->email, $site->name);
+            $log_content             = file_get_contents($logs_dir . '/laravel.log');
+            return view('site.show_laravel_log',compact('log_content'));
+        }
+        else{
+            $project_name = $site->name;
+            return view('site.laravel_logs',compact('logs','project_name'));
+        }
+    }
 }

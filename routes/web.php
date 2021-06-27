@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DeploymentController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +21,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     Route::resource('sites', App\Http\Controllers\SiteController::class);
     Route::get('sites/{site_id}/deployments',[SiteController::class,'deployments'])->name('sites.deployments');
+    Route::get('sites/{site_id}/logs',[SiteController::class,'logs'])->name('sites.logs');
     Route::post('sites/{id}/destroy',[SiteController::class,'destroy'])->name('sites.remove');
     Route::prefix('site')->group(function () {
         Route::get('/start',[SiteController::class,'start'])->name('site.start');
@@ -26,5 +29,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/restart',[SiteController::class,'restart'])->name('site.restart');
     });
 
-    Route::get('deployments/{id}/log',[\App\Http\Controllers\DeploymentController::class,'showLog'])->name('deployments.showLog');
+    Route::get('deployments/{id}/log',[DeploymentController::class,'showLog'])->name('deployments.showLog');
+    Route::get('logs/{project_name}/{file_name}',[LogController::class,'showLog'])->name('logs.show');
 });

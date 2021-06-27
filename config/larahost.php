@@ -5,5 +5,6 @@ return [
         'docker-compose' => 'docker-compose',
         'source' => 'source',
         'deployment_logs' => 'deployment_logs',
+        'laravel_logs' => 'storage/logs',
     ]
 ];

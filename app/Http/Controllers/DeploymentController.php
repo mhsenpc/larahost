@@ -10,7 +10,7 @@ class DeploymentController extends Controller
     public function showLog(int $id) {
         $deployment = Deployment::find($id);
         $deployment_logs_dir = PathHelper::getDeploymentLogsDir(\Auth::user()->email, $deployment->site->name);
-        $content = file_get_contents($deployment_logs_dir .'/'. $deployment->log_file);
-        return \Response::make($content, '200')->header('Content-Type', 'text/plain');
+        $log_content = file_get_contents($deployment_logs_dir .'/'. $deployment->log_file);
+        return view('site.show_deployment_log',compact('log_content'));
     }
 }

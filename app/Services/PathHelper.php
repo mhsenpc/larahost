@@ -25,4 +25,8 @@ class PathHelper
     public static function getDeploymentLogsDir(string $email, string $project_name) {
         return self::getProjectBasePath($email, $project_name) . '/'.config('larahost.dir_names.deployment_logs');
     }
+
+    public static function getLaravelLogsDir(string $email, string $project_name) {
+        return self::getSourceDir($email, $project_name) . '/'.config('larahost.dir_names.laravel_logs');
+    }
 }
