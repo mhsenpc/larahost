@@ -12,11 +12,13 @@ class SiteService
 {
     private $user;
 
-    public function __construct(User $user) {
+    public function __construct(User $user)
+    {
         $this->user = $user;
     }
 
-    public function newSite(string $name, string $repo_url) {
+    public function newSite(string $name, string $repo_url): Site
+    {
         $port = (new PortService())->getAFreePort();
         $site = Site::create([
             'user_id' => $this->user->id,
@@ -25,5 +27,6 @@ class SiteService
             'port' => $port
         ]);
         CreateNewSiteJob::dispatch($site);
+        return $site;
     }
 }

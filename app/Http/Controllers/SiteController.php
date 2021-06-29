@@ -53,8 +53,8 @@ class SiteController extends Controller
             return redirect()->back()->withInput()->withErrors(['This name is used. Please choose another name']);
         }
         $site_service = (new SiteService(Auth::user()));
-        $site_service->newSite($request->name, $request->repo);
-        return redirect(route('sites.index'));
+        $site = $site_service->newSite($request->name, $request->repo);
+        return redirect(route('sites.show',['site'=>$site]));
     }
 
     /**
@@ -158,5 +158,6 @@ class SiteController extends Controller
     {
         $site = Site::query()->where('name', $request->name)->first();
         RedeploySiteJob::dispatch($site);
+        return redirect()->back();
     }
 }

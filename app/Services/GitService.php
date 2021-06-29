@@ -27,6 +27,7 @@ class GitService
         if (count($files) == 0) {
             throw new \Exception("Source dir is empty!");
         }
+        exec("cd {$this->source_dir};git pull");
     }
 
     protected function createSourceDirForProject(string $email, string $project_name)
