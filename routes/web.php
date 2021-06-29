@@ -27,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/start',[SiteController::class,'start'])->name('site.start');
         Route::get('/stop',[SiteController::class,'stop'])->name('site.stop');
         Route::get('/restart',[SiteController::class,'restart'])->name('site.restart');
+        Route::get('/redeploy',[SiteController::class,'redeploy'])->name('site.redeploy');
     });
 
     Route::get('deployments/{id}/log',[DeploymentController::class,'showLog'])->name('deployments.showLog');

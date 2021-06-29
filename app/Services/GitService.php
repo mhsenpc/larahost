@@ -11,12 +11,26 @@ class GitService
     public $source_dir;
     public $project_base_dir;
 
-    public function cloneRepo(string $email, string $repo_name, string $url) {
-        $this->createSourceDirForProject($email, $repo_name);
+    public function cloneRepo(string $email, string $site_name, string $url)
+    {
+        $this->createSourceDirForProject($email, $site_name);
         exec("git clone $url {$this->source_dir}");
     }
 
-    protected function createSourceDirForProject(string $email, string $project_name) {
+    /*
+     */
+    public function pull(string $email, string $site_name)
+    {
+        $this->createSourceDirForProject($email, $site_name);
+        $files = scandir(PathHelper::getSourceDir($email, $site_name));
+        $files = array_diff($files, array('..', '.')); //remove invalid files
+        if (count($files) == 0) {
+            throw new \Exception("Source dir is empty!");
+        }
+    }
+
+    protected function createSourceDirForProject(string $email, string $project_name)
+    {
         $repos_dir = config('larahost.repos_dir');
         /*
          * check if required directories exist

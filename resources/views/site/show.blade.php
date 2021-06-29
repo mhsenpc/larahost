@@ -20,6 +20,10 @@
         <a class="btn btn-secondary" href="{{route('site.restart',['name'=>$site->name])}}">Restart Site</a>
     </p>
 
+    <p>
+        <a class="btn btn-dark" href="{{route('site.redeploy',['name'=>$site->name])}}">Redeploy Site</a>
+    </p>
+
     <form method="post" action="{{route('sites.remove',['id'=> $site->id])}}">
         @csrf
         <input type="submit" class="btn btn-danger" value="Remove Site"
@@ -27,10 +31,10 @@
     </form>
 
     <p>
-    <a href="{{route('sites.deployments',['site_id'=>$site->id])}}">Deployments</a>
+        <a href="{{route('sites.deployments',['site_id'=>$site->id])}}">Deployments</a>
     </p>
 
     <p>
-    <a href="{{route('sites.logs',['site_id'=>$site->id])}}">Laravel Logs</a>
+        <a href="{{route('sites.logs',['site_id'=>$site->id])}}">Laravel Logs</a>
     </p>
 @stop

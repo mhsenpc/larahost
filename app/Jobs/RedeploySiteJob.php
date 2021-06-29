@@ -3,9 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Site;
-use App\Services\ConnectionInfoGenerator;
 use App\Services\DockerComposeService;
-use App\Services\EnvVariablesService;
 use App\Services\GitService;
 use App\Services\DeploymentCommandsService;
 use App\Services\ReverseProxyService;
@@ -15,9 +13,10 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class CreateNewSiteJob implements ShouldQueue
+class RedeploySiteJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
     /**
      * @var Site
      */
@@ -28,7 +27,8 @@ class CreateNewSiteJob implements ShouldQueue
      *
      * @param Site $site
      */
-    public function __construct(Site $site) {
+    public function __construct(Site $site)
+    {
         $this->site = $site;
     }
 
@@ -37,15 +37,17 @@ class CreateNewSiteJob implements ShouldQueue
      *
      * @return void
      */
-    public function handle() {
-        $connection_info = ConnectionInfoGenerator::generate($this->site->name);
-        $git_service     = new GitService();
-        $git_service->cloneRepo($this->site->user->email, $this->site->name, $this->site->repo);
-        $env_updater = new EnvVariablesService($git_service->source_dir, $this->site->name, $connection_info);
-        $env_updater->updateEnv();
+    public function handle()
+    {
+        // try git pull. git clone if there wasn't any files
+        $git_service = new GitService();
+        try {
+            $git_service->pull($this->site->user->email, $this->site->name);
+        } catch (\Exception $exception) {
+            $git_service->cloneRepo($this->site->user->email, $this->site->name, $this->site->repo);
+        }
         $docker_service = new DockerComposeService();
-        $docker_service->setConnectionInfo($connection_info);
-        $docker_service->newSiteContainer($this->site->name, $this->site->port, $git_service->project_base_dir);
+        $docker_service->restart($this->site->name, $git_service->project_base_dir);
         sleep(10); //wait until containers are ready
         $deployment_commands_service = new DeploymentCommandsService($this->site, $git_service->project_base_dir);
         $deployment_commands_service->runCommands();
