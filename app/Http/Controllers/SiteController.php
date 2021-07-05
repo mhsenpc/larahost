@@ -118,7 +118,7 @@ class SiteController extends Controller
     {
         $project_dir = PathHelper::getProjectBasePath(Auth::user()->email, $request->name);
         $docker_compose_service = new DockerComposeService();
-        $docker_compose_service->stop($project_dir);
+        $docker_compose_service->stop($request->name,$project_dir);
         return redirect()->back();
     }
 

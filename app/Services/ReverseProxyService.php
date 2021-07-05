@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Storage;
 
 class ReverseProxyService
 {
-    protected $binary = '/usr/sbin/nginx';
     protected $conf_d_path= '/etc/nginx/conf.d';
 
     /**
@@ -29,7 +28,7 @@ class ReverseProxyService
     }
 
     public function reloadNginx() {
-        exec("{$this->binary} -s reload 2>&1",$output);
+        $output = SuperUserAPIService::reload_nginx();
         \Log::debug("nginx reload");
         \Log::debug($output);
     }
@@ -39,7 +38,7 @@ class ReverseProxyService
         $this->reloadNginx();
     }
 
-    public function removeSiteConfig(){
-        unlink("{$this->conf_d_path}/{$this->name}.conf");
+    public function removeSiteConfig(string $email){
+        $output = SuperUserAPIService::remove_site($email,$this->name);
     }
 }

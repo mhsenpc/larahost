@@ -6,8 +6,7 @@ namespace App\Services;
 
 use App\Models\Site;
 
-class SiteDestroyerService
-{
+class SiteDestroyerService {
     /**
      * @var Site
      */
@@ -19,13 +18,13 @@ class SiteDestroyerService
 
     public function destroy() {
         // docker-compose down
-        $project_dir            = PathHelper::getProjectBasePath($this->site->user->email, $this->site->name);
+        $project_dir = PathHelper::getProjectBasePath($this->site->user->email, $this->site->name);
         $docker_compose_service = new DockerComposeService();
-        $docker_compose_service->stop($project_dir);
+        $docker_compose_service->stop($this->site->name, $project_dir);
 
         // remove nginx config
         $reverse_proxy_service = new ReverseProxyService($this->site->name);
-        $reverse_proxy_service->removeSiteConfig();
+        $reverse_proxy_service->removeSiteConfig($this->site->user->email);
 
         // reload nginx
         $reverse_proxy_service->reloadNginx();
