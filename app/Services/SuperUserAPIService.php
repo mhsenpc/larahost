@@ -24,6 +24,19 @@ class SuperUserAPIService {
         return $response;
     }
 
+    public static function inspect(string $site_name) {
+        $response = Http::get(self::API_BASE . '/inspect', [
+            'site_name' => $site_name
+        ]);
+        $response = json_decode($response);
+        if($response->success){
+            return json_decode($response->data);
+        }
+        else{
+            return false;
+        }
+    }
+
     public static function reload_nginx() {
         $response = Http::get(self::API_BASE . '/reload_nginx');
         return $response;

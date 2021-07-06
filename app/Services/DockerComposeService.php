@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class DockerComposeService {
-    protected $binary = "/usr/bin/docker-compose";
     protected $connection_info;
 
     public function setConnectionInfo(ConnectionInfo $connectionInfo) {
@@ -34,7 +33,6 @@ class DockerComposeService {
     public function start(string $project_name, string $project_dir) {
         $docker_compose_dir = config('larahost.dir_names.docker-compose');
         $output = SuperUserAPIService::compose_up($project_name, $project_dir . '/' . $docker_compose_dir);
-        Log::debug("cd {$project_dir}/docker-compose;{$this->binary} up -d");
         Log::debug("docker compose start");
         Log::debug($output);
     }
