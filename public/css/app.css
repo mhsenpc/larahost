@@ -10002,3 +10002,11 @@ h3 {
     border-color: #dee2e6;
   }
 }
+.hidden{
+    display: none;
+}
+
+.failed_deployment{
+    background-color: indianred;
+}
+

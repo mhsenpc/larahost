@@ -8,24 +8,26 @@ use App\Jobs\CreateNewSiteJob;
 use App\Models\Site;
 use App\Models\User;
 
-class SiteService
-{
+class SiteService {
     private $user;
 
-    public function __construct(User $user)
-    {
+    public function __construct(User $user) {
         $this->user = $user;
     }
 
-    public function newSite(string $name, string $repo_url): Site
-    {
-        $port = (new PortService())->getAFreePort();
-        $site = Site::create([
+    public function newSite(string $name, string $repo_url, bool $credentials, ?string $git_user, ?string $git_password): Site {
+        $data = [
             'user_id' => $this->user->id,
             'name' => $name,
             'repo' => $repo_url,
-            'port' => $port
-        ]);
+            'port' => (new PortService())->getAFreePort()
+        ];
+
+        if ($credentials) {
+            $data['git_user'] = $git_user;
+            $data['git_password'] = $git_password;
+        }
+        $site = Site::create($data);
         CreateNewSiteJob::dispatch($site);
         return $site;
     }

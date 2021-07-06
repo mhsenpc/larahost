@@ -49,7 +49,7 @@ class SiteController extends Controller {
             return redirect()->back()->withInput()->withErrors(['This name is used. Please choose another name']);
         }
         $site_service = (new SiteService(Auth::user()));
-        $site = $site_service->newSite($request->name, $request->repo);
+        $site = $site_service->newSite($request->name, $request->repo, !empty($request->manual_credentials), $request->username, $request->password);
         return redirect(route('sites.show', ['site' => $site]));
     }
 
@@ -99,21 +99,21 @@ class SiteController extends Controller {
     }
 
     public function start(Request $request) {
-        $project_dir = PathHelper::getProjectBasePath(Auth::user()->email, $request->name);
+        $project_dir = PathHelper::getProjectBaseDir(Auth::user()->email, $request->name);
         $docker_compose_service = new DockerComposeService();
         $docker_compose_service->start($request->name, $project_dir);
         return redirect()->back();
     }
 
     public function stop(Request $request) {
-        $project_dir = PathHelper::getProjectBasePath(Auth::user()->email, $request->name);
+        $project_dir = PathHelper::getProjectBaseDir(Auth::user()->email, $request->name);
         $docker_compose_service = new DockerComposeService();
         $docker_compose_service->stop($request->name, $project_dir);
         return redirect()->back();
     }
 
     public function restart(Request $request) {
-        $project_dir = PathHelper::getProjectBasePath(Auth::user()->email, $request->name);
+        $project_dir = PathHelper::getProjectBaseDir(Auth::user()->email, $request->name);
         $docker_compose_service = new DockerComposeService();
         $docker_compose_service->restart($request->name, $project_dir);
         return redirect()->back();

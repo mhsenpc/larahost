@@ -18,7 +18,7 @@ class SiteDestroyerService {
 
     public function destroy() {
         // docker-compose down
-        $project_dir = PathHelper::getProjectBasePath($this->site->user->email, $this->site->name);
+        $project_dir = PathHelper::getProjectBaseDir($this->site->user->email, $this->site->name);
         $docker_compose_service = new DockerComposeService();
         $docker_compose_service->stop($this->site->name, $project_dir);
 

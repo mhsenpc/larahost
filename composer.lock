@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "08bea6932f5c0d9268c5dac96e834782",
+    "content-hash": "db2a4e5756a2c860fb61bde1d9fb894a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -117,6 +117,58 @@
                 }
             ],
             "time": "2021-01-20T22:51:39+00:00"
+        },
+        {
+            "name": "czproject/git-php",
+            "version": "v4.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/czproject/git-php.git",
+                "reference": "32505124ef2a8651f10a5afebace58f85eff2f93"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/czproject/git-php/zipball/32505124ef2a8651f10a5afebace58f85eff2f93",
+                "reference": "32505124ef2a8651f10a5afebace58f85eff2f93",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "nette/tester": "^2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Pecha",
+                    "email": "janpecha@email.cz"
+                }
+            ],
+            "description": "Library for work with Git repository in PHP.",
+            "keywords": [
+                "git"
+            ],
+            "support": {
+                "issues": "https://github.com/czproject/git-php/issues",
+                "source": "https://github.com/czproject/git-php/tree/v4.0.2"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/donate?hosted_button_id=EPSKR7MGVV7KC",
+                    "type": "custom"
+                }
+            ],
+            "time": "2021-06-15T09:39:16+00:00"
         },
         {
             "name": "doctrine/inflector",

@@ -8,18 +8,13 @@ use App\Models\Deployment;
 use App\Models\Site;
 use Illuminate\Support\Facades\Log;
 
-class DeploymentCommandsService
-{
+class DeploymentCommandsService {
     protected $binary = "/usr/bin/docker";
 
     /**
      * @var Site
      */
     private $site;
-    /**
-     * @var string
-     */
-    private $project_dir;
 
     protected $commands
         = [
@@ -29,14 +24,11 @@ class DeploymentCommandsService
             'php artisan migrate'
         ];
 
-    public function __construct(Site $site, string $project_dir)
-    {
+    public function __construct(Site $site) {
         $this->site = $site;
-        $this->project_dir = $project_dir;
     }
 
-    public function runCommands()
-    {
+    public function runCommands() {
         $file_contents = '';
         Log::debug("post run commands");
         foreach ($this->commands as $command) {
@@ -47,12 +39,11 @@ class DeploymentCommandsService
             $file_contents .= "\r\n";
             $output = "";
         }
-        $this->saveDeploymentLog($file_contents);
+        $this->saveDeploymentLog($file_contents, true);
     }
 
-    protected function saveDeploymentLog(string $log)
-    {
-        $dep_logs_dir = $this->project_dir . '/' . config('larahost.dir_names.deployment_logs');
+    public function saveDeploymentLog(string $log, bool $success) {
+        $dep_logs_dir = PathHelper::getDeploymentLogsDir($this->site->user->email, $this->site->name);
         if (!is_dir($dep_logs_dir)) {
             mkdir($dep_logs_dir);
         }
@@ -61,7 +52,7 @@ class DeploymentCommandsService
         Deployment::create([
             'site_id' => $this->site->id,
             'log_file' => $file_name,
-            'success' => true //TODO: detect if any errors happened
+            'success' => $success
         ]);
     }
 }

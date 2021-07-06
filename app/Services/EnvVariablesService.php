@@ -13,19 +13,19 @@ class EnvVariablesService
     protected $env_path;
     private $project_name;
 
-    public function __construct(string $project_dir, string $project_name, ConnectionInfo $connection_info) {
+    public function __construct(string $source_dir, string $project_name, ConnectionInfo $connection_info) {
         $this->connection_info = $connection_info;
-        $this->env_path        = $project_dir;
+        $this->env_path        = $source_dir;
         $this->project_name    = $project_name;
-        if (file_exists($project_dir . "/.env")) {
+        if (file_exists($source_dir . "/.env")) {
             // use their env in repo. however awkward it is
-        } else if (file_exists($project_dir . "/.env.example")) {
-            copy($project_dir . "/.env.example", $project_dir . "/.env");
+        } else if (file_exists($source_dir . "/.env.example")) {
+            copy($source_dir . "/.env.example", $source_dir . "/.env");
         } else {
             // create default .env
-            copy(Storage::path('env.template'), $project_dir . "/.env");
+            copy(Storage::path('env.template'), $source_dir . "/.env");
         }
-        $this->env_path = $project_dir . "/.env";
+        $this->env_path = $source_dir . "/.env";
     }
 
     public function updateEnv() {

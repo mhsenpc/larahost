@@ -1,10 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="row justify-content-center">
+
     <p>
-        <label for="log_content">Log content</label>
+        <textarea  style=" width: 600px;height: 400px;" id="log_content">{{$log_content}}</textarea>
     </p>
-    <p>
-        <textarea id="log_content">{{$log_content}}</textarea>
-    </p>
+
+
+    </div>
 @endsection
