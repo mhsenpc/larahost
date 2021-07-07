@@ -31,10 +31,11 @@ class DeploymentCommandsService {
         Log::debug("post run commands");
         foreach ($this->commands as $command) {
             $output = SuperUserAPIService::exec_command($this->site->name, $command);
+            $output = json_decode($output);
+            $output = $output->data;
             Log::debug($output);
             $file_contents .= $command . "\r\n";
-            $file_contents .= implode("\r\n", $output);
-            $file_contents .= "\r\n";
+            $file_contents .= $output. "\r\n";
         }
         $this->saveDeploymentLog($file_contents, true);
     }
