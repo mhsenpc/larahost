@@ -42,7 +42,7 @@ class SiteController extends Controller {
      */
     public function store(Request $request) {
         $request->validate([
-            'name' => 'required|alpha_dash|unique:sites',
+            'name' => 'required|alpha_num|unique:sites',
             'repo' => 'required',
         ]);
         if (ReservedNamesService::isNameReserved($request->name)) {

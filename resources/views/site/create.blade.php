@@ -70,6 +70,11 @@
                     $("#manual_credentials_area").hide();
                 }
             });
+
+            $('#name').keyup (function (e){
+                var clean_name= this.value.replace(/[^A-Za-z0-9]/g, "");
+                $('#name').val(clean_name);
+            });
         });
     </script>
 @stop
