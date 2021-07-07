@@ -21,7 +21,7 @@ class SiteController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $sites = Site::query()->where('user_id', Auth::id())->get();
+        $sites = Site::get();
         return view('site.index', compact('sites'));
     }
 
