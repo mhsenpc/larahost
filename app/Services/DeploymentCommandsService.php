@@ -9,8 +9,6 @@ use App\Models\Site;
 use Illuminate\Support\Facades\Log;
 
 class DeploymentCommandsService {
-    protected $binary = "/usr/bin/docker";
-
     /**
      * @var Site
      */
@@ -32,12 +30,11 @@ class DeploymentCommandsService {
         $file_contents = '';
         Log::debug("post run commands");
         foreach ($this->commands as $command) {
-            exec("{$this->binary} exec {$this->site->name} $command 2>&1", $output);
+            $output = SuperUserAPIService::exec_command($this->site->name, $command);
             Log::debug($output);
             $file_contents .= $command . "\r\n";
             $file_contents .= implode("\r\n", $output);
             $file_contents .= "\r\n";
-            $output = "";
         }
         $this->saveDeploymentLog($file_contents, true);
     }
