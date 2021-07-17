@@ -3,7 +3,7 @@
 @section('content')
     <div class="row justify-content-center">
 
-        <form method="post" action="{{route('sites.save_deploy_commands',['site_id'=>$site->id])}}">
+        <form method="post" action="{{route('sites.save_deploy_commands',['site'=>$site])}}">
             @csrf
             <p>
                 <textarea style=" width: 600px;height: 400px;" name="deploy_commands">{{$site->deploy_commands}}</textarea>

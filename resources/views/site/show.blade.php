@@ -12,33 +12,33 @@
 
     <p>
         @if($running)
-            <a class="btn btn-warning" href="{{route('site.stop',['name'=>$site->name])}}">Stop Site</a>
+            <a class="btn btn-warning" href="{{route('site.stop',['site'=>$site])}}">Stop Site</a>
         @else
-            <a class="btn btn-success" href="{{route('site.start',['name'=>$site->name])}}">Start Site</a>
+            <a class="btn btn-success" href="{{route('site.start',['site'=>$site])}}">Start Site</a>
         @endif
 
-        <a class="btn btn-secondary" href="{{route('site.restart',['name'=>$site->name])}}">Restart Site</a>
+        <a class="btn btn-secondary" href="{{route('site.restart',['site'=>$site])}}">Restart Site</a>
     </p>
 
     <p>
-        <a class="btn btn-dark" href="{{route('site.redeploy',['name'=>$site->name])}}">Redeploy Site</a>
+        <a class="btn btn-dark" href="{{route('site.redeploy',['site'=>$site])}}">Redeploy Site</a>
     </p>
 
-    <form method="post" action="{{route('sites.remove',['id'=> $site->id])}}">
+    <form method="post" action="{{route('sites.remove',['site'=> $site])}}">
         @csrf
         <input type="submit" class="btn btn-danger" value="Remove Site"
                onclick="return confirm('Are you sure? This action is irreversible')"/>
     </form>
 
     <p>
-        <a href="{{route('sites.deployments',['site_id'=>$site->id])}}">Deployments</a>
+        <a href="{{route('sites.deployments',['site'=>$site])}}">Deployments</a>
     </p>
 
     <p>
-        <a href="{{route('sites.logs',['site_id'=>$site->id])}}">Laravel Logs</a>
+        <a href="{{route('sites.logs',['site'=>$site])}}">Laravel Logs</a>
     </p>
 
     <p>
-        <a href="{{route('sites.deploy_commands',['site_id'=> $site->id])}}">Deploy Commands</a>
+        <a href="{{route('sites.deploy_commands',['site'=> $site])}}">Deploy Commands</a>
     </p>
 @stop

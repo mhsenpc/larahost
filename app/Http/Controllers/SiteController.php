@@ -62,7 +62,7 @@ class SiteController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show(Site $site) {
-        $running = ContainerInfoService::getPowerStatus($site->name);
+        $running = true; //ContainerInfoService::getPowerStatus($site->name);
         return view('site.show', compact('site', 'running'));
     }
 
@@ -121,13 +121,12 @@ class SiteController extends Controller {
         return redirect()->back();
     }
 
-    public function deployments(int $site_id) {
-        $deployments = Deployment::query()->where('site_id', $site_id)->get();
+    public function deployments(Site $site) {
+        $deployments = Deployment::query()->where('site_id', $site->id)->get();
         return view('site.deployments', compact('deployments'));
     }
 
-    public function logs(int $id) {
-        $site = Site::find($id);
+    public function logs(Site $site) {
         $logs_dir = PathHelper::getLaravelLogsDir(Auth::user()->email, $site->name);
         $logs = scandir($logs_dir);
 
@@ -143,19 +142,16 @@ class SiteController extends Controller {
         }
     }
 
-    public function redeploy(Request $request) {
-        $site = Site::query()->where('name', $request->name)->first();
+    public function redeploy(Site $site) {
         RedeploySiteJob::dispatch($site);
         return redirect()->back();
     }
 
-    public function deploy_commands(Request $request, int $site_id) {
-        $site = Site::find($site_id);
+    public function deploy_commands(Site $site) {
         return view('site.deployment_commands',compact('site'));
     }
 
-    public function save_deploy_commands(Request $request, int $site_id) {
-        $site = Site::find($site_id);
+    public function save_deploy_commands(Request $request, Site $site) {
         $site->deploy_commands = $request->deploy_commands;
         $site->save();
         return redirect()->back();

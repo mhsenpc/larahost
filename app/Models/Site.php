@@ -28,4 +28,8 @@ class Site extends Model
             $builder->where('user_id', Auth::id());
         });
     }
+
+    public function getRouteKeyName() {
+        return 'name';
+    }
 }
