@@ -93,31 +93,30 @@ class SiteController extends Controller {
      * @param \App\Models\Site $site
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
-        $site = Site::find($id);
+    public function destroy(Site $site) {
         $site_destroyer = new SiteDestroyerService($site);
         $site_destroyer->destroy();
         return redirect(route('sites.index'));
     }
 
-    public function start(Request $request) {
-        $project_dir = PathHelper::getProjectBaseDir(Auth::user()->email, $request->name);
+    public function start(Site $site) {
+        $project_dir = PathHelper::getProjectBaseDir(Auth::user()->email, $site->name);
         $docker_compose_service = new DockerComposeService();
-        $docker_compose_service->start($request->name, $project_dir);
+        $docker_compose_service->start($site->name, $project_dir);
         return redirect()->back();
     }
 
-    public function stop(Request $request) {
-        $project_dir = PathHelper::getProjectBaseDir(Auth::user()->email, $request->name);
+    public function stop(Site $site) {
+        $project_dir = PathHelper::getProjectBaseDir(Auth::user()->email, $site->name);
         $docker_compose_service = new DockerComposeService();
-        $docker_compose_service->stop($request->name, $project_dir);
+        $docker_compose_service->stop($site->name, $project_dir);
         return redirect()->back();
     }
 
-    public function restart(Request $request) {
-        $project_dir = PathHelper::getProjectBaseDir(Auth::user()->email, $request->name);
+    public function restart(Site $site) {
+        $project_dir = PathHelper::getProjectBaseDir(Auth::user()->email, $site->name);
         $docker_compose_service = new DockerComposeService();
-        $docker_compose_service->restart($request->name, $project_dir);
+        $docker_compose_service->restart($site->name, $project_dir);
         return redirect()->back();
     }
 
