@@ -14,16 +14,11 @@ class DeploymentCommandsService {
      */
     private $site;
 
-    protected $commands
-        = [
-            'chown -R www-data:www-data ./',
-            'composer install',
-            'php artisan key:generate',
-            'php artisan migrate'
-        ];
+    protected $commands = [];
 
     public function __construct(Site $site) {
         $this->site = $site;
+        $this->commands = preg_split("/\r\n|\n|\r/", $this->site->deploy_commands);
     }
 
     public function runCommands() {
@@ -35,7 +30,7 @@ class DeploymentCommandsService {
             $output = $output->data;
             Log::debug($output);
             $file_contents .= $command . "\r\n";
-            $file_contents .= $output. "\r\n";
+            $file_contents .= $output . "\r\n";
         }
         $this->saveDeploymentLog($file_contents, true);
     }

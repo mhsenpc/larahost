@@ -37,4 +37,8 @@
     <p>
         <a href="{{route('sites.logs',['site_id'=>$site->id])}}">Laravel Logs</a>
     </p>
+
+    <p>
+        <a href="{{route('sites.deploy_commands',['site_id'=> $site->id])}}">Deploy Commands</a>
+    </p>
 @stop

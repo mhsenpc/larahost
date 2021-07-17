@@ -148,4 +148,16 @@ class SiteController extends Controller {
         RedeploySiteJob::dispatch($site);
         return redirect()->back();
     }
+
+    public function deploy_commands(Request $request, int $site_id) {
+        $site = Site::find($site_id);
+        return view('site.deployment_commands',compact('site'));
+    }
+
+    public function save_deploy_commands(Request $request, int $site_id) {
+        $site = Site::find($site_id);
+        $site->deploy_commands = $request->deploy_commands;
+        $site->save();
+        return redirect()->back();
+    }
 }

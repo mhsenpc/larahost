@@ -16,11 +16,14 @@ class SiteService {
     }
 
     public function newSite(string $name, string $repo_url, bool $credentials, ?string $git_user, ?string $git_password): Site {
+        $deploy_commands = implode("\r\n", config('larahost.deploy_commands'));
+
         $data = [
             'user_id' => $this->user->id,
             'name' => $name,
             'repo' => $repo_url,
-            'port' => (new PortService())->getAFreePort()
+            'port' => (new PortService())->getAFreePort(),
+            'deploy_commands' => $deploy_commands
         ];
 
         if ($credentials) {
