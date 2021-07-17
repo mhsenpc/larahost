@@ -41,6 +41,8 @@ class SiteController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
+        $request->name = strtolower($request->name);
+
         $request->validate([
             'name' => 'required|alpha_num|unique:sites',
             'repo' => 'required',
