@@ -25,7 +25,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('logs', [SiteController::class, 'logs'])->name('sites.logs');
         Route::get('deploy_commands', [SiteController::class, 'deploy_commands'])->name('sites.deploy_commands');
         Route::post('deploy_commands', [SiteController::class, 'save_deploy_commands'])->name('sites.save_deploy_commands');
-        Route::post('destroy', [SiteController::class, 'destroy'])->name('sites.remove');
+        Route::get('remove', [SiteController::class, 'showRemove'])->name('sites.show_remove');
+        Route::post('remove', [SiteController::class, 'remove'])->name('sites.remove');
         Route::get('start', [SiteController::class, 'start'])->name('sites.start');
         Route::get('stop', [SiteController::class, 'stop'])->name('sites.stop');
         Route::get('restart', [SiteController::class, 'restart'])->name('sites.restart');

@@ -101,7 +101,11 @@
     <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
-@include('layouts.main_sidebar')
+            @if(isset( $sidebar))
+                @include($sidebar)
+            @else
+                @include('layouts.main_sidebar')
+            @endif
         </section>
         <!-- /.sidebar -->
     </aside>

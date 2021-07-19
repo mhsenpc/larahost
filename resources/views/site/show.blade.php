@@ -1,7 +1,8 @@
 @extends('layouts.single_box')
-@php($title="جزئیات سایت ".$site->name)
+@php($title="وضعیت سایت ".$site->name)
+@php($sidebar="layouts.site_sidebar")
 
-@section('content')
+@section('box_content')
     <h2>{{$site->name}}</h2>
     <p>current server status:
         @if($running)
@@ -23,23 +24,5 @@
 
     <p>
         <a class="btn btn-dark" href="{{route('sites.redeploy',['site'=>$site])}}">Redeploy Site</a>
-    </p>
-
-    <form method="post" action="{{route('sites.remove',['site'=> $site])}}">
-        @csrf
-        <input type="submit" class="btn btn-danger" value="Remove Site"
-               onclick="return confirm('Are you sure? This action is irreversible')"/>
-    </form>
-
-    <p>
-        <a href="{{route('sites.deployments',['site'=>$site])}}">Deployments</a>
-    </p>
-
-    <p>
-        <a href="{{route('sites.logs',['site'=>$site])}}">Laravel Logs</a>
-    </p>
-
-    <p>
-        <a href="{{route('sites.deploy_commands',['site'=> $site])}}">Deploy Commands</a>
     </p>
 @stop

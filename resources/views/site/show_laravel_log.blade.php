@@ -1,7 +1,8 @@
 @extends('layouts.single_box')
-@php($title="گزارش لاراول")
+@php($title="گزارش های لاراول")
+@php($sidebar="layouts.site_sidebar")
 
-@section('content')
+@section('box_content')
     <p>
         <label for="log_content">Log content</label>
     </p>

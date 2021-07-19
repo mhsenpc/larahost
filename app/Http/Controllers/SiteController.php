@@ -87,13 +87,17 @@ class SiteController extends Controller {
         //
     }
 
+    public function showRemove(Site $site) {
+        return view('site.remove',compact('site'));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param \App\Models\Site $site
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Site $site) {
+    public function remove(Site $site) {
         $site_destroyer = new SiteDestroyerService($site);
         $site_destroyer->destroy();
         return redirect(route('sites.index'));
@@ -122,7 +126,7 @@ class SiteController extends Controller {
 
     public function deployments(Site $site) {
         $deployments = Deployment::query()->where('site_id', $site->id)->get();
-        return view('site.deployments', compact('deployments'));
+        return view('site.deployments', compact('deployments','site'));
     }
 
     public function logs(Site $site) {
@@ -134,10 +138,10 @@ class SiteController extends Controller {
         if (count($logs) == 1 && reset($logs) == "laravel.log") {
             $logs_dir = PathHelper::getLaravelLogsDir(Auth::user()->email, $site->name);
             $log_content = file_get_contents($logs_dir . '/laravel.log');
-            return view('site.show_laravel_log', compact('log_content'));
+            return view('site.show_laravel_log', compact('log_content','site'));
         } else {
             $project_name = $site->name;
-            return view('site.laravel_logs', compact('logs', 'project_name'));
+            return view('site.laravel_logs', compact('logs', 'project_name','site'));
         }
     }
 
