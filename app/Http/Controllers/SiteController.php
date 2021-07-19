@@ -140,8 +140,7 @@ class SiteController extends Controller {
             $log_content = file_get_contents($logs_dir . '/laravel.log');
             return view('site.show_laravel_log', compact('log_content','site'));
         } else {
-            $project_name = $site->name;
-            return view('site.laravel_logs', compact('logs', 'project_name','site'));
+            return view('site.laravel_logs', compact('logs','site'));
         }
     }
 

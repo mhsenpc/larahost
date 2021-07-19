@@ -3,5 +3,5 @@
 @php($sidebar="layouts.site_sidebar")
 
 @section('box_content')
-    <textarea style=" width: 600px;height: 400px;" id="log_content">{{$log_content}}</textarea>
+    <textarea dir="ltr" class="col-md-12" style="height: 25em" id="log_content">{{$log_content}}</textarea>
 @endsection

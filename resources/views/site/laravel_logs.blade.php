@@ -22,7 +22,7 @@
                 <td>{{$key +1 }}.</td>
                 <td>{{$log}}</td>
                 <td><a class="btn btn-default"
-                       href="{{route('logs.show',['project_name'=>$project_name ,'file_name'=>$log])}}">نمایش محتویات Log</a>
+                       href="{{route('logs.show',['site_name'=>$site->name ,'file_name'=>$log])}}">نمایش محتویات Log</a>
                 </td>
             </tr>
         @endforeach
