@@ -31,7 +31,7 @@
             <i class="fa fa-files-o"></i>
             <span>سایت های من</span>
             <span class="pull-left-container">
-                                    <span class="label label-primary pull-left">{{count([])}}</span>
+                                    <span class="label label-primary pull-left">{{count($user_sites)}}</span>
                                 </span>
         </a>
         <ul class="treeview-menu">

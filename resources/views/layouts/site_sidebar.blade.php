@@ -5,7 +5,11 @@
     </div>
     <div class="pull-right info">
         <p>{{$site->name}}</p>
-        <a href="#"><i class="fa fa-circle text-success"></i> خاموش</a>
+        @if($running)
+        <a href="#"><i class="fa fa-circle text-success"></i> روشن</a>
+        @else
+            <a href="#"><i class="fa fa-circle text-danger"></i> خاموش</a>
+        @endif
     </div>
 </div>
 <!-- sidebar menu: : style can be found in sidebar.less -->

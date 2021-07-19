@@ -62,8 +62,7 @@ class SiteController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show(Site $site) {
-        $running = ContainerInfoService::getPowerStatus($site->name);
-        return view('site.show', compact('site', 'running'));
+        return view('site.show', compact('site'));
     }
 
     /**
