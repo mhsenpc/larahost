@@ -21,7 +21,7 @@
             <tr {!!  ($deployment->success == false)?'class="failed_deployment"':'' !!}>
                 <td>{{$key +1 }}.</td>
                 <td>{{$deployment->created_at}}</td>
-                <td><a class="btn btn-secondary" target="_blank"
+                <td><a class="btn btn-default" target="_blank"
                        href="{{route('deployments.showLog',['id'=>$deployment->id])}}">نمایش گزارش deploy</a></td>
             </tr>
         @endforeach

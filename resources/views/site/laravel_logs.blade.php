@@ -13,14 +13,16 @@
 @section('box_content')
     <table class="table">
         <tr>
-            <th>File Name</th>
+            <th style="width: 10px">#</th>
+            <th>نام فایل</th>
             <th></th>
         </tr>
-        @foreach($logs as $log)
+        @foreach($logs as $key=> $log)
             <tr>
+                <td>{{$key +1 }}.</td>
                 <td>{{$log}}</td>
-                <td><a class="btn btn-secondary"
-                       href="{{route('logs.show',['project_name'=>$project_name ,'file_name'=>$log])}}">View Log</a>
+                <td><a class="btn btn-default"
+                       href="{{route('logs.show',['project_name'=>$project_name ,'file_name'=>$log])}}">نمایش محتویات Log</a>
                 </td>
             </tr>
         @endforeach

@@ -34,6 +34,6 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::get('deployments/{id}/log', [DeploymentController::class, 'showLog'])->name('deployments.showLog');
-    Route::get('logs/{project_name}/{file_name}', [LogController::class, 'showLog'])->name('logs.show');
+    Route::get('logs/{site_name}/{file_name}', [LogController::class, 'showLog'])->name('logs.show');
 });
 Route::get('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');

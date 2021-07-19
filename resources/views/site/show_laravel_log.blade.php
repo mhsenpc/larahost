@@ -1,12 +1,7 @@
 @extends('layouts.single_box')
-@php($title="گزارش های لاراول")
+@php($title="محتویات گزارش ".$file_name)
 @php($sidebar="layouts.site_sidebar")
 
 @section('box_content')
-    <p>
-        <label for="log_content">Log content</label>
-    </p>
-    <p>
-        <textarea id="log_content">{{$log_content}}</textarea>
-    </p>
+    <textarea style=" width: 600px;height: 400px;" id="log_content">{{$log_content}}</textarea>
 @endsection
