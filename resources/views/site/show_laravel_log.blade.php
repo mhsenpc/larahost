@@ -1,4 +1,5 @@
-@extends('layouts.app')
+@extends('layouts.single_box')
+@php($title="گزارش لاراول")
 
 @section('content')
     <p>

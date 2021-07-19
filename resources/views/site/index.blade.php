@@ -1,5 +1,6 @@
-@extends('layouts.app')
-
+@extends('layouts.single_box')
+@php($title="سایت های من")
+@php($description="لیست سایت هایی که تاکنون ساخته اید")
 @section('content')
     <a class="btn btn-success" href="{{route('sites.create')}}">Add Site</a>
     <table class="table">

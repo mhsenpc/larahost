@@ -1,4 +1,5 @@
-@extends('layouts.app')
+@extends('layouts.single_box')
+@php($title="تاریخچه Deploy")
 
 @section('content')
     <table class="table">

@@ -1,4 +1,5 @@
-@extends('layouts.app')
+@extends('layouts.single_box')
+@php($title="گزارش های سایت شمت")
 
 @section('content')
     @if(empty($logs))

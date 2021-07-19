@@ -1,4 +1,5 @@
-@extends('layouts.app')
+@extends('layouts.single_box')
+@php($title="جزئیات سایت ".$site->name)
 
 @section('content')
     <h2>{{$site->name}}</h2>
@@ -12,16 +13,16 @@
 
     <p>
         @if($running)
-            <a class="btn btn-warning" href="{{route('site.stop',['site'=>$site])}}">Stop Site</a>
+            <a class="btn btn-warning" href="{{route('sites.stop',['site'=>$site])}}">Stop Site</a>
         @else
-            <a class="btn btn-success" href="{{route('site.start',['site'=>$site])}}">Start Site</a>
+            <a class="btn btn-success" href="{{route('sites.start',['site'=>$site])}}">Start Site</a>
         @endif
 
-        <a class="btn btn-secondary" href="{{route('site.restart',['site'=>$site])}}">Restart Site</a>
+        <a class="btn btn-secondary" href="{{route('sites.restart',['site'=>$site])}}">Restart Site</a>
     </p>
 
     <p>
-        <a class="btn btn-dark" href="{{route('site.redeploy',['site'=>$site])}}">Redeploy Site</a>
+        <a class="btn btn-dark" href="{{route('sites.redeploy',['site'=>$site])}}">Redeploy Site</a>
     </p>
 
     <form method="post" action="{{route('sites.remove',['site'=> $site])}}">

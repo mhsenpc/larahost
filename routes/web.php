@@ -26,12 +26,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('deploy_commands', [SiteController::class, 'deploy_commands'])->name('sites.deploy_commands');
         Route::post('deploy_commands', [SiteController::class, 'save_deploy_commands'])->name('sites.save_deploy_commands');
         Route::post('destroy', [SiteController::class, 'destroy'])->name('sites.remove');
-        Route::get('start', [SiteController::class, 'start'])->name('site.start');
-        Route::get('stop', [SiteController::class, 'stop'])->name('site.stop');
-        Route::get('restart', [SiteController::class, 'restart'])->name('site.restart');
-        Route::get('redeploy', [SiteController::class, 'redeploy'])->name('site.redeploy');
+        Route::get('start', [SiteController::class, 'start'])->name('sites.start');
+        Route::get('stop', [SiteController::class, 'stop'])->name('sites.stop');
+        Route::get('restart', [SiteController::class, 'restart'])->name('sites.restart');
+        Route::get('redeploy', [SiteController::class, 'redeploy'])->name('sites.redeploy');
     });
 
     Route::get('deployments/{id}/log', [DeploymentController::class, 'showLog'])->name('deployments.showLog');
     Route::get('logs/{project_name}/{file_name}', [LogController::class, 'showLog'])->name('logs.show');
 });
+Route::get('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
