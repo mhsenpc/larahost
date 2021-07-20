@@ -26,6 +26,11 @@
         </a>
     </li>
     <li >
+        <a href="{{route('sites.env_editor',['site'=>$site])}}">
+            <i class="fa fa-circle"></i> <span>Environment</span>
+        </a>
+    </li>
+    <li >
         <a href="{{route('sites.deployments',['site'=>$site])}}">
             <i class="fa fa-circle"></i> <span>Deployments</span>
         </a>

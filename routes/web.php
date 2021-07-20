@@ -27,6 +27,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('remove', [SiteController::class, 'remove'])->name('sites.remove');
         Route::get('restart', [SiteController::class, 'restartAll'])->name('sites.restart_all');
         Route::get('redeploy', [SiteController::class, 'redeploy'])->name('sites.redeploy');
+        Route::get('env_editor', [SiteController::class, 'env_editor'])->name('sites.env_editor');
+        Route::get('handle_env_editor', [SiteController::class, 'handle_env_editor'])->name('sites.handle_env_editor');
     });
 
     Route::get('deployments/{deployment_id}/log', [DeploymentController::class, 'showLog'])->name('deployments.showLog');

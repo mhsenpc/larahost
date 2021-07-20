@@ -107,7 +107,7 @@ class SiteController extends Controller {
 
     public function deployments(Site $site) {
         $deployments = Deployment::query()->where('site_id', $site->id)->get();
-        return view('site.deployments', compact('deployments','site'));
+        return view('site.deployments', compact('deployments', 'site'));
     }
 
     public function logs(Site $site) {
@@ -116,13 +116,13 @@ class SiteController extends Controller {
 
         $logs = array_diff($logs, array('..', '.', '.gitignore')); //remove invalid files
 
-        if (count($logs) == 1 && substr( reset($logs),-4) == '.log' ) {
+        if (count($logs) == 1 && substr(reset($logs), -4) == '.log') {
             $file_name = reset($logs);
             $logs_dir = PathHelper::getLaravelLogsDir(Auth::user()->email, $site->name);
             $log_content = file_get_contents($logs_dir . '/' . $file_name);
-            return view('site.show_laravel_log', compact('log_content','site','file_name'));
+            return view('site.show_laravel_log', compact('log_content', 'site', 'file_name'));
         } else {
-            return view('site.laravel_logs', compact('logs','site'));
+            return view('site.laravel_logs', compact('logs', 'site'));
         }
     }
 
@@ -134,6 +134,22 @@ class SiteController extends Controller {
     public function save_deploy_commands(Request $request, Site $site) {
         $site->deploy_commands = $request->deploy_commands;
         $site->save();
+        return redirect()->back();
+    }
+
+    public function env_editor(Site $site) {
+        $source_dir = PathHelper::getSourceDir(Auth::user()->email, $site->name);
+        $env = '';
+        if (file_exists($source_dir . '/.env')) {
+            $env = file_get_contents($source_dir . '/.env');
+        }
+
+        return view('site.env_editor', compact('site', 'env'));
+    }
+
+    public function handle_env_editor(Request $request, Site $site) {
+        $source_dir = PathHelper::getSourceDir(Auth::user()->email, $site->name);
+        file_put_contents($source_dir . '/.env', $request->env);
         return redirect()->back();
     }
 }
