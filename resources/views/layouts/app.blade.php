@@ -130,6 +130,9 @@
         <!-- Main content -->
         <section class="content">
             @yield('content')
+            @isset($site)
+                @include('layouts.partials.action_button')
+            @endisset
         </section>
         <!-- /.content -->
     </div>

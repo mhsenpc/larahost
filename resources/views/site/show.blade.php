@@ -137,47 +137,6 @@
     </div>
     */ ?>
 
-    <div class="row" >
-        <div class="input-group-btn col-md-1">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                Files
-                <span class="fa fa-caret-down"></span></button>
-            <ul class="dropdown-menu">
-                <li><a href="#">ویرایش فایل ENV</a></li>
-                <li><a href="#">ویرایش تنظیمات Apache</a></li>
-            </ul>
-        </div>
-
-        <div class="input-group-btn col-md-1">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                Restart
-                <span class="fa fa-caret-down"></span></button>
-            <ul class="dropdown-menu">
-                <li><a href="{{route('sites.restart_all',['site'=>$site])}}">Restart Server</a></li>
-                <li><a href="#">Restart Apache</a></li>
-                <li><a href="#">Restart Mysql</a></li>
-                <li><a href="#">Restart Redis</a></li>
-                <?php /* <li><a href="#">Restart Supervisor</a></li> */ ?>
-            </ul>
-        </div>
-
-        <div class="input-group-btn col-md-1">
-            <form method="post" action="{{route('sites.remove',['site'=> $site])}}">
-                @csrf
-                <input type="submit" class="btn btn-default" value="Delete Site"
-                       onclick="return confirm('آیا از حذف سایت {{$site->name}} اطمینان دارید؟ این عملیات غیرقابل بازگشت است!' )"/>
-            </form>
-        </div>
-
-    </div>
-
-    <div class="clearfix">
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-    </div>
 
     <div class="modal fade" id="modal-last-deployment">
         <div class="modal-dialog">
