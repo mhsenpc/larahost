@@ -1,6 +1,6 @@
 @extends('layouts.single_box')
 @php($title="تاریخچه Deploy")
-@php($sidebar="layouts.site_sidebar")
+@php($sidebar="layouts.sidebars.site_sidebar")
 
 @if(count($deployments) == 0)
 @section('content')

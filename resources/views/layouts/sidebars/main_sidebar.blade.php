@@ -23,7 +23,7 @@
     <li class="header">منو</li>
     <li >
         <a href="{{route('dashboard')}}">
-            <i class="fa fa-dashboard"></i> <span>داشبرد</span>
+            <i class="fa fa-dashboard"></i> <span>میزکار</span>
         </a>
     </li>
     <li class="treeview">

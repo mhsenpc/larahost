@@ -1,6 +1,6 @@
 @extends('layouts.single_box')
 @php($title="گزارش های سایت | " . $site->name)
-@php($sidebar="layouts.site_sidebar")
+@php($sidebar="layouts.sidebars.site_sidebar")
 
 
 @if(empty($logs))

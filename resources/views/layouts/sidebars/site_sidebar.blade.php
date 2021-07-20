@@ -1,14 +1,14 @@
 <!-- Sidebar user panel -->
 <div class="user-panel">
     <div class="pull-right image">
-        <img src="{{asset('dist/img/avatar.png')}}" class="img-circle" alt="User Image" />
+        <img src="{{asset('dist/img/server.png')}}"  />
     </div>
     <div class="pull-right info">
         <p>{{$site->name}}</p>
         @if($running)
-        <a href="#"><i class="fa fa-circle text-success"></i> روشن</a>
+        <a ><i class="fa fa-circle text-success"></i> روشن</a>
         @else
-            <a href="#"><i class="fa fa-circle text-danger"></i> خاموش</a>
+            <a  ><i class="fa fa-circle text-danger"></i> خاموش</a>
         @endif
     </div>
 </div>
@@ -22,12 +22,7 @@
     </li>
     <li >
         <a href="{{route('sites.show',['site'=>$site])}}">
-            <i class="fa fa-circle"></i> <span>وضعیت</span>
-        </a>
-    </li>
-    <li >
-        <a href="{{route('sites.deploy_commands',['site'=> $site])}}">
-            <i class="fa fa-circle"></i> <span>Deploy Commands</span>
+            <i class="fa fa-circle"></i> <span>میزکار سایت</span>
         </a>
     </li>
     <li >
@@ -38,11 +33,6 @@
     <li >
         <a href="{{route('sites.logs',['site'=>$site])}}">
             <i class="fa fa-circle"></i> <span>Laravel Logs</span>
-        </a>
-    </li>
-    <li >
-        <a href="{{route('sites.show_remove',['site'=> $site])}}">
-            <i class="fa fa-remove text-red"></i> <span>حذف سایت</span>
         </a>
     </li>
 </ul>

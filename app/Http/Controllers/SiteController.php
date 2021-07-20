@@ -86,10 +86,6 @@ class SiteController extends Controller {
         //
     }
 
-    public function showRemove(Site $site) {
-        return view('site.remove',compact('site'));
-    }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -102,21 +98,7 @@ class SiteController extends Controller {
         return redirect(route('sites.index'));
     }
 
-    public function start(Site $site) {
-        $project_dir = PathHelper::getProjectBaseDir(Auth::user()->email, $site->name);
-        $docker_compose_service = new DockerComposeService();
-        $docker_compose_service->start($site->name, $project_dir);
-        return redirect()->back();
-    }
-
-    public function stop(Site $site) {
-        $project_dir = PathHelper::getProjectBaseDir(Auth::user()->email, $site->name);
-        $docker_compose_service = new DockerComposeService();
-        $docker_compose_service->stop($site->name, $project_dir);
-        return redirect()->back();
-    }
-
-    public function restart(Site $site) {
+    public function restartAll(Site $site) {
         $project_dir = PathHelper::getProjectBaseDir(Auth::user()->email, $site->name);
         $docker_compose_service = new DockerComposeService();
         $docker_compose_service->restart($site->name, $project_dir);
@@ -146,10 +128,6 @@ class SiteController extends Controller {
     public function redeploy(Site $site) {
         RedeploySiteJob::dispatch($site);
         return redirect()->back();
-    }
-
-    public function deploy_commands(Site $site) {
-        return view('site.deployment_commands',compact('site'));
     }
 
     public function save_deploy_commands(Request $request, Site $site) {

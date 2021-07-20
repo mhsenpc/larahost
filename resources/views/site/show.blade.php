@@ -1,6 +1,6 @@
 @extends('layouts.single_box')
-@php($title="وضعیت سایت ".$site->name)
-@php($sidebar="layouts.site_sidebar")
+@php($title="میزکار سایت ".$site->name)
+@php($sidebar="layouts.sidebars.site_sidebar")
 
 @section('content')
     <div class="box">
@@ -9,36 +9,46 @@
                 Deployment
             </div>
             <div class="box-tools pull-left">
-                <a href="{{route('sites.redeploy',['site'=>$site])}}" type="button" class="btn btn-success">Deploy Now</a>
+                <a href="{{route('sites.redeploy',['site'=>$site])}}" type="button" class="btn btn-success">Deploy
+                    Now</a>
             </div>
         </div>
         <div class="box-body">
             <div class="alert alert-info">
-                If you want push to deploy for your custom Git site, setup a post-commit trigger on your source control
-                provider using the Deployment Trigger URL listed below.
+                اکر انتظار دارید که به محض push کردن در نرم افزار کنترل نسخه، عملیات deploy شروع شود، لازم است که تریگر
+                مربوطه که در بخش Deployment Trigger URL وجود دارد را تنظیم نمایید
             </div>
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-            <button class="btn btn-default">VIEW LATEST DEPLOYMENT LOG</button>
+            <button id="show_deployment_modal" class="btn btn-default" data-toggle="modal" data-target="#modal-last-deployment">دیدن گزارش آخرین Deployment</button>
         </div>
     </div>
 
     <div class="box">
-        <div class="box-header with-border">
-            <div class="pull-right">
-                Deploy Script
+        <form method="post" action="{{route('sites.save_deploy_commands',['site'=>$site])}}">
+            @csrf
+            <div class="box-header with-border">
+                <div class="pull-right">
+                    Deploy Script
+                    <small class="text-muted">
+                        در این بخش می توانید دستوراتی که بعد از هر deploy لازم است در سرور اجرا
+                         شوند را تعیین نمایید
+                    </small>
+                </div>
             </div>
-        </div>
-        <div class="box-body">
-            <textarea dir="ltr" class="col-md-12" style="height: 15em" name="deploy_commands">{{$site->deploy_commands}}</textarea>
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-            <button class="btn btn-success">Update</button>
-        </div>
+            <div class="box-body">
+                <textarea dir="ltr" class="col-md-12" style="height: 15em"
+                          name="deploy_commands">{{$site->deploy_commands}}</textarea>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button type="submit" class="btn btn-success">ذخیره</button>
+            </div>
+        </form>
     </div>
 
+    <?php /*
     <div class="box">
         <div class="box-header with-border">
             <div class="pull-right">
@@ -125,18 +135,78 @@
             <button class="btn btn-danger" type="button"><span >Uninstall Repository</span></button>
         </div>
     </div>
+    */ ?>
 
-    <div class="dropdown show">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown link
-        </a>
-
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
+    <div class="row" >
+        <div class="input-group-btn col-md-1">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                Files
+                <span class="fa fa-caret-down"></span></button>
+            <ul class="dropdown-menu">
+                <li><a href="#">ویرایش فایل ENV</a></li>
+                <li><a href="#">ویرایش تنظیمات Apache</a></li>
+            </ul>
         </div>
-    </div>
-        <a class="btn btn-secondary" href="{{route('sites.restart',['site'=>$site])}}">Restart Site</a>
 
+        <div class="input-group-btn col-md-1">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                Restart
+                <span class="fa fa-caret-down"></span></button>
+            <ul class="dropdown-menu">
+                <li><a href="{{route('sites.restart_all',['site'=>$site])}}">Restart Server</a></li>
+                <li><a href="#">Restart Apache</a></li>
+                <li><a href="#">Restart Mysql</a></li>
+                <li><a href="#">Restart Redis</a></li>
+                <?php /* <li><a href="#">Restart Supervisor</a></li> */ ?>
+            </ul>
+        </div>
+
+        <div class="input-group-btn col-md-1">
+            <form method="post" action="{{route('sites.remove',['site'=> $site])}}">
+                @csrf
+                <input type="submit" class="btn btn-default" value="Delete Site"
+                       onclick="return confirm('آیا از حذف سایت {{$site->name}} اطمینان دارید؟ این عملیات غیرقابل بازگشت است!' )"/>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="clearfix">
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+    </div>
+
+    <div class="modal fade" id="modal-last-deployment">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Deployment Log</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="overlay btn-lg">
+                        <i class="fa fa-refresh fa-spin"></i>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">بستن</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <script>
+        $('#show_deployment_modal').on('click',function(){
+            $('#modal-last-deployment .modal-body').load('{{route('deployments.lastDeploymentLog',['site_id'=>$site->id])}}',function(){
+                console.log("done")
+            });
+        });
+    </script>
 @stop

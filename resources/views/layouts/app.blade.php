@@ -9,7 +9,7 @@
     <!-- jQuery 3 -->
     <script src="{{asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
 
-    @include('layouts.css')
+    @include('layouts.partials.css')
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -104,7 +104,7 @@
             @if(isset( $sidebar))
                 @include($sidebar)
             @else
-                @include('layouts.main_sidebar')
+                @include('layouts.sidebars.main_sidebar')
             @endif
         </section>
         <!-- /.sidebar -->
@@ -140,6 +140,6 @@
     </footer>
 </div>
 <!-- ./wrapper -->
-@include('layouts.js')
+@include('layouts.partials.js')
 </body>
 </html>

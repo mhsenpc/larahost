@@ -27,12 +27,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // Using closure based composers...
-        View::composer('layouts.main_sidebar', function ($view) {
+        View::composer('layouts.sidebars.main_sidebar', function ($view) {
             $user_sites = Site::query()->get();
             $view->with('user_sites', $user_sites);
         });
 
-        View::composer('layouts.site_sidebar', function ($view) {
+        View::composer('layouts.sidebars.site_sidebar', function ($view) {
             $running = ContainerInfoService::getPowerStatus($view->site->name);
             $view->with('running', $running);
         });
