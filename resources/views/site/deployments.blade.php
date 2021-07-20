@@ -22,7 +22,7 @@
                 <td>{{$key +1 }}.</td>
                 <td>{{$deployment->created_at}}</td>
                 <td><a class="btn btn-default"
-                       href="{{route('deployments.showLog',['id'=>$deployment->id])}}">نمایش گزارش deploy</a></td>
+                       href="{{route('deployments.showLog',['deployment_id'=>$deployment->id])}}">نمایش گزارش deploy</a></td>
             </tr>
         @endforeach
     </table>

@@ -26,6 +26,7 @@ class DeploymentController extends Controller
         }
         $deployment_logs_dir = PathHelper::getDeploymentLogsDir(Auth::user()->email, $deployment->site->name);
         $log_content = file_get_contents($deployment_logs_dir .'/'. $deployment->log_file);
-        return response($log_content);
+        $log_content = str_replace(PHP_EOL,"<br />",$log_content);
+        return view('site.last_deployment_log',compact('log_content'));
     }
 }
