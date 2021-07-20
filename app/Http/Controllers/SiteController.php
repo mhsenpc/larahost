@@ -116,10 +116,11 @@ class SiteController extends Controller {
 
         $logs = array_diff($logs, array('..', '.', '.gitignore')); //remove invalid files
 
-        if (count($logs) == 1 && reset($logs) == "laravel.log") {
+        if (count($logs) == 1 && substr( reset($logs),-4) == '.log' ) {
+            $file_name = reset($logs);
             $logs_dir = PathHelper::getLaravelLogsDir(Auth::user()->email, $site->name);
-            $log_content = file_get_contents($logs_dir . '/laravel.log');
-            return view('site.show_laravel_log', compact('log_content','site'));
+            $log_content = file_get_contents($logs_dir . '/' . $file_name);
+            return view('site.show_laravel_log', compact('log_content','site','file_name'));
         } else {
             return view('site.laravel_logs', compact('logs','site'));
         }
