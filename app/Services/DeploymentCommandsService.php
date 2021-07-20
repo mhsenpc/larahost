@@ -35,6 +35,7 @@ class DeploymentCommandsService {
         $this->saveDeploymentLog($file_contents, true);
     }
 
+    //TODO: move save deployment log outside this class
     public function saveDeploymentLog(string $log, bool $success) {
         $dep_logs_dir = PathHelper::getDeploymentLogsDir($this->site->user->email, $this->site->name);
         if (!is_dir($dep_logs_dir)) {

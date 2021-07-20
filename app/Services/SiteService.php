@@ -23,7 +23,8 @@ class SiteService {
             'name' => $name,
             'repo' => $repo_url,
             'port' => (new PortService())->getAFreePort(),
-            'deploy_commands' => $deploy_commands
+            'deploy_commands' => $deploy_commands,
+            'deploy_token' => TokenCreatorService::generateDeployToken()
         ];
 
         if ($credentials) {

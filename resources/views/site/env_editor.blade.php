@@ -10,8 +10,7 @@
 @endsection
 @else
 @section('box_content')
-    <form action="{{route('sites.handle_env_editor',['site'=>$site])}}">
-
+    <form method="post" action="{{route('sites.handle_env_editor',['site'=>$site])}}">
         <textarea dir="ltr" class="col-md-12" style="height: 25em" name="env">{{$env}}</textarea>
         <div class="clearfix">&nbsp;</div>
         <input type="submit" class="btn btn-primary" value="ذخیره">

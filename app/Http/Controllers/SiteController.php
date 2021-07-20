@@ -11,6 +11,7 @@ use App\Services\PathHelper;
 use App\Services\ReservedNamesService;
 use App\Services\SiteDestroyerService;
 use App\Services\SiteService;
+use App\Services\TokenCreatorService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -151,5 +152,20 @@ class SiteController extends Controller {
         $source_dir = PathHelper::getSourceDir(Auth::user()->email, $site->name);
         file_put_contents($source_dir . '/.env', $request->env);
         return redirect()->back();
+    }
+
+    public function regenerateDeployToken(Site $site) {
+        $site->deploy_token = TokenCreatorService::generateDeployToken();
+        $site->save();
+        return redirect()->back();
+    }
+
+    public function triggerDeployment(Request $request) {
+        $request->validate([
+            'token' => 'required|exists:sites,deploy_token'
+        ]);
+        $site = Site::query()->withoutGlobalScopes()->where('deploy_token', $request->token)->firstOrFail();
+        RedeploySiteJob::dispatch($site);
+        return response()->json(['success' => true, 'message' => 'Deployment started for site ' . $site->name]);
     }
 }

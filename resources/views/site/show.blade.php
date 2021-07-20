@@ -48,7 +48,7 @@
         </form>
     </div>
 
-    <?php /*
+
     <div class="box">
         <div class="box-header with-border">
             <div class="pull-right">
@@ -56,15 +56,18 @@
             </div>
         </div>
         <div class="box-body">
-            Using a custom Git service, or want a service like Chipper CI to run your tests before your application is deployed to Forge? It's simple. When you commit fresh code, or when your continuous integration service finishes testing your application, instruct the service to make a GET or POST request to the following URL. Making a request to this URL will trigger your Forge deployment script:
-<a >https://forge.laravel.com/servers/310282/sites/832343/deploy/http?token=hV4uZPsw8epR2ggshy3Zu9XEmaBmobmy9lInTP2s</a>
+            در صورتی که بخواهید به محض push کردن کدها در نرم افزار سورس کنترل و یا پس از اتمام عملیات تست اتوماتیک توسط نرم افزارهایی همانند Jenkins یا CircleCI،  لاراهاست کدهای شما را از سیستم کنترل نسخه دریافت کرده و بطور اتوماتیک روی سایت شما بارگذاری کند کافیست یک درخواست Get و یا Post به آدرس زیر داده شود که این امر باعث شروع عملیات Deploy خودکار می شود
+            <p>
+                <a href="{{route('triggerDeployment',['token'=> $site->deploy_token])}}">{{route('triggerDeployment',['token'=> $site->deploy_token])}}</a>
+            </p>
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-            <button class="btn btn-success">REFRESH SITE TOKEN</button>
+            <a class="btn btn-success" href="{{route('sites.regenerate_deploy_token',['site'=>$site])}}">تغییر Token</a>
         </div>
     </div>
 
+    <?php /*
     <div class="box">
         <div class="box-header with-border">
             <div class="pull-right">

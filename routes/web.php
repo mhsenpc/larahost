@@ -28,7 +28,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('restart', [SiteController::class, 'restartAll'])->name('sites.restart_all');
         Route::get('redeploy', [SiteController::class, 'redeploy'])->name('sites.redeploy');
         Route::get('env_editor', [SiteController::class, 'env_editor'])->name('sites.env_editor');
-        Route::get('handle_env_editor', [SiteController::class, 'handle_env_editor'])->name('sites.handle_env_editor');
+        Route::post('handle_env_editor', [SiteController::class, 'handle_env_editor'])->name('sites.handle_env_editor');
+        Route::get('regenerate_deploy_token', [SiteController::class, 'regenerateDeployToken'])->name('sites.regenerate_deploy_token');
     });
 
     Route::get('deployments/{deployment_id}/log', [DeploymentController::class, 'showLog'])->name('deployments.showLog');
@@ -36,3 +37,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('logs/{site_name}/{file_name}', [LogController::class, 'showLog'])->name('logs.show');
 });
 Route::get('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+Route::any('trigger_deployment', [App\Http\Controllers\SiteController::class, 'triggerDeployment'])->name('triggerDeployment');
+
