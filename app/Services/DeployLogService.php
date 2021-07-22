@@ -17,8 +17,10 @@ class DeployLogService {
         $this->site = $site;
     }
 
-    public function addLog(string $command, array $output) {
-        $output = implode('\r\n',$output);
+    public function addLog(string $command, $output) {
+        if(is_array($output)){
+            $output = implode('\r\n',$output);
+        }
         $this->commands_and_outputs = array_merge_recursive($this->commands_and_outputs, [$command => $output]);
     }
 
