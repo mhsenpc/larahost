@@ -81,7 +81,7 @@ class GitService {
     protected function isValidRepo(): bool {
         $git = new Git;
         $repo = $git->open($this->source_dir);
-        $branches = 0;
+        $branches = [];
         try {
             $branches = $repo->getBranches();
         } catch (\Exception $exception) {
