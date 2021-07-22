@@ -23,7 +23,7 @@ class GitService {
     }
 
     public function cloneRepo(): bool {
-        $this->createSourceDirForProject($this->site->user->email, $this->site->name);
+        $this->createSourceDirForProject($this->site->user->email);
         $repo_url = $this->getFullRepoUrl($this->site);
         exec("git clone {$repo_url} {$this->source_dir}");
 
@@ -55,7 +55,7 @@ class GitService {
         }
     }
 
-    protected function createSourceDirForProject(string $email, string $project_name) {
+    protected function createSourceDirForProject(string $email) {
         $repos_dir = config('larahost.repos_dir');
         /*
          * check if required directories exist
@@ -71,7 +71,11 @@ class GitService {
             mkdir($this->project_base_dir);
         }
 
-        if (!is_dir($this->source_dir)) {
+        // if this directory already exists. it might be because of uninstall repository
+        if(is_dir($this->source_dir)){
+            SuperUserAPIService::remove_dir($this->source_dir);
+        }
+        else{
             mkdir($this->source_dir);
         }
     }
