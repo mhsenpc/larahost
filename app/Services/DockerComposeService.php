@@ -17,7 +17,7 @@ class DockerComposeService {
 
     public function newSiteContainer(string $name, int $port, string $project_dir) {
         $compose_dir = $project_dir . '/' . config('larahost.dir_names.docker-compose');
-        $this->writeComposeFile($name, $port, $project_dir, $compose_dir);
+        $this->writeComposeFile($name, $port, $project_dir);
         $output = SuperUserAPIService::compose_up($name, $compose_dir);
         Log::debug("output of compose up");
         Log::debug($output);
@@ -46,9 +46,8 @@ class DockerComposeService {
      * @param string $name
      * @param int $port
      * @param string $project_dir
-     * @return string
      */
-    public function writeComposeFile(string $name, int $port, string $project_dir): string {
+    public function writeComposeFile(string $name, int $port, string $project_dir) {
         $compose_dir = $project_dir . '/' . config('larahost.dir_names.docker-compose');
         $template = Storage::get('docker_compose.template');
         $template = str_replace('$project_name', $name, $template);
