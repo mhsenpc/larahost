@@ -23,3 +23,7 @@ pre.console{
     overflow: hidden;
     direction: ltr;
 }
+
+.dir-ltr{
+    direction: ltr;
+}

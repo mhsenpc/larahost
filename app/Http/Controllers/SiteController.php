@@ -186,4 +186,10 @@ class SiteController extends Controller {
         $maintenance_service->down($request->secret);
         return redirect()->back();
     }
+
+    public function updateGitRemote(Request $request, Site $site){
+        $site->repo = $request->repo;
+        $site->save();
+        return redirect()->back();
+    }
 }

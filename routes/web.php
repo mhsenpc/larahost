@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('regenerate_deploy_token', [SiteController::class, 'regenerateDeployToken'])->name('sites.regenerate_deploy_token');
         Route::post('maintenance_up', [SiteController::class, 'maintenanceUp'])->name('sites.maintenance_up');
         Route::post('maintenance_down', [SiteController::class, 'maintenanceDown'])->name('sites.maintenance_down');
+        Route::post('update_git_remote', [SiteController::class, 'updateGitRemote'])->name('sites.update_git_remote');
     });
 
     Route::get('deployments/{deployment_id}/log', [DeploymentController::class, 'showLog'])->name('deployments.showLog');

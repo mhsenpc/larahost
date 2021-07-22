@@ -85,7 +85,9 @@
                     <div class="alert alert-warning">
                         <p> در حال حاضر سایت شما در حالت تعمیر قرار دارد</p>
                     </div>
-                    <p class="text-left text-center" ><a target="_blank" href="http://{{$site->name}}.gnulover.ir/{{$maintenace_secret}}">http://{{$site->name}}.gnulover.ir/{{$maintenace_secret}}</a></p>
+                    <p class="text-left text-center"><a target="_blank"
+                                                        href="http://{{$site->name}}.gnulover.ir/{{$maintenace_secret}}">http://{{$site->name}}
+                            .gnulover.ir/{{$maintenace_secret}}</a></p>
                 </div>
 
                 <!-- /.box-body -->
@@ -110,7 +112,7 @@
                     </div>
                     <div class="form-group row"><label for="secret" class="col-md-3 col-form-label text-md-right">عبارت
                             مخفی</label>
-                        <div class="col-md-8"><input type="text" id="secret" name="secret" class="form-control"> <span
+                        <div class="col-md-8"><input type="text" id="secret" name="secret" class="form-control dir-ltr"> <span
                                 class="form-text">نکته: فقط لاراول 8 توانایی استفاده از  <a
                                     href="https://laravel.com/docs/8.x/configuration#bypassing-maintenance-mode"
                                     target="_blank">عبارت مخفی</a> را دارد.</span></div>
@@ -119,8 +121,9 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-                    <button type="submit" href="{{route('sites.maintenance_down',['site'=>$site])}}" class="btn btn-warning"
-                       ><span>فعال سازی حالت تعمیر</span></button>
+                    <button type="submit" href="{{route('sites.maintenance_down',['site'=>$site])}}"
+                            class="btn btn-warning"
+                    ><span>فعال سازی حالت تعمیر</span></button>
                 </div>
             </form>
         </div>
@@ -146,26 +149,41 @@
             <button class="btn btn-success" type="button"><span >Update Branch</span></button>
         </div>
     </div>
-
+  */ ?>
     <div class="box">
-        <div class="box-header with-border">
-            <div class="pull-right">
-                Update Git Remote
+        <form method="post" action="{{route('sites.update_git_remote',['site'=>$site])}}">
+            @csrf
+            <div class="box-header with-border">
+                <div class="pull-right">
+                    تغییر Git Remote
+                </div>
             </div>
-        </div>
-        <div class="box-body">
-            <div class="alert alert-info">
-                This panel allows you to update the Git remote URL on your server; however, the site will not be removed or become unavailable during the process. The updated Git remote must contain the same repository / Git history as the currently installed repository. You should not use this function to install an entirely different project onto this site. If you would like to install an entirely different project, you should completely uninstall the existing repository using the "Uninstall Repository" button below.
-            </div>
-            <div class="form-group row"><label for="repository" class="col-md-3 col-form-label text-md-right">Repository</label> <div class="col-md-8"><input type="text" value="git@gitlab.com:mohsengituser/calltrackingwebsite.git" class="form-control"></div></div>
+            <div class="box-body">
+                <div class="alert alert-info">
+                    در این بخش می توانید Git remote Url متصل به سایت خود را تغییر دهید.توجه کنید که آدرس Repository
+                    جدیدی که وارد می کنید دقیقا باید شامل همان repository و همان تاریخچه commit باشد در غیر این صورت
+                    سیستم deploy عمل نخواهد کرد!
+                    <br/>
+                    از قابلیت نباید برای نصب یک repository کاملا متفاوت استفاده کرد مگر اینکه قبل از آن دکمه Uninstall
+                    Repository را بزنید تا Repository قبلی کاملا از سیستم حذف شود.
+                </div>
+                <div class="form-group row">
+                    <label for="repository" class="col-md-3 col-form-label text-right">Repository</label>
+                    <div class="col-md-8">
+                        <input name="repo" type="text" value="{{$site->repo}}"
+                                                 class="form-control text-left dir-ltr">
+                    </div>
+                </div>
 
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-            <button class="btn btn-success" type="button"><span >Update Git Remote</span></button>
-        </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button class="btn btn-success" type="submit"><span>تغییر Git Remote</span></button>
+            </div>
+        </form>
     </div>
 
+    <?php /*
     <div class="box">
         <div class="box-header with-border">
             <div class="pull-right">
