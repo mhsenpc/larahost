@@ -21,7 +21,9 @@
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-            <button id="show_deployment_modal" class="btn btn-default" data-toggle="modal" data-target="#modal-last-deployment">دیدن گزارش آخرین Deployment</button>
+            <button id="show_deployment_modal" class="btn btn-default" data-toggle="modal"
+                    data-target="#modal-last-deployment">دیدن گزارش آخرین Deployment
+            </button>
         </div>
     </div>
 
@@ -33,7 +35,7 @@
                     Deploy Script
                     <small class="text-muted">
                         در این بخش می توانید دستوراتی که بعد از هر deploy لازم است در سرور اجرا
-                         شوند را تعیین نمایید
+                        شوند را تعیین نمایید
                     </small>
                 </div>
             </div>
@@ -56,10 +58,13 @@
             </div>
         </div>
         <div class="box-body">
-            در صورتی که بخواهید به محض push کردن کدها در نرم افزار سورس کنترل و یا پس از اتمام عملیات تست اتوماتیک توسط نرم افزارهایی همانند Jenkins یا CircleCI،  لاراهاست کدهای شما را از سیستم کنترل نسخه دریافت کرده و بطور اتوماتیک روی سایت شما بارگذاری کند کافیست یک درخواست Get و یا Post به آدرس زیر داده شود که این امر باعث شروع عملیات Deploy خودکار می شود
-            <p>
+            در صورتی که بخواهید به محض push کردن کدها در نرم افزار سورس کنترل و یا پس از اتمام عملیات تست اتوماتیک توسط
+            نرم افزارهایی همانند Jenkins یا CircleCI، لاراهاست کدهای شما را از سیستم کنترل نسخه دریافت کرده و بطور
+            اتوماتیک روی سایت شما بارگذاری کند کافیست یک درخواست Get و یا Post به آدرس زیر داده شود که این امر باعث شروع
+            عملیات Deploy خودکار می شود
+            <div class="alert alert-warning text-left">
                 <a href="{{route('triggerDeployment',['token'=> $site->deploy_token])}}">{{route('triggerDeployment',['token'=> $site->deploy_token])}}</a>
-            </p>
+            </div>
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
@@ -67,22 +72,61 @@
         </div>
     </div>
 
-    <?php /*
-    <div class="box">
-        <div class="box-header with-border">
-            <div class="pull-right">
-                Maintenance Mode
-            </div>
-        </div>
-        <div class="box-body">
-            <div class="form-group row"><label for="secret" class="col-md-3 col-form-label text-md-right">Secret</label> <div class="col-md-8"><input type="text" id="secret" class="form-control"> <span class="form-text">Laravel 8 applications can make use of the <a href="https://laravel.com/docs/8.x/configuration#bypassing-maintenance-mode" target="_blank">secret option</a>.</span></div></div>
+    @if($maintenace_status)
+        <div class="box">
+            <form method="post" action="{{route('sites.maintenance_up',['site'=> $site])}}">
+                @csrf
+                <div class="box-header with-border">
+                    <div class="pull-right">
+                        حالت تعمیر
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="alert alert-warning">
+                        <p> در حال حاضر سایت شما در حالت تعمیر قرار دارد</p>
+                    </div>
+                    <p class="text-left text-center" ><a target="_blank" href="http://{{$site->name}}.gnulover.ir/{{$maintenace_secret}}">http://{{$site->name}}.gnulover.ir/{{$maintenace_secret}}</a></p>
+                </div>
 
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-success"
+                    ><span>خروج از حالت تعمیر</span></button>
+                </div>
+            </form>
         </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-            <button class="btn btn-danger" type="button"><span >Enable Maintenance Mode</span></button>
+    @else
+        <div class="box">
+            <form method="post" action="{{route('sites.maintenance_down',['site'=>$site])}}">
+                @csrf
+                <div class="box-header with-border">
+                    <div class="pull-right">
+                        حالت تعمیر
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="alert alert-info">
+                        فعال سازی حالت تعمیر باعث خارج شدن سایت از دسترس عموم می شود
+                    </div>
+                    <div class="form-group row"><label for="secret" class="col-md-3 col-form-label text-md-right">عبارت
+                            مخفی</label>
+                        <div class="col-md-8"><input type="text" id="secret" name="secret" class="form-control"> <span
+                                class="form-text">لاراول 8 توانایی استفاده از  <a
+                                    href="https://laravel.com/docs/8.x/configuration#bypassing-maintenance-mode"
+                                    target="_blank">عبارت مخفی</a> را دارد.</span></div>
+                    </div>
+
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <button type="submit" href="{{route('sites.maintenance_down',['site'=>$site])}}" class="btn btn-warning"
+                       ><span>فعال سازی حالت تعمیر</span></button>
+                </div>
+            </form>
         </div>
-    </div>
+    @endif
+
+    <?php /*
 
     <div class="box">
         <div class="box-header with-border">
@@ -165,8 +209,8 @@
     <!-- /.modal -->
 
     <script>
-        $('#show_deployment_modal').on('click',function(){
-            $('#modal-last-deployment .modal-body').load('{{route('deployments.lastDeploymentLog',['site_id'=>$site->id])}}',function(){
+        $('#show_deployment_modal').on('click', function () {
+            $('#modal-last-deployment .modal-body').load('{{route('deployments.lastDeploymentLog',['site_id'=>$site->id])}}', function () {
                 console.log("done")
             });
         });

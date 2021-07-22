@@ -7,13 +7,16 @@ use App\Models\Deployment;
 use App\Models\Site;
 use App\Services\ContainerInfoService;
 use App\Services\DockerComposeService;
+use App\Services\MaintenanceService;
 use App\Services\PathHelper;
 use App\Services\ReservedNamesService;
 use App\Services\SiteDestroyerService;
 use App\Services\SiteService;
+use App\Services\SuperUserAPIService;
 use App\Services\TokenCreatorService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class SiteController extends Controller {
     /**
@@ -63,7 +66,10 @@ class SiteController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show(Site $site) {
-        return view('site.show', compact('site'));
+        $maintance_service = new MaintenanceService($site);
+        $maintenace_status =  $maintance_service->isDown();
+        $maintenace_secret =  $maintance_service->getSecret();
+        return view('site.show', compact('site','maintenace_status','maintenace_secret'));
     }
 
     /**
@@ -167,5 +173,17 @@ class SiteController extends Controller {
         $site = Site::query()->withoutGlobalScopes()->where('deploy_token', $request->token)->firstOrFail();
         RedeploySiteJob::dispatch($site);
         return response()->json(['success' => true, 'message' => 'Deployment started for site ' . $site->name]);
+    }
+
+    public function maintenanceUp(Site $site) {
+        $maintenance_service = new MaintenanceService($site);
+        $maintenance_service->up();
+        return redirect()->back();
+    }
+
+    public function maintenanceDown(Request $request, Site $site) {
+        $maintenance_service = new MaintenanceService($site);
+        $maintenance_service->down($request->secret);
+        return redirect()->back();
     }
 }

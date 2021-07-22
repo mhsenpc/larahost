@@ -30,6 +30,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('env_editor', [SiteController::class, 'env_editor'])->name('sites.env_editor');
         Route::post('handle_env_editor', [SiteController::class, 'handle_env_editor'])->name('sites.handle_env_editor');
         Route::get('regenerate_deploy_token', [SiteController::class, 'regenerateDeployToken'])->name('sites.regenerate_deploy_token');
+        Route::post('maintenance_up', [SiteController::class, 'maintenanceUp'])->name('sites.maintenance_up');
+        Route::post('maintenance_down', [SiteController::class, 'maintenanceDown'])->name('sites.maintenance_down');
     });
 
     Route::get('deployments/{deployment_id}/log', [DeploymentController::class, 'showLog'])->name('deployments.showLog');
