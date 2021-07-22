@@ -198,7 +198,8 @@ class SiteController extends Controller {
         $source_dir = PathHelper::getSourceDir($site->user->email,$site->name);
         SuperUserAPIService::remove_dir($source_dir);
         mkdir($source_dir);
-        copy(Storage::path('site_default_page.html'), $source_dir . "/index.html");
+        mkdir($source_dir.'/public');
+        copy(Storage::path('site_default_page.html'), $source_dir . "/public/index.php");
 
         $project_dir = PathHelper::getProjectBaseDir(Auth::user()->email, $site->name);
         $docker_compose_service = new DockerComposeService();
