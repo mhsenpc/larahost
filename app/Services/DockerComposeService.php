@@ -56,7 +56,9 @@ class DockerComposeService {
         $template = str_replace('$db_password', $this->connection_info->db_password, $template);
         $template = str_replace('$source_dir', $project_dir . '/source', $template);
         $template = str_replace('$db_dir', $project_dir . '/db', $template);
-        mkdir($compose_dir);
+        if (!file_exists($compose_dir)) {
+            mkdir($compose_dir);
+        }
         file_put_contents($compose_dir . '/docker-compose.yml', $template);
     }
 }
