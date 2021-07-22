@@ -46,11 +46,10 @@ class GitService {
     /*
      */
     public function pull() {
-        if($this->isValidRepo()){
+        if ($this->isValidRepo()) {
             exec("cd {$this->source_dir};git pull");
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
@@ -72,12 +71,11 @@ class GitService {
         }
 
         // if this directory already exists. it might be because of uninstall repository
-        if(is_dir($this->source_dir)){
+        if (is_dir($this->source_dir)) {
             SuperUserAPIService::remove_dir($this->source_dir);
         }
-        else{
-            mkdir($this->source_dir);
-        }
+
+        mkdir($this->source_dir);
     }
 
     protected function isValidRepo(): bool {
