@@ -42,7 +42,7 @@ class DeployLogService {
         $result = "";
         foreach ($this->commands_and_outputs as $command=>$output){
             $result .= "root@".$this->site->name.":/var/www/html# ".$command."\r\n";
-            $result .= $output;
+            $result .= $output."\r\n";
         }
         return $result;
     }
