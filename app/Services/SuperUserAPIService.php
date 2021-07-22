@@ -58,4 +58,11 @@ class SuperUserAPIService {
         ]);
         return $response;
     }
+
+    public static function remove_dir(string $dir) {
+        $response = Http::get(config('larahost.dir_names.super_user_api_url') . '/remove_dir', [
+            'dir' => $dir,
+        ]);
+        return $response;
+    }
 }

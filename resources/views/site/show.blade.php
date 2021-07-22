@@ -183,24 +183,28 @@
         </form>
     </div>
 
-    <?php /*
     <div class="box">
         <div class="box-header with-border">
             <div class="pull-right">
-                Uninstall Repository
+                لغو نصب Repository
             </div>
         </div>
         <div class="box-body">
             <div class="alert alert-warning">
-                Uninstalling a repository will reset the site back to its original state, which shows Forge's default site page.
+                فرآیند لغو نصب repository باعث می شود که سایت به حالت اولیه خود، که نمایش صفحه پیش فرض لاراهاست است، درآید
             </div>
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-            <button class="btn btn-danger" type="button"><span >Uninstall Repository</span></button>
+            <form method="post" action="{{route('sites.uninstallRepository',['site'=> $site])}}">
+                @csrf
+                <input type="submit" class="btn btn-danger" value="لغو نصب Repository"
+                       onclick="return confirm('آیا از لغو نصب repository از روی سایت اطمینان دارید؟' )"/>
+            </form>
+
         </div>
     </div>
-    */ ?>
+
 
 
     <div class="modal fade" id="modal-last-deployment">

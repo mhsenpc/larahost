@@ -16,6 +16,7 @@ use App\Services\SuperUserAPIService;
 use App\Services\TokenCreatorService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class SiteController extends Controller {
@@ -190,6 +191,14 @@ class SiteController extends Controller {
     public function updateGitRemote(Request $request, Site $site){
         $site->repo = $request->repo;
         $site->save();
+        return redirect()->back();
+    }
+
+    public function uninstallRepository(Request $request, Site $site){
+        $source_dir = PathHelper::getSourceDir($site->user->email,$site->name);
+        SuperUserAPIService::remove_dir($source_dir);
+        mkdir($source_dir);
+        copy(Storage::path('site_default_page.html'), $source_dir . "/index.html");
         return redirect()->back();
     }
 }

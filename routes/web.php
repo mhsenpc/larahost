@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('maintenance_up', [SiteController::class, 'maintenanceUp'])->name('sites.maintenance_up');
         Route::post('maintenance_down', [SiteController::class, 'maintenanceDown'])->name('sites.maintenance_down');
         Route::post('update_git_remote', [SiteController::class, 'updateGitRemote'])->name('sites.update_git_remote');
+        Route::post('uninstall_repository', [SiteController::class, 'uninstallRepository'])->name('sites.uninstallRepository');
     });
 
     Route::get('deployments/{deployment_id}/log', [DeploymentController::class, 'showLog'])->name('deployments.showLog');
