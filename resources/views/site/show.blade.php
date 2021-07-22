@@ -111,7 +111,7 @@
                     <div class="form-group row"><label for="secret" class="col-md-3 col-form-label text-md-right">عبارت
                             مخفی</label>
                         <div class="col-md-8"><input type="text" id="secret" name="secret" class="form-control"> <span
-                                class="form-text">لاراول 8 توانایی استفاده از  <a
+                                class="form-text">نکته: فقط لاراول 8 توانایی استفاده از  <a
                                     href="https://laravel.com/docs/8.x/configuration#bypassing-maintenance-mode"
                                     target="_blank">عبارت مخفی</a> را دارد.</span></div>
                     </div>
