@@ -44,16 +44,11 @@ class RedeploySiteJob implements ShouldQueue
         // try git pull. git clone if there wasn't any files
         $git_service = new GitService($this->site);
         // try pull. if there were any problems with pull, let's clone repo again
-        $docker_service = new DockerComposeService();
         if(!$git_service->pull()){
             $git_service->cloneRepo();
-            $connection_info = ConnectionInfoGenerator::generate($this->site->name);
-            $env_updater = new EnvVariablesService($git_service->source_dir, $this->site->name, $connection_info);
-            $env_updater->updateEnv();
-            $docker_service->setConnectionInfo($connection_info);
-            $docker_service->writeComposeFile($this->site->name,$this->site->port,$git_service->project_base_dir);
         }
-        $docker_service->restart($this->site->name, $git_service->project_base_dir);
+        $compose_service = new DockerComposeService();
+        $compose_service->restart($this->site->name, $git_service->project_base_dir);
         sleep(10); //wait until containers are ready
         $deployment_commands_service = new DeploymentCommandsService($this->site);
         $deployment_commands_service->runCommands();

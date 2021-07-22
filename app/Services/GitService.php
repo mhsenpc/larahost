@@ -70,10 +70,8 @@ class GitService {
             mkdir($this->project_base_dir);
         }
 
-        // if this directory already exists. it might be because of uninstall repository
-        if (is_dir($this->source_dir)) {
-            SuperUserAPIService::remove_dir($this->source_dir);
-        }
+
+        SuperUserAPIService::remove_dir($this->source_dir);
 
         mkdir($this->source_dir);
     }

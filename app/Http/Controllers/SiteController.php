@@ -68,9 +68,9 @@ class SiteController extends Controller {
      */
     public function show(Site $site) {
         $maintance_service = new MaintenanceService($site);
-        $maintenace_status =  $maintance_service->isDown();
-        $maintenace_secret =  $maintance_service->getSecret();
-        return view('site.show', compact('site','maintenace_status','maintenace_secret'));
+        $maintenace_status = $maintance_service->isDown();
+        $maintenace_secret = $maintance_service->getSecret();
+        return view('site.show', compact('site', 'maintenace_status', 'maintenace_secret'));
     }
 
     /**
@@ -188,23 +188,9 @@ class SiteController extends Controller {
         return redirect()->back();
     }
 
-    public function updateGitRemote(Request $request, Site $site){
+    public function updateGitRemote(Request $request, Site $site) {
         $site->repo = $request->repo;
         $site->save();
-        return redirect()->back();
-    }
-
-    public function uninstallRepository(Request $request, Site $site){
-        $source_dir = PathHelper::getSourceDir($site->user->email,$site->name);
-        SuperUserAPIService::remove_dir($source_dir);
-        mkdir($source_dir);
-        mkdir($source_dir.'/public');
-        copy(Storage::path('site_default_page.html'), $source_dir . "/public/index.php");
-
-        $project_dir = PathHelper::getProjectBaseDir(Auth::user()->email, $site->name);
-        $docker_compose_service = new DockerComposeService();
-        $docker_compose_service->restart($site->name, $project_dir);
-
         return redirect()->back();
     }
 }

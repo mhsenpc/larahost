@@ -163,9 +163,6 @@
                     در این بخش می توانید Git remote Url متصل به سایت خود را تغییر دهید.توجه کنید که آدرس Repository
                     جدیدی که وارد می کنید دقیقا باید شامل همان repository و همان تاریخچه commit باشد در غیر این صورت
                     سیستم deploy عمل نخواهد کرد!
-                    <br/>
-                    از قابلیت نباید برای نصب یک repository کاملا متفاوت استفاده کرد مگر اینکه قبل از آن دکمه Uninstall
-                    Repository را بزنید تا Repository قبلی کاملا از سیستم حذف شود.
                 </div>
                 <div class="form-group row">
                     <label for="repository" class="col-md-3 col-form-label text-right">Repository</label>
@@ -182,30 +179,6 @@
             </div>
         </form>
     </div>
-
-    <div class="box">
-        <div class="box-header with-border">
-            <div class="pull-right">
-                لغو نصب Repository
-            </div>
-        </div>
-        <div class="box-body">
-            <div class="alert alert-warning">
-                فرآیند لغو نصب repository باعث می شود که سایت به حالت اولیه خود، که نمایش صفحه پیش فرض لاراهاست است، درآید
-            </div>
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-            <form method="post" action="{{route('sites.uninstallRepository',['site'=> $site])}}">
-                @csrf
-                <input type="submit" class="btn btn-danger" value="لغو نصب Repository"
-                       onclick="return confirm('آیا از لغو نصب repository از روی سایت اطمینان دارید؟' )"/>
-            </form>
-
-        </div>
-    </div>
-
-
 
     <div class="modal fade" id="modal-last-deployment">
         <div class="modal-dialog">

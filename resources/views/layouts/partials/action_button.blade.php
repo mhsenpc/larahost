@@ -40,7 +40,7 @@
         <div class="input-group-btn col-md-1">
             <form method="post" action="{{route('sites.remove',['site'=> $site])}}">
                 @csrf
-                <input type="submit" class="btn btn-default" value="Delete Site"
+                <input type="submit" class="btn btn-default" value="حذف سایت"
                        onclick="return confirm('آیا از حذف سایت {{$site->name}} اطمینان دارید؟ این عملیات غیرقابل بازگشت است!' )"/>
             </form>
         </div>
