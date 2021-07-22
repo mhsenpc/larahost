@@ -15,38 +15,25 @@ class DeploymentCommandsService {
     private $site;
 
     protected $commands = [];
+    /**
+     * @var DeployLogService
+     */
+    protected $deploy_log_service;
 
-    public function __construct(Site $site) {
+    public function __construct(Site $site, \App\Services\DeployLogService $deploy_log_service) {
         $this->site = $site;
         $this->commands = preg_split("/\r\n|\n|\r/", $this->site->deploy_commands);
+        $this->deploy_log_service = $deploy_log_service;
     }
 
     public function runCommands() {
-        $file_contents = '';
         Log::debug("post run commands");
         foreach ($this->commands as $command) {
             $output = SuperUserAPIService::exec_command($this->site->name, $command);
             $output = json_decode($output);
             $output = $output->data;
+            $this->deploy_log_service->addLog($command,$output);
             Log::debug($output);
-            $file_contents .= $command . "\r\n";
-            $file_contents .= $output . "\r\n";
         }
-        $this->saveDeploymentLog($file_contents, true);
-    }
-
-    //TODO: move save deployment log outside this class
-    public function saveDeploymentLog(string $log, bool $success) {
-        $dep_logs_dir = PathHelper::getDeploymentLogsDir($this->site->user->email, $this->site->name);
-        if (!is_dir($dep_logs_dir)) {
-            mkdir($dep_logs_dir);
-        }
-        $file_name = date('YmdHis') . '.log';
-        file_put_contents($dep_logs_dir . '/' . $file_name, $log);
-        Deployment::create([
-            'site_id' => $this->site->id,
-            'log_file' => $file_name,
-            'success' => $success
-        ]);
     }
 }

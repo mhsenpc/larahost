@@ -15,18 +15,23 @@ class GitService {
      * @var Site
      */
     private $site;
+    /**
+     * @var DeployLogService
+     */
+    protected $deploy_log_service;
 
-    public function __construct(Site $site) {
+    public function __construct(Site $site, \App\Services\DeployLogService $deploy_log_service) {
         $this->site = $site;
         $this->source_dir = PathHelper::getSourceDir($site->user->email, $site->name);
         $this->project_base_dir = PathHelper::getProjectBaseDir($site->user->email, $site->name);
+        $this->deploy_log_service = $deploy_log_service;
     }
 
     public function cloneRepo(): bool {
         $this->createSourceDirForProject($this->site->user->email);
         $repo_url = $this->getFullRepoUrl($this->site);
-        exec("git clone {$repo_url} {$this->source_dir}");
-
+        exec("git clone {$repo_url} {$this->source_dir}", $output);
+        $this->deploy_log_service->addLog("git clone " . $this->site->repo . " .", $output);
         return $this->isValidRepo();
     }
 
@@ -47,7 +52,8 @@ class GitService {
      */
     public function pull() {
         if ($this->isValidRepo()) {
-            exec("cd {$this->source_dir};git pull");
+            exec("cd {$this->source_dir};git pull", $output);
+            $this->deploy_log_service->addLog("git pull",  $output);
             return true;
         } else {
             return false;
