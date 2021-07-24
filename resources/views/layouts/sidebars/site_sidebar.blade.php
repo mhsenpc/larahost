@@ -44,6 +44,11 @@
         </a>
     </li>
     <li>
+        <a href="{{route('sites.commands',['site'=> $site])}}">
+            <i class="fa fa-circle"></i> <span>Commands</span>
+        </a>
+    </li>
+    <li>
         <a href="{{route('sites.logs',['site'=>$site])}}">
             <i class="fa fa-circle"></i> <span>Laravel Logs</span>
         </a>

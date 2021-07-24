@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\RedeploySiteJob;
+use App\Models\CommandHistory;
 use App\Models\Deployment;
 use App\Models\Site;
-use App\Services\ContainerInfoService;
 use App\Services\DockerComposeService;
 use App\Services\MaintenanceService;
 use App\Services\PathHelper;
@@ -16,8 +16,6 @@ use App\Services\SuperUserAPIService;
 use App\Services\TokenCreatorService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 
 class SiteController extends Controller {
     /**

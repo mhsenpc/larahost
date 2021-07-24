@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommandsController;
 use App\Http\Controllers\DeploymentController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\SiteController;
@@ -33,6 +34,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('maintenance_up', [SiteController::class, 'maintenanceUp'])->name('sites.maintenance_up');
         Route::post('maintenance_down', [SiteController::class, 'maintenanceDown'])->name('sites.maintenance_down');
         Route::post('update_git_remote', [SiteController::class, 'updateGitRemote'])->name('sites.update_git_remote');
+
+        Route::get('/commands', [CommandsController::class, 'index'])->name('sites.commands');
+        Route::post('/exec_command', [CommandsController::class, 'execCommand'])->name('sites.exec_command');
     });
 
     Route::get('deployments/{deployment_id}/log', [DeploymentController::class, 'showLog'])->name('deployments.showLog');

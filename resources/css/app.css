@@ -27,3 +27,8 @@ pre.console{
 .dir-ltr{
     direction: ltr;
 }
+
+.command_status{
+    border-radius: 1em;
+    padding: 0.3em;
+}

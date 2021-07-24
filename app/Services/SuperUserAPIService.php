@@ -39,6 +39,9 @@ class SuperUserAPIService {
     }
 
     public static function exec_command(string $site_name, string $command) {
+        if(App::environment('local')){
+            return json_encode(['success'=>true,'data'=>".gitignore \n app"]);
+        }
         $response = Http::get(config('larahost.dir_names.super_user_api_url') . '/exec', [
             'site_name' => $site_name,
             'command' => $command

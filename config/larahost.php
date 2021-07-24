@@ -12,6 +12,8 @@ return [
         'chown -R www-data:www-data ./',
         'composer install',
         'php artisan key:generate',
-        'php artisan migrate'
+        'php artisan migrate',
+        'php artisan queue:restart',
+        'php artisan storage:link',
     ],
 ];

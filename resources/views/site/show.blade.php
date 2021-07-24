@@ -129,27 +129,6 @@
         </div>
     @endif
 
-    <?php /*
-
-    <div class="box">
-        <div class="box-header with-border">
-            <div class="pull-right">
-                Deployment Branch
-            </div>
-        </div>
-        <div class="box-body">
-            <div class="alert alert-info">
-                Forge uses this branch to gather details of the latest commit when you deploy your application. You should verify that this branch matches the branch in your deployment script and the branch that is actually deployed on your server
-            </div>
-            <div class="form-group row"><label for="repository" class="col-md-3 col-form-label text-md-right">Branch</label> <div class="col-md-8"><input type="text" value="master" class="form-control"></div></div>
-
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-            <button class="btn btn-success" type="button"><span >Update Branch</span></button>
-        </div>
-    </div>
-  */ ?>
     <div class="box">
         <form method="post" action="{{route('sites.update_git_remote',['site'=>$site])}}">
             @csrf
