@@ -18,7 +18,7 @@ class CreateCommandHistoryTable extends Migration
             $table->integer('user_id');
             $table->integer('site_id');
             $table->string('command');
-            $table->string('output')->nullable();
+            $table->mediumText('output')->nullable();
             $table->boolean('success');
             $table->timestamps();
         });
