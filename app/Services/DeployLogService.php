@@ -48,7 +48,7 @@ class DeployLogService {
         return $result;
     }
 
-    public function clearReposPathFromOutput(string $output) {
+    public function clearReposPathFromOutput($output) {
         if (is_array($output)) {
             $output = implode('\r\n', $output);
         }
