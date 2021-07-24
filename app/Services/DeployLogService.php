@@ -49,6 +49,10 @@ class DeployLogService {
     }
 
     public function clearReposPathFromOutput(string $output) {
+        if (is_array($output)) {
+            $output = implode('\r\n', $output);
+        }
+
         $repos_dir = config('larahost.repos_dir');
         $output = str_replace("{$repos_dir}/{$this->site->user->email}/{$this->site->name}/source", '/var/www/html', $output);
         Log::debug("{$repos_dir}/{$this->site->user->email}/{$this->site->name}/source");
