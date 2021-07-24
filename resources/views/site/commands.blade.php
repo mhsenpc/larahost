@@ -68,7 +68,7 @@
                                         <span class="fa  fa-ellipsis-v"></span></button>
                                     <ul class="dropdown-menu">
                                         <li><a class="show_output_modal" data-toggle="modal"
-                                               data-target="#modal-output" data-output="{{$history->output}}" href="#">نمایش
+                                               data-target="#modal-output" data-command="{{$history->command}}" data-output="{{$history->output}}" href="#">نمایش
                                                 خروجی</a></li>
                                         <li>
                                             <a href="#1" onclick="document.getElementById('form_{{$history->id}}').submit()" >اجرای مجدد</a>
@@ -100,7 +100,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">خروجی دستور</h4>
+                    <h4 class="modal-title">خروجی دستور <small class="text-muted" id="command-content"></small></h4>
                 </div>
                 <div class="modal-body">
                     <pre class="console">
@@ -120,6 +120,7 @@
     <script>
         $('.show_output_modal').on('click', function () {
             $('#output-content').html($(this).data('output'))
+            $('#command-content').html($(this).data('command'))
         });
     </script>
 @stop
