@@ -34,6 +34,8 @@ class EnvVariablesService
         // app name
         $env_editor->changeKey('APP_NAME', $this->project_name);
 
+        $env_editor->changeKey('APP_URL', "http://{$this->project_name}.gnulover.ir");
+
         // db connection info
         $env_editor->changeKey('DB_CONNECTION', $this->connection_info->db_connection);
         $env_editor->changeKey('DB_HOST', $this->connection_info->db_host);
