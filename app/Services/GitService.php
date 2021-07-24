@@ -31,6 +31,7 @@ class GitService {
         $this->createSourceDirForProject($this->site->user->email);
         $repo_url = $this->getFullRepoUrl($this->site);
         exec("git clone {$repo_url} {$this->source_dir}", $output);
+        $output = $this->deploy_log_service->clearReposPathFromOutput($output);
         $this->deploy_log_service->addLog("git clone " . $this->site->repo . " .", $output);
         return $this->isValidRepo();
     }
