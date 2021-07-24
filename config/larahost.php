@@ -1,6 +1,6 @@
 <?php
 return [
-    'repos_dir' => env('REPOS_DIR'),
+    'repos_dir' => env('REPOS_DIR','/home/repos'),
     'dir_names' => [
         'docker-compose' => 'docker-compose',
         'source' => 'source',
