@@ -55,7 +55,6 @@ class DeployLogService {
 
         $repos_dir = config('larahost.repos_dir');
         $output = str_replace("{$repos_dir}/{$this->site->user->email}/{$this->site->name}/source", '/var/www/html', $output);
-        Log::debug("{$repos_dir}/{$this->site->user->email}/{$this->site->name}/source");
         return $output;
     }
 }
