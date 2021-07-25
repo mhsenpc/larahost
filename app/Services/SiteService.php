@@ -72,7 +72,6 @@ class SiteService {
         $source_dir = PathHelper::getSourceDir($email, $this->site->name);
         $deploy_logs_dir = PathHelper::getDeploymentLogsDir($email, $this->site->name);
         $docker_compose_dir = PathHelper::getDockerComposeDir($email, $this->site->name);
-        $laravel_logs_dir = PathHelper::getLaravelLogsDir($email, $this->site->name);
         $ssh_keys_dir = PathHelper::getSSHKeysDir($email, $this->site->name);
 
         /*
@@ -89,7 +88,6 @@ class SiteService {
         mkdir($source_dir);
         mkdir($deploy_logs_dir);
         mkdir($docker_compose_dir);
-        mkdir($laravel_logs_dir);
         mkdir($ssh_keys_dir);
     }
 }
