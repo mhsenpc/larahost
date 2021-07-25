@@ -13,7 +13,7 @@
                 @csrf
                 <div class="form-group">
                     <label for="name">نام سایت</label>
-                    <input type="text" name="name" id="name" class="form-control dir-ltr" required placeholder="my_beautiful_gallery" value="{{$faker->domainName}}" >
+                    <input type="text" name="name" id="name" class="form-control dir-ltr" required placeholder="my_beautiful_gallery" value="{{$faker->domainWord }}" >
                 </div>
 
                 <div class="form-group">
