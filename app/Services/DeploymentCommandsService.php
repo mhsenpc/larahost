@@ -12,7 +12,7 @@ class DeploymentCommandsService {
     /**
      * @var Site
      */
-    private $site;
+    protected $site;
 
     protected $commands = [];
     /**
@@ -38,6 +38,8 @@ class DeploymentCommandsService {
     public function runFirstDeployCommands() {
         SuperUserAPIService::exec_command($this->site->name, 'chown -R www-data:www-data ./');
         SuperUserAPIService::exec_command($this->site->name, 'php artisan storage:link');
-        SuperUserAPIService::exec_command($this->site->name, 'php artisan key:generate');
+        $output = SuperUserAPIService::exec_command($this->site->name, 'php artisan key:generate');
+        Log::debug("first deploy commands");
+        Log::debug($output);
     }
 }
