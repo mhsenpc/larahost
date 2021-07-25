@@ -28,13 +28,12 @@ class SiteService {
     }
 
     public function firstDeploy() {
-        $project_base_dir = PathHelper::getProjectBaseDir($this->site->user->email, $this->site->name);
         $this->createRequiredDirectories();
         $connection_info = ConnectionInfoGenerator::generate($this->site->name);
 
         $this->docker_compose_service->setConnectionInfo($connection_info);
         $this->docker_compose_service->newSiteContainer();
-        sleep(10); //wait until containers are ready
+        sleep(10); //wait until containers are ready TODO: create a better way to do this like ls
         if ($this->git_service->cloneRepo()) {
             $env_updater = new EnvVariablesService($this->git_service->source_dir, $this->site->name, $connection_info);
             $env_updater->updateEnv();
@@ -50,7 +49,6 @@ class SiteService {
     }
 
     public function reDeploy() {
-        $project_base_dir = PathHelper::getProjectBaseDir($this->site->user->email, $this->site->name);
 
         // try pull. if there were any problems with pull, let's clone repo again
         $valid_repo = $this->git_service->pull();
@@ -59,7 +57,7 @@ class SiteService {
         }
 
         if ($valid_repo) {
-            $this->docker_compose_service->restart($this->site->name, $project_base_dir);
+            $this->docker_compose_service->restart();
             sleep(10); //wait until containers are ready
             $deployment_commands_service = new DeploymentCommandsService($this->site, $this->deploy_log_service);
             $deployment_commands_service->runDeployCommands();

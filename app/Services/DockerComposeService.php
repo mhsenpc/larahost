@@ -38,21 +38,21 @@ class DockerComposeService {
         Log::debug($output);
     }
 
-    public function start(string $project_name, string $project_dir) {
-        $output = SuperUserAPIService::compose_up($project_name, $this->project_compose_dir);
+    public function start() {
+        $output = SuperUserAPIService::compose_up($this->site->name, $this->project_compose_dir);
         Log::debug("docker compose start");
         Log::debug($output);
     }
 
-    public function stop(string $project_name, string $project_dir) {
-        $output = SuperUserAPIService::compose_down($project_name, $this->project_compose_dir);
+    public function stop() {
+        $output = SuperUserAPIService::compose_down($this->site->name, $this->project_compose_dir);
         Log::debug("docker compose stop");
         Log::debug($output);
     }
 
-    public function restart(string $project_name, string $project_dir) {
-        $this->stop($project_name, $project_dir);
-        $this->start($project_name, $project_dir);
+    public function restart() {
+        $this->stop();
+        $this->start();
     }
 
     /**

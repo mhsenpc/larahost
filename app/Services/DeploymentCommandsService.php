@@ -20,7 +20,7 @@ class DeploymentCommandsService {
      */
     protected $deploy_log_service;
 
-    public function __construct(Site $site, \App\Services\DeployLogService $deploy_log_service) {
+    public function __construct(Site $site, DeployLogService $deploy_log_service) {
         $this->site = $site;
         $this->commands = preg_split("/\r\n|\n|\r/", $this->site->deploy_commands);
         $this->deploy_log_service = $deploy_log_service;
@@ -36,10 +36,15 @@ class DeploymentCommandsService {
     }
 
     public function runFirstDeployCommands() {
-        SuperUserAPIService::exec_command($this->site->name, 'chown -R www-data:www-data ./');
-        SuperUserAPIService::exec_command($this->site->name, 'php artisan storage:link');
-        $output = SuperUserAPIService::exec_command($this->site->name, 'php artisan key:generate');
         Log::debug("first deploy commands");
+
+        $output = SuperUserAPIService::exec_command($this->site->name, 'chown -R www-data:www-data ./');
+        Log::debug($output);
+
+        $output = SuperUserAPIService::exec_command($this->site->name, 'php artisan storage:link');
+        Log::debug($output);
+
+        $output = SuperUserAPIService::exec_command($this->site->name, 'php artisan key:generate');
         Log::debug($output);
     }
 }

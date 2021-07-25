@@ -112,9 +112,8 @@ class SiteController extends Controller {
     }
 
     public function restartAll(Site $site) {
-        $project_dir = PathHelper::getProjectBaseDir(Auth::user()->email, $site->name);
         $docker_compose_service = new DockerComposeService($site);
-        $docker_compose_service->restart($site->name, $project_dir);
+        $docker_compose_service->restart();
         return redirect()->back();
     }
 
