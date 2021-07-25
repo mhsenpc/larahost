@@ -12,11 +12,10 @@ use App\Services\PathHelper;
 use App\Services\ReservedNamesService;
 use App\Services\SiteDestroyerService;
 use App\Services\NewSiteService;
-use App\Services\SuperUserAPIService;
 use App\Services\TokenCreatorService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+use Faker\Factory as Faker;
 
 class SiteController extends Controller {
     /**
@@ -40,8 +39,9 @@ class SiteController extends Controller {
         if(file_exists($user_public_key)){
             $public_key = file_get_contents($user_public_key);
         }
+        $faker = Faker::create();
 
-        return view('site.create',compact('public_key'));
+        return view('site.create',compact('public_key','faker'));
     }
 
     /**

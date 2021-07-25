@@ -13,22 +13,26 @@
                 @csrf
                 <div class="form-group">
                     <label for="name">نام سایت</label>
-                    <input type="text" name="name" id="name" class="form-control" required>
+                    <input type="text" name="name" id="name" class="form-control dir-ltr" required placeholder="my_beautiful_gallery" value="{{$faker->domainName}}" >
                 </div>
 
                 <div class="form-group">
                     <label for="repo">آدرس repository</label>
-                    <input type="text" name="repo" id="repo" value="https://github.com/laravel/laravel" class="form-control" required>
+                    <input type="text" name="repo" id="repo" value="https://github.com/laravel/laravel"
+                           class="form-control dir-ltr" required placeholder="https://github.com/laravel/laravel">
                 </div>
 
                 @if(!empty($public_key))
-                <div class="form-group">
-                    <div class="alert alert-warning">
-                        توجه کنید که برای deploy موفق، نیاز به افزودن این کلید به Git Server خود هستید
-                        <br/>
-                        {{$public_key}}
+                    <div class="row">
+                        <div class="callout callout-warning">
+                            <h4>توجه </h4>
+
+                            <p> برای deploy موفق، نیاز به افزودن این کلید به Git Server خود دارید </p>
+                            <p class="text-left dir-ltr" style="word-break: break-all;">
+                                {{$public_key}}
+                            </p>
+                        </div>
                     </div>
-                </div>
                 @endif
 
                 <div class="box-footer">
