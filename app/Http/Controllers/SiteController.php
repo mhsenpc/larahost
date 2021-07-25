@@ -16,6 +16,7 @@ use App\Services\SuperUserAPIService;
 use App\Services\TokenCreatorService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class SiteController extends Controller {
     /**
@@ -35,11 +36,12 @@ class SiteController extends Controller {
      */
     public function create() {
         $user_public_key =  PathHelper::getSSHKeysDir(Auth::user()->email) .'/id_rsa.pub';
+        Log::debug("path of id_rsa is ".$user_public_key);
         $public_key = "";
         if(file_exists($user_public_key)){
             $public_key = file_get_contents($user_public_key);
         }
-        
+
         return view('site.create',compact('public_key'));
     }
 
