@@ -129,6 +129,8 @@
 
         <!-- Main content -->
         <section class="content">
+            @include('layouts.partials.errors')
+
             @yield('content')
             @isset($site)
                 @include('layouts.partials.action_button')

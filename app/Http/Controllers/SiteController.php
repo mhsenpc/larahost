@@ -6,6 +6,7 @@ use App\Jobs\RedeploySiteJob;
 use App\Models\CommandHistory;
 use App\Models\Deployment;
 use App\Models\Site;
+use App\Rules\AlphaDashDot;
 use App\Services\DockerComposeService;
 use App\Services\MaintenanceService;
 use App\Services\PathHelper;
@@ -54,7 +55,7 @@ class SiteController extends Controller {
         $request->name = strtolower($request->name);
 
         $request->validate([
-            'name' => 'required|alpha_num|unique:sites',
+            'name' => ['required','unique:sites',new AlphaDashDot],
             'repo' => 'required',
         ]);
         if (ReservedNamesService::isNameReserved($request->name)) {
