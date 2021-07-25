@@ -76,4 +76,12 @@ class SuperUserAPIService {
         ]);
         return $response->json();
     }
+
+    public static function new_file(string $file_name,string $content) {
+        $response = Http::get(config('larahost.super_user_api_url') . '/new_file', [
+            'file_name' => $file_name,
+            'content' => $content,
+        ]);
+        return $response->json();
+    }
 }

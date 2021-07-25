@@ -18,6 +18,6 @@ class SSHKeyService {
         $keys_dir = PathHelper::getSSHKeysDir($user->email);
         $config = "Host *
     StrictHostKeyChecking no";
-        file_put_contents("$keys_dir/config", $config);
+        SuperUserAPIService::new_file("$keys_dir/config", $config);
     }
 }

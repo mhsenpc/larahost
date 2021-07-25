@@ -12,7 +12,7 @@ return [
     ],
     'deploy_commands' => [
         'composer install',
-        'php artisan migrate',
+        'php artisan migrate --force',
         'php artisan queue:restart',
     ],
 ];
