@@ -52,18 +52,22 @@ class SiteService {
         $project_base_dir = PathHelper::getProjectBaseDir($this->site->user->email, $this->site->name);
 
         // try pull. if there were any problems with pull, let's clone repo again
-        if (!$this->git_service->pull()) {
-            $this->git_service->cloneRepo();
+        $valid_repo = $this->git_service->pull();
+        if (!$valid_repo) {
+            $valid_repo = $this->git_service->cloneRepo();
         }
-        $this->docker_compose_service->restart($this->site->name, $project_base_dir);
-        sleep(10); //wait until containers are ready
-        $deployment_commands_service = new DeploymentCommandsService($this->site, $this->deploy_log_service);
-        $deployment_commands_service->runDeployCommands();
-        $this->deploy_log_service->write(true);
-        $this->reverse_proxy_service->setupNginx($this->site->port);
+
+        if ($valid_repo) {
+            $this->docker_compose_service->restart($this->site->name, $project_base_dir);
+            sleep(10); //wait until containers are ready
+            $deployment_commands_service = new DeploymentCommandsService($this->site, $this->deploy_log_service);
+            $deployment_commands_service->runDeployCommands();
+            $this->deploy_log_service->write(true);
+            $this->reverse_proxy_service->setupNginx($this->site->port);
+        }
     }
 
-    protected function createRequiredDirectories(){
+    protected function createRequiredDirectories() {
         $repos_dir = config('larahost.repos_dir');
         $email = $this->site->user->email;
         $project_base_dir = PathHelper::getProjectBaseDir($email, $this->site->name);
