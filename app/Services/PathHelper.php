@@ -29,6 +29,6 @@ class PathHelper {
     }
 
     public static function getSSHKeysDir(string $email, string $site_name) {
-        return self::getSourceDir($email, $site_name) . '/' . config('larahost.dir_names.ssh_keys');
+        return self::getProjectBaseDir($email, $site_name) . '/' . config('larahost.dir_names.ssh_keys');
     }
 }

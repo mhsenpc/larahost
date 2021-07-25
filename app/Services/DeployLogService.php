@@ -22,7 +22,7 @@ class DeployLogService {
         if (is_array($output)) {
             $output = implode('\r\n', $output);
         }
-        $this->commands_and_outputs = array_merge_recursive($this->commands_and_outputs, [$command => $output]);
+        $this->commands_and_outputs[$command] = $output;
     }
 
     public function write(bool $success) {
