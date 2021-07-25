@@ -72,6 +72,7 @@ class RegisterController extends Controller
         ]);
 
         SSHKeyService::generateKeyPair($user);
+        SSHKeyService::writeSSHConfig($user);
         return $user;
     }
 }
