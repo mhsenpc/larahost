@@ -38,6 +38,7 @@ class SiteService {
         if ($this->git_service->cloneRepo()) {
             $env_updater = new EnvVariablesService($this->git_service->source_dir, $this->site->name, $connection_info);
             $env_updater->updateEnv();
+            sleep(5);
             $this->deployment_commands_service->runFirstDeployCommands();
             $this->deployment_commands_service->runDeployCommands();
             $this->deploy_log_service->write(true);
