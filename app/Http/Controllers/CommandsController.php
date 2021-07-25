@@ -18,13 +18,12 @@ class CommandsController extends Controller
 
     public function execCommand(Request $request, Site $site) {
         $result = SuperUserAPIService::exec_command($site->name, $request->command);
-        $result = json_decode($result);
         CommandHistory::query()->create([
             'user_id' => Auth::id(),
             'site_id' => $site->id,
             'command' => $request->command,
-            'output' => $result->data,
-            'success' => $result->success,
+            'output' => $result['data'],
+            'success' => $result['success'],
         ]);
         return redirect()->back();
     }

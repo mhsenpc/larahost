@@ -15,7 +15,7 @@ class SuperUserAPIService {
             'site_name' => $site_name,
             'compose_dir' => $compose_dir
         ]);
-        return $response;
+        return $response->json();
     }
 
     public static function compose_down(string $site_name, string $compose_dir) {
@@ -23,7 +23,7 @@ class SuperUserAPIService {
             'site_name' => $site_name,
             'compose_dir' => $compose_dir
         ]);
-        return $response;
+        return $response->json();
     }
 
     public static function inspect(string $site_name) {
@@ -38,20 +38,20 @@ class SuperUserAPIService {
         }
     }
 
-    public static function exec_command(string $site_name, string $command) {
+    public static function exec_command(string $site_name, string $command):array {
         if(App::environment('local')){
-            return json_encode(['success'=>true,'data'=>".gitignore \n app"]);
+            return ['success'=>true,'data'=>".gitignore \n app"];
         }
         $response = Http::get(config('larahost.super_user_api_url') . '/exec', [
             'site_name' => $site_name,
             'command' => $command
         ]);
-        return $response;
+        return $response->json();
     }
 
     public static function reload_nginx() {
         $response = Http::get(config('larahost.super_user_api_url') . '/reload_nginx');
-        return $response;
+        return $response->json();
     }
 
     public static function remove_site(string $email, string $site_name) {
@@ -59,14 +59,14 @@ class SuperUserAPIService {
             'email' => $email,
             'site_name' => $site_name
         ]);
-        return $response;
+        return $response->json();
     }
 
     public static function remove_dir(string $dir) {
         $response = Http::get(config('larahost.super_user_api_url') . '/remove_dir', [
             'dir' => $dir,
         ]);
-        return $response;
+        return $response->json();
     }
 
     public static function generate_key_pair(string $email,string $output_dir) {
@@ -74,6 +74,6 @@ class SuperUserAPIService {
             'email' => $email,
             'output_dir' => $output_dir,
         ]);
-        return $response;
+        return $response->json();
     }
 }

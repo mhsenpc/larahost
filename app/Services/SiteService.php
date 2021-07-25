@@ -45,7 +45,7 @@ class SiteService {
             $this->deploy_log_service->write(true);
             $this->reverse_proxy_service->setupNginx($this->site->port);
         } else {
-            $this->deploy_log_service->addLog("git clone " . $this->site->repo . " .", "Failed to clone the repository with the provided credentials");
+            $this->deploy_log_service->addLog("git clone {$this->site->repo} .", "Failed to clone the repository with the provided credentials");
             $this->deploy_log_service->write(false);
         }
     }

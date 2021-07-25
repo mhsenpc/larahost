@@ -30,10 +30,8 @@ class DeploymentCommandsService {
         Log::debug("runDeployCommands");
         foreach ($this->commands as $command) {
             $output = SuperUserAPIService::exec_command($this->site->name, $command);
-            $output = json_decode($output);
-            $output = $output->data;
-            $this->deploy_log_service->addLog($command, $output);
-            Log::debug($output);
+            $this->deploy_log_service->addLog($command, $output['data']);
+            Log::debug($output['data']);
         }
     }
 
