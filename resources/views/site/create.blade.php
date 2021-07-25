@@ -46,7 +46,7 @@
     <script>
         $(document).ready(function () {
             $('#name').keyup(function (e) {
-                var clean_name = this.value.replace(/[^A-Za-z0-9\.\_\-]/g, "");
+                var clean_name = this.value.replace(/[^A-Za-z0-9]/g, "");
                 $('#name').val(clean_name);
             });
         });
