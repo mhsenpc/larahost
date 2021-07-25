@@ -28,7 +28,14 @@ class PathHelper {
         return self::getSourceDir($email, $site_name) . '/' . config('larahost.dir_names.laravel_logs');
     }
 
-    public static function getSSHKeysDir(string $email, string $site_name) {
-        return self::getProjectBaseDir($email, $site_name) . '/' . config('larahost.dir_names.ssh_keys');
+    public static function getSSHKeysDir(string $email): string {
+        if(!is_dir(config('larahost.keys_dir'))){
+            mkdir(config('larahost.keys_dir'));
+        }
+        $user_keys = config('larahost.keys_dir') . '/' . $email;
+        if(!is_dir($user_keys)){
+            mkdir($user_keys);
+        }
+        return $user_keys;
     }
 }

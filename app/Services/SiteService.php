@@ -22,7 +22,7 @@ class SiteService {
         $this->site = $site;
         $this->deploy_log_service = new DeployLogService($this->site);
         $this->git_service = new GitService($this->site, $this->deploy_log_service);
-        $this->docker_compose_service = new DockerComposeService();
+        $this->docker_compose_service = new DockerComposeService($this->site);
         $this->reverse_proxy_service = new ReverseProxyService($this->site->name);
         $this->deployment_commands_service = new DeploymentCommandsService($this->site, $this->deploy_log_service);
     }
@@ -32,10 +32,8 @@ class SiteService {
         $this->createRequiredDirectories();
         $connection_info = ConnectionInfoGenerator::generate($this->site->name);
 
-        SSHKeyService::generateKeyPair($this->site);
-
         $this->docker_compose_service->setConnectionInfo($connection_info);
-        $this->docker_compose_service->newSiteContainer($this->site->name, $this->site->port, $project_base_dir);
+        $this->docker_compose_service->newSiteContainer();
         sleep(10); //wait until containers are ready
         if ($this->git_service->cloneRepo()) {
             $env_updater = new EnvVariablesService($this->git_service->source_dir, $this->site->name, $connection_info);
@@ -72,7 +70,6 @@ class SiteService {
         $source_dir = PathHelper::getSourceDir($email, $this->site->name);
         $deploy_logs_dir = PathHelper::getDeploymentLogsDir($email, $this->site->name);
         $docker_compose_dir = PathHelper::getDockerComposeDir($email, $this->site->name);
-        $ssh_keys_dir = PathHelper::getSSHKeysDir($email, $this->site->name);
 
         /*
          * check if required directories exist
@@ -88,6 +85,5 @@ class SiteService {
         mkdir($source_dir);
         mkdir($deploy_logs_dir);
         mkdir($docker_compose_dir);
-        mkdir($ssh_keys_dir);
     }
 }

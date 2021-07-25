@@ -5,12 +5,12 @@ namespace App\Services;
 
 
 use App\Models\Site;
+use App\Models\User;
 
 class SSHKeyService {
-    public static function generateKeyPair(Site $site) {
-        $email = $site->user->email;
-        $keys_dir = PathHelper::getSSHKeysDir($email, $site->name);
-        SuperUserAPIService::generate_key_pair($email, $keys_dir);
+    public static function generateKeyPair(User $user) {
+        $keys_dir = PathHelper::getSSHKeysDir($user->email);
+        SuperUserAPIService::generate_key_pair($user->email, $keys_dir);
         return true;
     }
 }

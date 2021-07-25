@@ -21,36 +21,15 @@
                     <input type="text" name="repo" id="repo" value="https://github.com/laravel/laravel" class="form-control" required>
                 </div>
 
-                <!-- checkbox -->
+                @if(!empty($public_key))
                 <div class="form-group">
-                    <label>
-                        <input type="checkbox" name="manual_credentials" id="manual_credentials" value="1">
-                        Manual
-                        Credentials
-                    </label>
-
-                </div>
-
-                <div id="manual_credentials_area" class="lara_hidden">
-                    <div class="row justify-content-center">
-                        <div class="col-md-2">
-                            <label for="username">Username</label>
-                        </div>
-                        <div class="col-md-4">
-                            <input type="text" name="username" id="username" value="">
-                        </div>
+                    <div class="alert alert-warning">
+                        توجه کنید که برای deploy موفق، نیاز به افزودن این کلید به Git Server خود هستید
+                        <br/>
                     </div>
-
-                    <div class="row justify-content-center">
-                        <div class="col-md-2">
-                            <label for="password">Password</label>
-                        </div>
-                        <div class="col-md-4">
-                            <input type="password" name="password" id="password" value="">
-                        </div>
-                    </div>
-
                 </div>
+                @endif
+
                 <div class="box-footer">
                     <input type="submit" value="راه اندازی سایت" class="btn btn-primary"/>
                 </div>
@@ -61,15 +40,6 @@
 
     <script>
         $(document).ready(function () {
-            $('#manual_credentials').on('ifChanged', function () {
-                console.log(this.checked);
-                if (this.checked) {
-                    $("#manual_credentials_area").show();
-                } else {
-                    $("#manual_credentials_area").hide();
-                }
-            });
-
             $('#name').keyup(function (e) {
                 var clean_name = this.value.replace(/[^A-Za-z0-9]/g, "");
                 $('#name').val(clean_name);

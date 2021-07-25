@@ -34,7 +34,13 @@ class SiteController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        return view('site.create');
+        $user_public_key =  PathHelper::getSSHKeysDir(Auth::user()->email) .'/id_rsa.pub';
+        $public_key = "";
+        if(file_exists($user_public_key)){
+            $public_key = file_get_contents($user_public_key);
+        }
+        
+        return view('site.create',compact('public_key'));
     }
 
     /**
@@ -106,7 +112,7 @@ class SiteController extends Controller {
 
     public function restartAll(Site $site) {
         $project_dir = PathHelper::getProjectBaseDir(Auth::user()->email, $site->name);
-        $docker_compose_service = new DockerComposeService();
+        $docker_compose_service = new DockerComposeService($site);
         $docker_compose_service->restart($site->name, $project_dir);
         return redirect()->back();
     }
