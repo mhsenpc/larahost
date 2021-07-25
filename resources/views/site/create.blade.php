@@ -26,6 +26,7 @@
                     <div class="alert alert-warning">
                         توجه کنید که برای deploy موفق، نیاز به افزودن این کلید به Git Server خود هستید
                         <br/>
+                        {{$public_key}}
                     </div>
                 </div>
                 @endif

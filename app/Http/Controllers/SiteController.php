@@ -36,7 +36,6 @@ class SiteController extends Controller {
      */
     public function create() {
         $user_public_key =  PathHelper::getSSHKeysDir(Auth::user()->email) .'/id_rsa.pub';
-        Log::debug("path of id_rsa is ".$user_public_key);
         $public_key = "";
         if(file_exists($user_public_key)){
             $public_key = file_get_contents($user_public_key);
