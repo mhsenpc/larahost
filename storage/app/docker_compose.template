@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     volumes:
       - $source_dir:/var/www/html
-      - $ssh_keys_dir:/root/.ssh
+      - $ssh_keys_dir:/root/.ssh:ro
     ports:
       - $port:80
     mem_limit: 1G
