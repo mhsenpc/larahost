@@ -10,6 +10,7 @@ use App\Services\EnvVariablesService;
 use App\Services\GitService;
 use App\Services\DeploymentCommandsService;
 use App\Services\ReverseProxyService;
+use App\Services\SiteService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -39,20 +40,7 @@ class RedeploySiteJob implements ShouldQueue {
      * @return void
      */
     public function handle() {
-        $deploy_log_service = new DeployLogService($this->site);
-        // try git pull. git clone if there wasn't any files
-        $git_service = new GitService($this->site, $deploy_log_service);
-        // try pull. if there were any problems with pull, let's clone repo again
-        if (!$git_service->pull()) {
-            $git_service->cloneRepo();
-        }
-        $compose_service = new DockerComposeService();
-        $compose_service->restart($this->site->name, $git_service->project_base_dir);
-        sleep(10); //wait until containers are ready
-        $deployment_commands_service = new DeploymentCommandsService($this->site, $deploy_log_service);
-        $deployment_commands_service->runCommands();
-        $deploy_log_service->write(true);
-        $reverse_proxy_service = new ReverseProxyService($this->site->name);
-        $reverse_proxy_service->setupNginx($this->site->port);
+        $site_service = new SiteService($this->site);
+        $site_service->reDeploy();
     }
 }

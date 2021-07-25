@@ -26,14 +26,20 @@ class DeploymentCommandsService {
         $this->deploy_log_service = $deploy_log_service;
     }
 
-    public function runCommands() {
-        Log::debug("post run commands");
+    public function runDeployCommands() {
+        Log::debug("runDeployCommands");
         foreach ($this->commands as $command) {
             $output = SuperUserAPIService::exec_command($this->site->name, $command);
             $output = json_decode($output);
             $output = $output->data;
-            $this->deploy_log_service->addLog($command,$output);
+            $this->deploy_log_service->addLog($command, $output);
             Log::debug($output);
         }
+    }
+
+    public function runFirstDeployCommands() {
+        SuperUserAPIService::exec_command($this->site->name, 'chown -R www-data:www-data ./');
+        SuperUserAPIService::exec_command($this->site->name, 'php artisan storage:link');
+        SuperUserAPIService::exec_command($this->site->name, 'php artisan key:generate');
     }
 }

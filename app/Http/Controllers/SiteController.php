@@ -11,7 +11,7 @@ use App\Services\MaintenanceService;
 use App\Services\PathHelper;
 use App\Services\ReservedNamesService;
 use App\Services\SiteDestroyerService;
-use App\Services\SiteService;
+use App\Services\NewSiteService;
 use App\Services\SuperUserAPIService;
 use App\Services\TokenCreatorService;
 use Illuminate\Http\Request;
@@ -53,8 +53,8 @@ class SiteController extends Controller {
         if (ReservedNamesService::isNameReserved($request->name)) {
             return redirect()->back()->withInput()->withErrors(['This name is used. Please choose another name']);
         }
-        $site_service = (new SiteService(Auth::user()));
-        $site = $site_service->newSite($request->name, $request->repo, !empty($request->manual_credentials), $request->username, $request->password);
+        $new_site_service = (new NewSiteService(Auth::user()));
+        $site = $new_site_service->newSite($request->name, $request->repo, !empty($request->manual_credentials), $request->username, $request->password);
         return redirect(route('sites.show', ['site' => $site]));
     }
 

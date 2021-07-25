@@ -27,9 +27,6 @@ class DeployLogService {
 
     public function write(bool $success) {
         $dep_logs_dir = PathHelper::getDeploymentLogsDir($this->site->user->email, $this->site->name);
-        if (!is_dir($dep_logs_dir)) {
-            mkdir($dep_logs_dir);
-        }
         $file_name = date('YmdHis') . '.log';
         file_put_contents($dep_logs_dir . '/' . $file_name, $this->getFormattedDeployLog());
         Deployment::create([
