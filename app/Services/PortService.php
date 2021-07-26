@@ -8,11 +8,11 @@ use App\Models\Site;
 
 class PortService
 {
-    protected $reserved_ports = [8000, 9000, 9001];
+    protected $reserved_ports = [21,22,23,80,443,3306,8000, 9000, 9001];
     protected $busy_ports = [];
 
     public function __construct() {
-        $used_ports       = Site::query()->whereNotNull('port')->pluck('port')->toArray();
+        $used_ports       = Site::query()->withoutGlobalScopes()->whereNotNull('port')->pluck('port')->toArray();
         $this->busy_ports = array_merge($used_ports, $this->reserved_ports);
     }
 
