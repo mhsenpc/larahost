@@ -54,10 +54,10 @@
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
                                     <li>
-                                        <a href="#"> <i class="fa fa-money text-dark"></i> سرویس ها تا اطلاع ثانوی رایگان هستند </a>
+                                        <a href="#"> <i class="fa fa-info"></i> سرویس ها تا اطلاع ثانوی رایگان هستند </a>
                                     </li>
                                     <li>
-                                        <a href="#"> <i class="fa fa-check text-green"></i> به لاراهاست خوش آمدید </a>
+                                        <a href="#"> <i class="fa fa-info"></i> به لاراهاست خوش آمدید </a>
                                     </li>
                                 </ul>
                             </li>

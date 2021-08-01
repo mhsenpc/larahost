@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Models\Site;
+use Illuminate\Support\Facades\Log;
 
 class SiteService {
     /**
@@ -33,23 +34,26 @@ class SiteService {
 
         $this->docker_compose_service->setConnectionInfo($connection_info);
         $this->docker_compose_service->newSiteContainer();
-        sleep(10); //wait until containers are ready TODO: create a better way to do this like ls
-        if ($this->git_service->cloneRepo()) {
-            $env_updater = new EnvVariablesService($this->git_service->source_dir, $this->site->name, $connection_info);
-            $env_updater->updateEnv();
-            sleep(5);
-            $this->deployment_commands_service->runFirstDeployCommands();
-            $this->deployment_commands_service->runDeployCommands();
-            $this->deploy_log_service->write(true);
-            $this->reverse_proxy_service->setupNginx($this->site->port);
+        if ($this->waitForWakeUp()) {
+            if ($this->git_service->cloneRepo()) {
+                $env_updater = new EnvVariablesService($this->git_service->source_dir, $this->site->name, $connection_info);
+                $env_updater->updateEnv();
+                $this->deployment_commands_service->runFirstDeployCommands();
+                $this->deployment_commands_service->runDeployCommands();
+                $this->deploy_log_service->write(true);
+                $this->reverse_proxy_service->setupNginx($this->site->port);
+            } else {
+                $this->deploy_log_service->addLog("git clone {$this->site->repo} .", "Failed to clone the repository with the provided credentials");
+                $this->deploy_log_service->write(false);
+            }
         } else {
-            $this->deploy_log_service->addLog("git clone {$this->site->repo} .", "Failed to clone the repository with the provided credentials");
+            $this->deploy_log_service->addLog("site new {$this->site->name}", "Unable to setup a new site. Contact Administrator");
             $this->deploy_log_service->write(false);
+            Log::critical("failed to create new container {$this->site->name}");
         }
     }
 
     public function reDeploy() {
-
         // try pull. if there were any problems with pull, let's clone repo again
         $valid_repo = $this->git_service->pull();
         if (!$valid_repo) {
@@ -58,11 +62,15 @@ class SiteService {
 
         if ($valid_repo) {
             $this->docker_compose_service->restart();
-            sleep(10); //wait until containers are ready
-            $deployment_commands_service = new DeploymentCommandsService($this->site, $this->deploy_log_service);
-            $deployment_commands_service->runDeployCommands();
-            $this->deploy_log_service->write(true);
-            $this->reverse_proxy_service->setupNginx($this->site->port);
+            if ($this->waitForWakeUp()) {
+                $deployment_commands_service = new DeploymentCommandsService($this->site, $this->deploy_log_service);
+                $deployment_commands_service->runDeployCommands();
+                $this->deploy_log_service->write(true);
+                $this->reverse_proxy_service->setupNginx($this->site->port);
+            }
+            else{
+                Log::critical("failed to restart container {$this->site->name} while redeploy");
+            }
         }
     }
 
@@ -88,5 +96,17 @@ class SiteService {
         mkdir($source_dir);
         mkdir($deploy_logs_dir);
         mkdir($docker_compose_dir);
+    }
+
+    protected function waitForWakeUp() {
+        $i = 0;
+        while (!SuperUserAPIService::exec_command($this->site->name, "ls")->success) {
+            $i++;
+            sleep(2000);
+            if ($i > 30) {
+                return false;
+            }
+        }
+        return true;
     }
 }
