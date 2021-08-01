@@ -26,7 +26,8 @@ class GitService {
     }
 
     public function cloneRepo(): bool {
-        $command = "git clone {$this->site->repo} .";
+        $repo_url = $this->getFullRepoUrl();
+        $command = "git clone {$repo_url} .";
         $output = SuperUserAPIService::exec_command($this->site->name, $command);
         $this->deploy_log_service->addLog($command, $output['data']);
         return $this->isValidRepo();
@@ -41,6 +42,19 @@ class GitService {
             return true;
         } else {
             return false;
+        }
+    }
+
+    protected function getFullRepoUrl(): string {
+        if (!empty($this->site->git_user)) {
+            $result = $this->site->repo;
+            $result = str_replace('https://www.', '', $result);
+            $result = str_replace('https://', '', $result);
+            $result = "https://{$this->site->git_user}:{$this->site->git_password}@$result";
+            Log::debug($result);
+            return $result;
+        } else {
+            return $this->site->repo;
         }
     }
 

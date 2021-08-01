@@ -18,7 +18,6 @@ class CreateSitesTable extends Migration
             $table->integer('user_id');
             $table->string('name')->unique();
             $table->string('repo')->nullable();
-            $table->string('domain')->nullable();
             $table->unsignedInteger('port')->nullable();
             $table->tinyInteger('subdomain_status')->default(1);
             $table->tinyInteger('status')->default(1);

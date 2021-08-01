@@ -58,7 +58,7 @@ class SiteController extends Controller {
             'repo' => 'required',
         ]);
         if (ReservedNamesService::isNameReserved($request->name)) {
-            return redirect()->back()->withInput()->withErrors(['This name is used. Please choose another name']);
+            return redirect()->back()->withInput()->withErrors(['متاسفانه این نام قبلا استفاده شده است. لطفا نام دیگری انتخاب نمایید']);
         }
         $new_site_service = (new NewSiteService(Auth::user()));
         $site = $new_site_service->newSite($request->name, $request->repo, !empty($request->manual_credentials), $request->username, $request->password);
