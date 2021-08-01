@@ -3,7 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>{{$title??''}} | کنترل پنل</title>
+    <title>
+        @if(isset( $site) && \App\Services\ProgressService::isActive("deploy_{$site->name}"))
+            Deploying {{$site->name}}
+        @else
+            {{$title??''}} | کنترل پنل
+        @endif
+    </title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
     <!-- jQuery 3 -->
@@ -20,6 +26,19 @@
 
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" />
+
+
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('{{config('broadcasting.connections.pusher.key')}}', {
+            cluster: 'ap2'
+        });
+
+        window.channel = pusher.subscribe('user-{{\Illuminate\Support\Facades\Auth::id()}}');
+    </script>
 </head>
 <!-- ADD THE CLASS layout-boxed TO GET A BOXED LAYOUT -->
 <body class="hold-transition skin-blue layout-boxed sidebar-mini">

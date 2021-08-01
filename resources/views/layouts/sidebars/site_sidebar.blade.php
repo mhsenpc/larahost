@@ -54,3 +54,12 @@
         </a>
     </li>
 </ul>
+
+<script>
+    window.channel.bind('site.deployed', function(data) {
+        var site_name = "{{$site->name}}";
+        if(site_name == data.site_name){
+            window.document.title = "{{$title}}";
+        }
+    });
+</script>

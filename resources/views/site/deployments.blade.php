@@ -14,15 +14,24 @@
         <tr>
             <th style="width: 10px">#</th>
             <th>تاریخ</th>
+            <th>وضعیت</th>
             <th></th>
         </tr>
 
         @foreach($deployments as $key=> $deployment)
-            <tr {!!  ($deployment->success == false)?'class="failed_deployment"':'' !!}>
+            <tr >
                 <td>{{$key +1 }}.</td>
                 <td>{{$deployment->created_at}}</td>
+                <td>
+                    @if($deployment->success)
+                        <span class="bg-success">موفق</span>
+                    @else
+                        <span class="bg-warning">ناموفق</span>
+                    @endif
+                </td>
                 <td><a class="btn btn-default"
-                       href="{{route('deployments.showLog',['deployment_id'=>$deployment->id])}}">نمایش گزارش deploy</a></td>
+                       href="{{route('deployments.showLog',['deployment_id'=>$deployment->id])}}">نمایش گزارش deploy</a>
+                </td>
             </tr>
         @endforeach
     </table>

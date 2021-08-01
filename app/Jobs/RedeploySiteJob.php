@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Events\SiteDeployed;
 use App\Models\Site;
 use App\Services\ConnectionInfoGenerator;
 use App\Services\DeployLogService;
@@ -9,6 +10,7 @@ use App\Services\DockerComposeService;
 use App\Services\EnvVariablesService;
 use App\Services\GitService;
 use App\Services\DeploymentCommandsService;
+use App\Services\ProgressService;
 use App\Services\ReverseProxyService;
 use App\Services\SiteService;
 use Illuminate\Bus\Queueable;
@@ -16,6 +18,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\App;
 
 class RedeploySiteJob implements ShouldQueue {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -40,7 +43,10 @@ class RedeploySiteJob implements ShouldQueue {
      * @return void
      */
     public function handle() {
+        ProgressService::start("deploy_{$this->site->name}");
         $site_service = new SiteService($this->site);
         $site_service->reDeploy();
+        SiteDeployed::dispatch($this->site);
+        ProgressService::finish("deploy_{$this->site->name}");
     }
 }

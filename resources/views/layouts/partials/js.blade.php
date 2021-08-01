@@ -21,3 +21,9 @@
 </script>
 
 <script src="{{asset('js/app.js')}}"></script>
+<script>
+    window.channel.bind('site.created', function(data) {
+        alert("سایت " + data.site_name +" با موفقیت ایجاد شد");
+        window.location.href= '/sites/' + data.site_name;
+    });
+</script>
