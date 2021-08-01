@@ -62,7 +62,7 @@ class SiteController extends Controller {
         }
         $new_site_service = (new NewSiteService(Auth::user()));
         $site = $new_site_service->newSite($request->name, $request->repo, !empty($request->manual_credentials), $request->username, $request->password);
-        return redirect(route('sites.show', ['site' => $site]));
+        return redirect(route('sites.index'));
     }
 
     /**
