@@ -37,6 +37,12 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/commands', [CommandsController::class, 'index'])->name('sites.commands');
         Route::post('/exec_command', [CommandsController::class, 'execCommand'])->name('sites.exec_command');
+
+        Route::get('/domains', [\App\Http\Controllers\DomainController::class, 'index'])->name('sites.domains');
+        Route::post('/park_domain', [\App\Http\Controllers\DomainController::class, 'parkDomain'])->name('sites.park_domain');
+        Route::get('/remove_domain', [\App\Http\Controllers\DomainController::class, 'removeDomain'])->name('sites.remove_domain');
+        Route::get('/enable_sub_domain', [\App\Http\Controllers\DomainController::class, 'enableSubDomain'])->name('sites.enable_sub_domain');
+        Route::get('/disable_sub_domain', [\App\Http\Controllers\DomainController::class, 'disableSubDomain'])->name('sites.disable_sub_domain');
     });
 
     Route::get('deployments/{deployment_id}/log', [DeploymentController::class, 'showLog'])->name('deployments.showLog');

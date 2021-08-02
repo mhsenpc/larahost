@@ -62,6 +62,12 @@ class SuperUserAPIService {
         return $response->json();
     }
 
+    public static function remove_domain_config(string $domain) {
+        $response = Http::get(config('larahost.super_user_api_url') . '/remove_domain_config', [
+            'domain' => $domain,
+        ]);
+        return $response->json();
+    }
     public static function remove_dir(string $dir) {
         $response = Http::get(config('larahost.super_user_api_url') . '/remove_dir', [
             'dir' => $dir,

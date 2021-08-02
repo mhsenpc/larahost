@@ -45,12 +45,17 @@
     </li>
     <li>
         <a href="{{route('sites.commands',['site'=> $site])}}">
-            <i class="fa fa-circle"></i> <span>Commands</span>
+            <i class="fa fa-circle"></i> <span>دستورات</span>
         </a>
     </li>
     <li>
         <a href="{{route('sites.logs',['site'=>$site])}}">
-            <i class="fa fa-circle"></i> <span>Laravel Logs</span>
+            <i class="fa fa-circle"></i> <span>گزارش ها</span>
+        </a>
+    </li>
+    <li>
+        <a href="{{route('sites.domains',['site'=>$site])}}">
+            <i class="fa fa-circle"></i> <span>دامنه ها</span>
         </a>
     </li>
 </ul>

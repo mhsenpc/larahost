@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\RedeploySiteJob;
 use App\Models\CommandHistory;
 use App\Models\Deployment;
+use App\Models\Domain;
 use App\Models\Site;
 use App\Services\DockerComposeService;
 use App\Services\MaintenanceService;

@@ -24,7 +24,7 @@ class SiteService {
         $this->deploy_log_service = new DeployLogService($this->site);
         $this->git_service = new GitService($this->site, $this->deploy_log_service);
         $this->docker_compose_service = new DockerComposeService($this->site);
-        $this->reverse_proxy_service = new ReverseProxyService($this->site->name);
+        $this->reverse_proxy_service = new ReverseProxyService($this->site);
         $this->deployment_commands_service = new DeploymentCommandsService($this->site, $this->deploy_log_service);
     }
 
@@ -41,7 +41,7 @@ class SiteService {
                 $this->deployment_commands_service->runDeployCommands();
                 $this->deployment_commands_service->runFirstDeployCommands();
                 $this->deploy_log_service->write(true);
-                $this->reverse_proxy_service->setupNginx($this->site->port);
+                $this->reverse_proxy_service->writeNginxConfigs();
             } else {
                 $this->deploy_log_service->addLog("git clone {$this->site->repo} .", "Failed to clone the repository with the provided credentials");
                 $this->deploy_log_service->write(false);
@@ -66,7 +66,7 @@ class SiteService {
                 $deployment_commands_service = new DeploymentCommandsService($this->site, $this->deploy_log_service);
                 $deployment_commands_service->runDeployCommands();
                 $this->deploy_log_service->write(true);
-                $this->reverse_proxy_service->setupNginx($this->site->port);
+                $this->reverse_proxy_service->writeNginxConfigs();
             }
             else{
                 Log::critical("failed to restart container {$this->site->name} while redeploy");

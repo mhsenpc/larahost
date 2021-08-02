@@ -2,7 +2,7 @@ server {
         listen 80;
         listen [::]:80;
 
-        server_name $project_name.gnulover.ir www.$project_name.gnulover.ir;
+        server_name $domain www.$domain;
 
         location / {
                 proxy_set_header Host $host;

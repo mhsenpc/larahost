@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Models\Domain;
 use App\Models\Site;
 
 class SiteDestroyerService {
@@ -20,17 +21,17 @@ class SiteDestroyerService {
         // docker-compose down
         $project_dir = PathHelper::getProjectBaseDir($this->site->user->email, $this->site->name);
         $docker_compose_service = new DockerComposeService($this->site);
-        $docker_compose_service->stop($this->site->name, $project_dir);
+        $docker_compose_service->stop();
+
+        // remove contents
+        $output = SuperUserAPIService::remove_site($this->site->user->email,$this->site);
 
         // remove nginx config
-        $reverse_proxy_service = new ReverseProxyService($this->site->name);
-        $reverse_proxy_service->removeSiteConfig($this->site->user->email);
+        $reverse_proxy_service = new ReverseProxyService($this->site);
+        $reverse_proxy_service->removeNginxConfigs();
 
-        // reload nginx
-        $reverse_proxy_service->reloadNginx();
-
-        // remove sites table record
-        exec("rm -rf $project_dir");
+        // remove parked domains
+        Domain::query()->where('site_id',$this->site->id)->delete();
 
         // remove database record
         $this->site->delete();
