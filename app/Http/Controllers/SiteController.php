@@ -13,6 +13,7 @@ use App\Services\PathHelper;
 use App\Services\ReservedNamesService;
 use App\Services\SiteDestroyerService;
 use App\Services\NewSiteService;
+use App\Services\SuperUserAPIService;
 use App\Services\TokenCreatorService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -112,9 +113,9 @@ class SiteController extends Controller {
         return redirect(route('sites.index'));
     }
 
-    public function restartAll(Site $site) {
+    public function factoryReset(Site $site) {
         $docker_compose_service = new DockerComposeService($site);
-        $docker_compose_service->restart();
+        $docker_compose_service->rebuildContainers();
         return redirect()->back();
     }
 
@@ -196,6 +197,21 @@ class SiteController extends Controller {
     public function updateGitRemote(Request $request, Site $site) {
         $site->repo = $request->repo;
         $site->save();
+        return redirect()->back();
+    }
+
+    public function restartApache(Request $request, Site $site){
+        SuperUserAPIService::restart_container($site->name);
+        return redirect()->back();
+    }
+
+    public function restartMySql(Request $request, Site $site){
+        SuperUserAPIService::restart_container("{$site->name}_db");
+        return redirect()->back();
+    }
+
+    public function restartRedis(Request $request, Site $site){
+        SuperUserAPIService::restart_container("{$site->name}_redis");
         return redirect()->back();
     }
 }

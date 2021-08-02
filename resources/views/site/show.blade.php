@@ -9,7 +9,7 @@
                 Deployment
             </div>
             <div class="box-tools pull-left">
-                <a href="{{route('sites.redeploy',['site'=>$site])}}" type="button" class="btn btn-success">Deploy
+                <a href="{{route('sites.redeploy',['site'=>$site])}}" type="button" class="btn btn-success @if(!$running) disabled @endif">Deploy
                     Now</a>
             </div>
         </div>

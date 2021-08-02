@@ -61,16 +61,10 @@ class SiteService {
         }
 
         if ($valid_repo) {
-            $this->docker_compose_service->restart();
-            if ($this->waitForWakeUp()) {
-                $deployment_commands_service = new DeploymentCommandsService($this->site, $this->deploy_log_service);
-                $deployment_commands_service->runDeployCommands();
-                $this->deploy_log_service->write(true);
-                $this->reverse_proxy_service->writeNginxConfigs();
-            }
-            else{
-                Log::critical("failed to restart container {$this->site->name} while redeploy");
-            }
+            $deployment_commands_service = new DeploymentCommandsService($this->site, $this->deploy_log_service);
+            $deployment_commands_service->runDeployCommands();
+            $this->deploy_log_service->write(true);
+            $this->reverse_proxy_service->writeNginxConfigs();
         }
     }
 

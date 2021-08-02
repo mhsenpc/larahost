@@ -32,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('user_sites', $user_sites);
         });
 
-        View::composer('layouts.sidebars.site_sidebar', function ($view) {
+        View::composer(['layouts.sidebars.site_sidebar','site.show'], function ($view) {
             $running = ContainerInfoService::getPowerStatus($view->site->name);
             $view->with('running', $running);
         });

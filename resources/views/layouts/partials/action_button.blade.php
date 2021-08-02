@@ -5,7 +5,8 @@
         </div>
 
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                    title="Collapse">
                 <i class="fa fa-minus"></i>
             </button>
             <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
@@ -29,11 +30,12 @@
                 Restart
                 <span class="fa fa-caret-down"></span></button>
             <ul class="dropdown-menu">
-                <li><a href="{{route('sites.restart_all',['site'=>$site])}}">Restart Server</a></li>
-                <li><a href="#">Restart Apache</a></li>
-                <li><a href="#">Restart Mysql</a></li>
-                <li><a href="#">Restart Redis</a></li>
-                <?php /* <li><a href="#">Restart Supervisor</a></li> */ ?>
+                <li><a href="{{route('sites.restart_apache',['site'=>$site])}}">Restart Apache</a></li>
+                <li><a href="{{route('sites.restart_mysql',['site'=>$site])}}">Restart Mysql</a></li>
+                <li><a href="{{route('sites.restart_redis',['site'=>$site])}}">Restart Redis</a></li>
+                <li class="divider"></li>
+                <li><a onclick="return confirm('با بازنشانی سرور، تمامی تغییراتی که روی سرور انجام داده بودید به حالت اولیه برمیگردند. آیا اطمینان دارید؟' )" href="{{route('sites.factory_reset',['site'=>$site])}}">Factory Reset</a></li>
+            <?php /* <li><a href="#">Restart Supervisor</a></li> */ ?>
             </ul>
         </div>
 

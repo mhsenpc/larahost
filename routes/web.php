@@ -26,7 +26,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('logs', [SiteController::class, 'logs'])->name('sites.logs');
         Route::post('deploy_commands', [SiteController::class, 'save_deploy_commands'])->name('sites.save_deploy_commands');
         Route::post('remove', [SiteController::class, 'remove'])->name('sites.remove');
-        Route::get('restart', [SiteController::class, 'restartAll'])->name('sites.restart_all');
+        Route::get('sites.factory_reset', [SiteController::class, 'factoryReset'])->name('sites.factory_reset');
         Route::get('redeploy', [SiteController::class, 'redeploy'])->name('sites.redeploy');
         Route::get('env_editor', [SiteController::class, 'env_editor'])->name('sites.env_editor');
         Route::post('handle_env_editor', [SiteController::class, 'handle_env_editor'])->name('sites.handle_env_editor');
@@ -34,6 +34,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('maintenance_up', [SiteController::class, 'maintenanceUp'])->name('sites.maintenance_up');
         Route::post('maintenance_down', [SiteController::class, 'maintenanceDown'])->name('sites.maintenance_down');
         Route::post('update_git_remote', [SiteController::class, 'updateGitRemote'])->name('sites.update_git_remote');
+        Route::get('restart_apache', [SiteController::class, 'restartApache'])->name('sites.restart_apache');
+        Route::get('restart_mysql', [SiteController::class, 'restartMySql'])->name('sites.restart_mysql');
+        Route::get('restart_redis', [SiteController::class, 'restartRedis'])->name('sites.restart_redis');
 
         Route::get('/commands', [CommandsController::class, 'index'])->name('sites.commands');
         Route::post('/exec_command', [CommandsController::class, 'execCommand'])->name('sites.exec_command');
