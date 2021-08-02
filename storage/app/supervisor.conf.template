@@ -1,0 +1,12 @@
+[program:laravel-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /var/www/html/artisan queue:work $connection  --queue=$queue --sleep=$sleep --tries=$tries  --timeout=$timeout
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+user=root
+numprocs=$num_procs
+redirect_stderr=true
+stdout_logfile=/var/log/worker.log
+stopwaitsecs=3600
