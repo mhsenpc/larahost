@@ -100,7 +100,7 @@
                                 <small>Connection: {{$worker->connection}}</small>
                             </td>
                             <td>{{$worker->timeout}}</td>
-                            <td>{{$worker->num_proces}}</td>
+                            <td>{{$worker->num_procs}}</td>
                             <td>{{$worker->tries}}</td>
                             <td><a href="{{route('sites.remove_worker',['site'=>$site,'worker_id'=>$worker->id])}}" class="btn btn-danger"><i class="fa fa-remove" /></a> </td>
 
