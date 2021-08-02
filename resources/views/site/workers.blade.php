@@ -13,7 +13,9 @@
             </div>
             <div class="box-body">
                 <div class="alert alert-info">
-                    در این قسمت به هر تعداد که نیاز دارید می توانید queue worker بسازید. worker ها بصورت خودکار توسط برنامه supervisor مانیتور خواهند شد و در صورت بروز مشکل، مجددا اجرا خواهند شد. تمامی worker در صورت restart کردن سرور، بطور اتوماتیک اجرا می شوند.
+                    در این قسمت به هر تعداد که نیاز دارید می توانید queue worker بسازید. worker ها بصورت خودکار توسط
+                    برنامه supervisor مانیتور خواهند شد و در صورت بروز مشکل، مجددا اجرا خواهند شد. تمامی worker در صورت
+                    restart کردن سرور، بطور اتوماتیک اجرا می شوند.
                 </div>
                 <div class="form-group row">
                     <label for="connection" class="col-md-3 col-form-label text-right">Connection</label>
@@ -102,8 +104,12 @@
                             <td>{{$worker->timeout}}</td>
                             <td>{{$worker->num_procs}}</td>
                             <td>{{$worker->tries}}</td>
-                            <td><a href="{{route('sites.remove_worker',['site'=>$site,'worker_id'=>$worker->id])}}" class="btn btn-danger"><i class="fa fa-remove" /></a> </td>
-
+                            <td>
+                                <a href="{{route('sites.remove_worker',['site'=>$site,'worker_id'=>$worker->id])}}"
+                                   class="btn btn-danger">
+                                    <i class="fa fa-remove"></i>
+                                </a>
+                            </td>
                         </tr>
                     @endforeach
                 </table>
