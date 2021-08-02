@@ -44,11 +44,12 @@ class SiteController extends Controller {
         }
         $faker = Faker::create();
         $sites_count = Site::query()->count();
-        if(App::environment('local')){
+        $sites_count = 0; //todo: remove
+        if (App::environment('local')) {
             $sites_count = 0;
         }
 
-        return view('site.create', compact('public_key', 'faker','sites_count'));
+        return view('site.create', compact('public_key', 'faker', 'sites_count'));
     }
 
     /**
@@ -68,9 +69,12 @@ class SiteController extends Controller {
             return redirect()->back()->withInput()->withErrors(['متاسفانه این نام قبلا استفاده شده است. لطفا نام دیگری انتخاب نمایید']);
         }
 
-        if (!App::environment('local')) {
-            if (Site::query()->count() > 0) {
-                return response('forbidden',403);
+        //todo: remove
+        if (false) {
+            if (!App::environment('local')) {
+                if (Site::query()->count() > 0) {
+                    return response('forbidden', 403);
+                }
             }
         }
 
