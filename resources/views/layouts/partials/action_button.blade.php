@@ -33,7 +33,7 @@
                 <li><a href="{{route('sites.restart_apache',['site'=>$site])}}">Restart Apache</a></li>
                 <li><a href="{{route('sites.restart_mysql',['site'=>$site])}}">Restart Mysql</a></li>
                 <li><a href="{{route('sites.restart_redis',['site'=>$site])}}">Restart Redis</a></li>
-                <?php // <li><a href="{{route('sites.restart_supervisor',['site'=>$site])}}">Restart Supervisor</a></li> ?>
+                <li><a href="{{route('sites.restart_supervisor',['site'=>$site])}}">Restart Supervisor</a></li>
                 <li class="divider"></li>
                 <li>
                     <a onclick="return confirm('با بازنشانی سرور، تمامی تغییراتی که روی سرور انجام داده بودید به حالت اولیه برمیگردند. آیا اطمینان دارید؟' )"

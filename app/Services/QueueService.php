@@ -28,7 +28,8 @@ class QueueService {
             'sleep' => $sleep,
             'tries' => $tries,
             'timeout' => $timeout,
-            'num_procs' => $num_procs
+            'num_procs' => $num_procs,
+            'site_id'=>$this->site->id
         ]);
 
         // create config for new worker

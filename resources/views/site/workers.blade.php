@@ -61,7 +61,7 @@
                     <label for="tries" class="col-md-3 col-form-label text-right">Maximum Tries (Optional)</label>
                     <div class="col-md-8">
                         <input id="tries" name="tries" type="text" class="form-control text-left dir-ltr"
-                               placeholder="10">
+                               placeholder="1">
                     </div>
                 </div>
 

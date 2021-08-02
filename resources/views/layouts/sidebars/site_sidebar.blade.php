@@ -58,6 +58,12 @@
             <i class="fa fa-circle"></i> <span>دامنه ها</span>
         </a>
     </li>
+
+    <li>
+        <a href="{{route('sites.workers',['site'=>$site])}}">
+            <i class="fa fa-circle"></i> <span>Queue</span>
+        </a>
+    </li>
 </ul>
 
 <script>

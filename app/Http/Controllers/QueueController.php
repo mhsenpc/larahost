@@ -24,6 +24,30 @@ class QueueController extends Controller {
             'tries' => 'nullable|numeric',
         ]);
 
+        if(empty($request->connection)){
+            $request->connection = "redis";
+        }
+
+        if(empty($request->queue)){
+            $request->queue = "default";
+        }
+
+        if(empty($request->sleep)){
+            $request->sleep = 10;
+        }
+
+        if(empty($request->timeout)){
+            $request->timeout = 60;
+        }
+
+        if(empty($request->num_procs)){
+            $request->num_procs = 1;
+        }
+
+        if(empty($request->tries)){
+            $request->tries = 1;
+        }
+
         $queue_service = new QueueService($site);
         $queue_service->createWorker($request->connection, $request->queue, $request->sleep, $request->tries, $request->timeout, $request->num_procs);
         return redirect()->back();
