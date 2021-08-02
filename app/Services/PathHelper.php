@@ -28,6 +28,10 @@ class PathHelper {
         return self::getSourceDir($email, $site_name) . '/' . config('larahost.dir_names.laravel_logs');
     }
 
+    public static function getWorkersDir(string $email, string $site_name) {
+        return self::getProjectBaseDir($email, $site_name) . '/' . config('larahost.dir_names.workers');
+    }
+
     public static function getSSHKeysDir(string $email): string {
         if(!is_dir(config('larahost.keys_dir'))){
             mkdir(config('larahost.keys_dir'));

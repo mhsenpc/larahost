@@ -18,6 +18,7 @@ class DockerComposeService {
     protected $project_base_dir;
     protected $project_compose_dir;
     protected $user_keys_dir;
+    protected $workers_dir;
 
 
     public function __construct(Site $site) {
@@ -25,6 +26,7 @@ class DockerComposeService {
         $this->project_base_dir = PathHelper::getProjectBaseDir($this->site->user->email, $this->site->name);
         $this->project_compose_dir = PathHelper::getDockerComposeDir($this->site->user->email, $this->site->name);
         $this->user_keys_dir = PathHelper::getSSHKeysDir($this->site->user->email);
+        $this->workers_dir = PathHelper::getWorkersDir($this->site->user->email);
     }
 
     public function setConnectionInfo(ConnectionInfo $connectionInfo) {
@@ -67,6 +69,7 @@ class DockerComposeService {
         $template = str_replace('$db_password', $this->connection_info->db_password, $template);
         $template = str_replace('$source_dir', $project_dir . '/' . config('larahost.dir_names.source'), $template);
         $template = str_replace('$ssh_keys_dir', $this->user_keys_dir, $template);
+        $template = str_replace('$workers_dir', $this->workers_dir, $template);
         $template = str_replace('$db_dir', $project_dir . '/' . config('larahost.dir_names.db'), $template);
         file_put_contents($this->project_compose_dir . '/docker-compose.yml', $template);
     }

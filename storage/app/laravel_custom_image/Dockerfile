@@ -15,3 +15,4 @@ RUN a2enmod rewrite
 RUN pecl install -o -f redis \
 &&  rm -rf /tmp/pear \
 &&  docker-php-ext-enable redis
+RUN apt install supervisor -y

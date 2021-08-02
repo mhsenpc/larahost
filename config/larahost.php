@@ -9,6 +9,7 @@ return [
         'deployment_logs' => 'deployment_logs',
         'laravel_logs' => 'storage/logs',
         'db' => 'db',
+        'workers' => 'workers',
     ],
     'deploy_commands' => [
         'composer install',

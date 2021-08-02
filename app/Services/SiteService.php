@@ -75,6 +75,7 @@ class SiteService {
         $source_dir = PathHelper::getSourceDir($email, $this->site->name);
         $deploy_logs_dir = PathHelper::getDeploymentLogsDir($email, $this->site->name);
         $docker_compose_dir = PathHelper::getDockerComposeDir($email, $this->site->name);
+        $workers_dir = PathHelper::getWorkersDir($email, $this->site->name);
 
         /*
          * check if required directories exist
@@ -90,6 +91,7 @@ class SiteService {
         mkdir($source_dir);
         mkdir($deploy_logs_dir);
         mkdir($docker_compose_dir);
+        mkdir($workers_dir);
     }
 
     protected function waitForWakeUp() {

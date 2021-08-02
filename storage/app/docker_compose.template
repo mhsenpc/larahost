@@ -7,13 +7,14 @@ services:
     volumes:
       - $source_dir:/var/www/html
       - $ssh_keys_dir:/root/.ssh:ro
+      - $workers_dir:/etc/supervisor/conf.d:ro
     ports:
       - $port:80
     mem_limit: 1G
     memswap_limit: 1G
     cpus: 0.5
     storage_opt:
-      size: '20G'
+      size: '5G'
 
   $project_name_db:
     image: mariadb

@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Site;
+use App\Models\Worker;
+use App\Services\PathHelper;
+use App\Services\QueueService;
+use App\Services\SuperUserAPIService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
+class QueueController extends Controller {
+    public function index(Request $request, Site $site) {
+        $workers = Worker::query()->where('site_id', $site->id)->get();
+        return view('site.workers', compact('workers','site'));
+    }
+
+    public function createWorker(Request $request, Site $site) {
+        $request->validate([
+            'timeout' => 'nullable|numeric',
+            'sleep' => 'nullable|numeric',
+            'num_procs' => 'nullable|numeric',
+            'tries' => 'nullable|numeric',
+        ]);
+
+        $queue_service = new QueueService($site);
+        $queue_service->createWorker($request->connection, $request->queue, $request->sleep, $request->tries, $request->timeout, $request->num_procs);
+        return redirect()->back();
+    }
+
+    public function removeWorker(Request $request, Site $site) {
+        $queue_service = new QueueService($site);
+        $queue_service->removeWorker($request->worker_id);
+        return redirect()->back();
+    }
+
+    public function restartSupervisor(Request $request, Site $site) {
+        $queue_service = new QueueService($site);
+        $queue_service->reloadSupervisor();
+    }
+}

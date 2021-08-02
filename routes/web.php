@@ -3,6 +3,7 @@
 use App\Http\Controllers\CommandsController;
 use App\Http\Controllers\DeploymentController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\QueueController;
 use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('restart_apache', [SiteController::class, 'restartApache'])->name('sites.restart_apache');
         Route::get('restart_mysql', [SiteController::class, 'restartMySql'])->name('sites.restart_mysql');
         Route::get('restart_redis', [SiteController::class, 'restartRedis'])->name('sites.restart_redis');
+        Route::get('restart_supervisor', [QueueController::class, 'restartSupervisor'])->name('sites.restart_supervisor');
 
         Route::get('/commands', [CommandsController::class, 'index'])->name('sites.commands');
         Route::post('/exec_command', [CommandsController::class, 'execCommand'])->name('sites.exec_command');
@@ -46,6 +48,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/remove_domain', [\App\Http\Controllers\DomainController::class, 'removeDomain'])->name('sites.remove_domain');
         Route::get('/enable_sub_domain', [\App\Http\Controllers\DomainController::class, 'enableSubDomain'])->name('sites.enable_sub_domain');
         Route::get('/disable_sub_domain', [\App\Http\Controllers\DomainController::class, 'disableSubDomain'])->name('sites.disable_sub_domain');
+
+        Route::get('/workers', [QueueController::class, 'index'])->name('sites.workers');
+        Route::post('/create_worker', [QueueController::class, 'createWorker'])->name('sites.create_worker');
+        Route::get('/remove_worker', [QueueController::class, 'removeWorker'])->name('sites.remove_worker');
     });
 
     Route::get('deployments/{deployment_id}/log', [DeploymentController::class, 'showLog'])->name('deployments.showLog');
