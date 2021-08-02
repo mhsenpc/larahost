@@ -16,6 +16,7 @@ use App\Services\NewSiteService;
 use App\Services\SuperUserAPIService;
 use App\Services\TokenCreatorService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Faker\Factory as Faker;
 
@@ -36,14 +37,18 @@ class SiteController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        $user_public_key =  PathHelper::getSSHKeysDir(Auth::user()->email) .'/id_rsa.pub';
+        $user_public_key = PathHelper::getSSHKeysDir(Auth::user()->email) . '/id_rsa.pub';
         $public_key = "";
-        if(file_exists($user_public_key)){
+        if (file_exists($user_public_key)) {
             $public_key = file_get_contents($user_public_key);
         }
         $faker = Faker::create();
+        $sites_count = Site::query()->count();
+        if(App::environment('local')){
+            $sites_count = 0;
+        }
 
-        return view('site.create',compact('public_key','faker'));
+        return view('site.create', compact('public_key', 'faker','sites_count'));
     }
 
     /**
@@ -62,6 +67,13 @@ class SiteController extends Controller {
         if (ReservedNamesService::isNameReserved($request->name)) {
             return redirect()->back()->withInput()->withErrors(['متاسفانه این نام قبلا استفاده شده است. لطفا نام دیگری انتخاب نمایید']);
         }
+
+        if (!App::environment('local')) {
+            if (Site::query()->count() > 0) {
+                return response('forbidden',403);
+            }
+        }
+
         $new_site_service = (new NewSiteService(Auth::user()));
         $site = $new_site_service->newSite($request->name, $request->repo, !empty($request->manual_credentials), $request->username, $request->password);
         return redirect(route('sites.index'));
@@ -200,17 +212,17 @@ class SiteController extends Controller {
         return redirect()->back();
     }
 
-    public function restartApache(Request $request, Site $site){
+    public function restartApache(Request $request, Site $site) {
         SuperUserAPIService::restart_container($site->name);
         return redirect()->back();
     }
 
-    public function restartMySql(Request $request, Site $site){
+    public function restartMySql(Request $request, Site $site) {
         SuperUserAPIService::restart_container("{$site->name}_db");
         return redirect()->back();
     }
 
-    public function restartRedis(Request $request, Site $site){
+    public function restartRedis(Request $request, Site $site) {
         SuperUserAPIService::restart_container("{$site->name}_redis");
         return redirect()->back();
     }

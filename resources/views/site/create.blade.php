@@ -1,6 +1,14 @@
 @extends('layouts.single_box')
 @php($title="ایجاد سایت جدید")
 @section('content')
+    @if($sites_count)
+        <div class="alert alert-warning">
+            ضمن تشکر از علاقه مندی شما به سرویس لاراهاست، لازم به ذکر هست که در حال حاضر هر کاربر مجاز به ساخت فقط یک
+            سایت می باشد. یقینا پس از اتمام دوره آزمایشی و اعمال هزینه بر روی سرویس، میزبان سایت های شما به تعداد
+            نامحدود خواهیم بود
+        </div>
+    @endif
+
     <!-- general form elements -->
     <div class="box box-primary">
         <div class="box-header with-border">
@@ -8,6 +16,8 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
+
+
         <form action="{{route('sites.store')}}" method="post">
             <div class="box-body">
                 @csrf
@@ -57,7 +67,8 @@
                                 <div class="callout callout-warning">
                                     <h4>توجه </h4>
 
-                                    <p>لطفا جهت بالابردن ضریب امنیت خودتان، تا حد امکان از این نوع احراز هویت استفاده نفرمایید بلکه از احراز هویت با کلید استفاده کنید.</p>
+                                    <p>لطفا جهت بالابردن ضریب امنیت خودتان، تا حد امکان از این نوع احراز هویت
+                                        استفاده نفرمایید بلکه از احراز هویت با کلید استفاده کنید.</p>
                                     <p class="text-left dir-ltr" style="word-break: break-all;">
                                         {{$public_key}}
                                     </p>
@@ -69,7 +80,7 @@
                                     <label for="username">نام کاربری Git</label>
                                 </div>
                                 <div class="col-md-4">
-                                    <input  class="form-control" type="text" name="username" id="username" value="">
+                                    <input class="form-control" type="text" name="username" id="username" value="">
                                 </div>
                             </div>
 
@@ -78,7 +89,8 @@
                                     <label for="password">رمز عبور Git</label>
                                 </div>
                                 <div class="col-md-4">
-                                    <input class="form-control" type="password" name="password" id="password" value="">
+                                    <input class="form-control" type="password" name="password" id="password"
+                                           value="">
                                 </div>
                             </div>
                         </div>
@@ -86,9 +98,9 @@
                 </div>
 
 
-
                 <div class="box-footer">
-                    <input type="submit" value="راه اندازی سایت" class="btn btn-primary"/>
+                    <input type="submit" value="راه اندازی سایت" class="btn btn-primary"
+                           @if($sites_count) disabled @endif/>
                 </div>
             </div>
         </form>
