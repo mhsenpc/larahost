@@ -26,7 +26,7 @@ class DockerComposeService {
         $this->project_base_dir = PathHelper::getProjectBaseDir($this->site->user->email, $this->site->name);
         $this->project_compose_dir = PathHelper::getDockerComposeDir($this->site->user->email, $this->site->name);
         $this->user_keys_dir = PathHelper::getSSHKeysDir($this->site->user->email);
-        $this->workers_dir = PathHelper::getWorkersDir($this->site->user->email);
+        $this->workers_dir = PathHelper::getWorkersDir($this->site->user->email,$this->site->name);
     }
 
     public function setConnectionInfo(ConnectionInfo $connectionInfo) {
