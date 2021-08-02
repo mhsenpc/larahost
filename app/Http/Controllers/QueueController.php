@@ -62,5 +62,6 @@ class QueueController extends Controller {
     public function restartSupervisor(Request $request, Site $site) {
         $queue_service = new QueueService($site);
         $queue_service->reloadSupervisor();
+        return redirect()->back();
     }
 }
