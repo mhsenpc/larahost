@@ -119,7 +119,7 @@
                                         class="fa fa-refresh"></i></a>
                             </td>
                             <td>
-                                <button id="show_worker_log" class="btn btn-default" data-toggle="modal"
+                                <button class="btn btn-default show_worker_log" data-toggle="modal"
                                         data-target="#modal-workers" data-worker-id="{{$worker->id}}"><i
                                         class="fa fa-eye"></i></button>
 
@@ -146,16 +146,14 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">modal title goes here</h4>
+                    <h4 class="modal-title">Loading</h4>
                 </div>
                 <div class="modal-body">
-                    <pre class="console">
-                        <code id="modal_content">
+                    <pre class="console"><code id="modal_content">
                             <div class="overlay btn-lg">
                                 <i class="fa fa-refresh fa-spin"></i>
                             </div>
-                        </code>
-                    </pre>
+                        </code></pre>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">بستن</button>
@@ -168,9 +166,10 @@
     <!-- /.modal -->
 
     <script>
-        $('#show_worker_log').on('click', function () {
+        $('.show_worker_log').on('click', function () {
             let worker_id = $(this).data('worker-id');
             $(".modal-title").html("Queue Worker Log (#" + worker_id + ")")
+            $('#modal_content').html("");
             $('#modal_content').load('{{route('sites.get_worker_log',['site'=>$site,'worker_id'=>'0'])}}' + worker_id, function () {
                 console.log("done")
             });
@@ -178,6 +177,7 @@
 
         $('#check_workers_status').on('click', function () {
             $(".modal-title").html("Queue Workers Status")
+            $('#modal_content').html("");
             $('#modal_content').load('{{route('sites.get_workers_status',['site'=>$site])}}', function () {
                 console.log("done")
             });

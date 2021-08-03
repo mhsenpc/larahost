@@ -103,9 +103,7 @@
                     <h4 class="modal-title">خروجی دستور <small class="text-muted" id="command-content"></small></h4>
                 </div>
                 <div class="modal-body">
-                    <pre class="console">
-                        <code id="output-content"></code>
-                    </pre>
+                    <pre class="console"><code id="output-content"></code></pre>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">بستن</button>

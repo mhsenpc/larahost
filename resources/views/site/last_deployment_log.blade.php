@@ -1,3 +1,1 @@
-<pre class="console">
-    <code>{{$log_content}}</code>
-</pre>
+<pre class="console"><code>{{$log_content}}</code></pre>
