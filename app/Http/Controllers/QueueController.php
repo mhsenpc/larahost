@@ -53,15 +53,31 @@ class QueueController extends Controller {
         return redirect()->back();
     }
 
-    public function removeWorker(Request $request, Site $site) {
+    public function removeWorker(Site $site,int $worker_id) {
         $queue_service = new QueueService($site);
-        $queue_service->removeWorker($request->worker_id);
+        $queue_service->removeWorker($worker_id);
         return redirect()->back();
     }
 
     public function restartSupervisor(Request $request, Site $site) {
         $queue_service = new QueueService($site);
-        $queue_service->reloadSupervisor();
+        $queue_service->restartSupervisor();
         return redirect()->back();
+    }
+
+    public function restartWorker(Site $site,int $worker_id){
+        $queue_service = new QueueService($site);
+        $queue_service->restartWorker($worker_id);
+        return redirect()->back();
+    }
+
+    public function getWorkersStatus(Site $site){
+        $queue_service = new QueueService($site);
+        return $queue_service->getWorkersStatus();
+    }
+
+    public function getWorkerLog(Site $site,int $worker_id){
+        $queue_service = new QueueService($site);
+        return $queue_service->getWorkerLog($worker_id);
     }
 }

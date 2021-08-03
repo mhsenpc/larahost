@@ -29,7 +29,7 @@ class QueueService {
             'tries' => $tries,
             'timeout' => $timeout,
             'num_procs' => $num_procs,
-            'site_id'=>$this->site->id
+            'site_id' => $this->site->id
         ]);
 
         // create config for new worker
@@ -40,13 +40,14 @@ class QueueService {
         $template = str_replace('$tries', $tries, $template);
         $template = str_replace('$timeout', $timeout, $template);
         $template = str_replace('$num_procs', $num_procs, $template);
+        $template = str_replace('$id', $worker->id, $template);
         file_put_contents($this->workers_path . "/laravel-worker-{$worker->id}.conf", $template);
         $this->reloadSupervisor();
 
     }
 
-    public function removeWorker(int $worker_id){
-        $worker = Worker::query()->where('site_id',$this->site->id)->findOrFail($worker_id);
+    public function removeWorker(int $worker_id) {
+        $worker = Worker::query()->where('site_id', $this->site->id)->findOrFail($worker_id);
 
         // remove config of worker
         unlink($this->workers_path . "/laravel-worker-{$worker->id}.conf");
@@ -63,5 +64,23 @@ class QueueService {
         SuperUserAPIService::exec_command($this->site->name, 'supervisorctl reread');
         SuperUserAPIService::exec_command($this->site->name, 'supervisorctl update');
         SuperUserAPIService::exec_command($this->site->name, 'supervisorctl start laravel-worker:*');
+    }
+
+    public function restartSupervisor(): void {
+        SuperUserAPIService::exec_command($this->site->name, 'service supervisor restart');
+    }
+
+    public function restartWorker(int $id) {
+        SuperUserAPIService::exec_command($this->site->name, "supervisorctl restart worker-$id:");
+    }
+
+    public function getWorkerLog(int $id) {
+        $result = SuperUserAPIService::exec_command($this->site->name, "cat /var/log/worker-$id.log");
+        return $result->data;
+    }
+
+    public function getWorkersStatus(){
+        $result = SuperUserAPIService::exec_command($this->site->name, "supervisorctl status");
+        return $result->data;
     }
 }

@@ -1,5 +1,5 @@
 @extends('layouts.single_box')
-@php($title="اجرای دستورات ")
+@php($title="صف (Queue) ")
 @php($sidebar="layouts.sidebars.site_sidebar")
 
 @section('content')
@@ -8,7 +8,7 @@
             @csrf
             <div class="box-header with-border">
                 <div class="pull-right">
-                    صف (Queue)
+                    ایجاد worker جدید
                 </div>
             </div>
             <div class="box-body">
@@ -38,7 +38,7 @@
                     <div class="col-md-8">
                         <input id="timeout" name="timeout" type="text" class="form-control text-left dir-ltr"
                                placeholder="60">
-                        <p><small>(0 = No Timeout)</small></p>
+                        <p><small class="text-muted">(0 = No Timeout)</small></p>
                     </div>
                 </div>
 
@@ -80,6 +80,13 @@
             <div class="pull-right">
                 لیست Worker ها
             </div>
+
+            <div class="pull-left">
+                <button id="check_workers_status" class="btn btn-default" data-toggle="modal"
+                        data-target="#modal-workers">
+                    Check Workers Status
+                </button>
+            </div>
         </div>
 
         <div class="box-body">
@@ -91,6 +98,7 @@
                         <th>Timeout</th>
                         <th>تعداد پردازش</th>
                         <th>تلاش ها</th>
+                        <th>Restart</th>
                         <th></th>
                     </tr>
 
@@ -99,12 +107,22 @@
                             <td>{{$worker->id }}.</td>
                             <td>
                                 {{$worker->queue}}
+                                <br/>
                                 <small>Connection: {{$worker->connection}}</small>
                             </td>
                             <td>{{$worker->timeout}}</td>
                             <td>{{$worker->num_procs}}</td>
                             <td>{{$worker->tries}}</td>
                             <td>
+                                <a class="btn btn-default bg-black"
+                                   href="{{route('sites.restart_worker',['site'=>$site,'worker_id'=>$worker->id])}}"><i
+                                        class="fa fa-refresh"></i></a>
+                            </td>
+                            <td>
+                                <button id="show_worker_log" class="btn btn-default" data-toggle="modal"
+                                        data-target="#modal-workers" data-worker-id="{{$worker->id}}"><i
+                                        class="fa fa-eye"></i></button>
+
                                 <a href="{{route('sites.remove_worker',['site'=>$site,'worker_id'=>$worker->id])}}"
                                    class="btn btn-danger">
                                     <i class="fa fa-remove"></i>
@@ -121,4 +139,48 @@
 
         </div>
     </div>
+
+    <div class="modal fade" id="modal-workers">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">modal title goes here</h4>
+                </div>
+                <div class="modal-body">
+                    <pre class="console">
+                        <code id="modal_content">
+                            <div class="overlay btn-lg">
+                                <i class="fa fa-refresh fa-spin"></i>
+                            </div>
+                        </code>
+                    </pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">بستن</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <script>
+        $('#show_worker_log').on('click', function () {
+            let worker_id = $(this).data('worker-id');
+            $(".modal-title").html("Queue Worker Log (#" + worker_id + ")")
+            $('#modal_content').load('{{route('sites.get_worker_log',['site'=>$site,'worker_id'=>'0'])}}' + worker_id, function () {
+                console.log("done")
+            });
+        });
+
+        $('#check_workers_status').on('click', function () {
+            $(".modal-title").html("Queue Workers Status")
+            $('#modal_content').load('{{route('sites.get_workers_status',['site'=>$site])}}', function () {
+                console.log("done")
+            });
+        });
+    </script>
 @stop

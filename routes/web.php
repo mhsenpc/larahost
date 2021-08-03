@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CommandsController;
 use App\Http\Controllers\DeploymentController;
+use App\Http\Controllers\DomainController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\QueueController;
 use App\Http\Controllers\SiteController;
@@ -40,18 +41,21 @@ Route::middleware(['auth'])->group(function () {
         Route::get('restart_redis', [SiteController::class, 'restartRedis'])->name('sites.restart_redis');
         Route::get('restart_supervisor', [QueueController::class, 'restartSupervisor'])->name('sites.restart_supervisor');
 
-        Route::get('/commands', [CommandsController::class, 'index'])->name('sites.commands');
-        Route::post('/exec_command', [CommandsController::class, 'execCommand'])->name('sites.exec_command');
+        Route::get('commands', [CommandsController::class, 'index'])->name('sites.commands');
+        Route::post('exec_command', [CommandsController::class, 'execCommand'])->name('sites.exec_command');
 
-        Route::get('/domains', [\App\Http\Controllers\DomainController::class, 'index'])->name('sites.domains');
-        Route::post('/park_domain', [\App\Http\Controllers\DomainController::class, 'parkDomain'])->name('sites.park_domain');
-        Route::get('/remove_domain', [\App\Http\Controllers\DomainController::class, 'removeDomain'])->name('sites.remove_domain');
-        Route::get('/enable_sub_domain', [\App\Http\Controllers\DomainController::class, 'enableSubDomain'])->name('sites.enable_sub_domain');
-        Route::get('/disable_sub_domain', [\App\Http\Controllers\DomainController::class, 'disableSubDomain'])->name('sites.disable_sub_domain');
+        Route::get('domains', [DomainController::class, 'index'])->name('sites.domains');
+        Route::post('park_domain', [DomainController::class, 'parkDomain'])->name('sites.park_domain');
+        Route::get('remove_domain', [DomainController::class, 'removeDomain'])->name('sites.remove_domain');
+        Route::get('enable_sub_domain', [DomainController::class, 'enableSubDomain'])->name('sites.enable_sub_domain');
+        Route::get('disable_sub_domain', [DomainController::class, 'disableSubDomain'])->name('sites.disable_sub_domain');
 
-        Route::get('/workers', [QueueController::class, 'index'])->name('sites.workers');
-        Route::post('/create_worker', [QueueController::class, 'createWorker'])->name('sites.create_worker');
-        Route::get('/remove_worker', [QueueController::class, 'removeWorker'])->name('sites.remove_worker');
+        Route::get('workers', [QueueController::class, 'index'])->name('sites.workers');
+        Route::post('create_worker', [QueueController::class, 'createWorker'])->name('sites.create_worker');
+        Route::get('remove_worker/{worker_id}', [QueueController::class, 'removeWorker'])->name('sites.remove_worker');
+        Route::get('restart_worker/{worker_id}', [QueueController::class, 'restartWorker'])->name('sites.restart_worker');
+        Route::get('get_workers_status', [QueueController::class, 'getWorkersStatus'])->name('sites.get_workers_status');
+        Route::get('get_worker_log/{worker_id}', [QueueController::class, 'getWorkerLog'])->name('sites.get_worker_log');
     });
 
     Route::get('deployments/{deployment_id}/log', [DeploymentController::class, 'showLog'])->name('deployments.showLog');
