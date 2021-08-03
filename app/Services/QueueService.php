@@ -67,7 +67,8 @@ class QueueService {
     }
 
     public function restartSupervisor(): void {
-        SuperUserAPIService::exec_command($this->site->name, 'service supervisor restart');
+        SuperUserAPIService::exec_command($this->site->name, 'service supervisor stop');
+        SuperUserAPIService::exec_command($this->site->name, 'service supervisor start');
     }
 
     public function restartWorker(int $id) {
