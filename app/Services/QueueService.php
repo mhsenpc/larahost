@@ -76,11 +76,11 @@ class QueueService {
 
     public function getWorkerLog(int $id) {
         $result = SuperUserAPIService::exec_command($this->site->name, "cat /var/log/worker-$id.log");
-        return $result->data;
+        return $result['data'];
     }
 
     public function getWorkersStatus(){
         $result = SuperUserAPIService::exec_command($this->site->name, "supervisorctl status");
-        return $result->data;
+        return $result['data'];
     }
 }
