@@ -1,7 +1,7 @@
 <!-- Sidebar user panel -->
 <div class="user-panel">
     <div class="pull-right image">
-        <img src="{{asset('dist/img/avatar.png')}}" class="img-circle" alt="User Image" />
+        <img src="{{asset('dist/img/avatar.png')}}" class="img-circle" alt="User Image"/>
     </div>
     <div class="pull-right info">
         <p>{{auth()->user()->name}}</p>
@@ -9,11 +9,18 @@
     </div>
 </div>
 <!-- search form -->
-<form action="#" method="get" class="sidebar-form">
+<form action="{{route('search')}}" method="get" class="sidebar-form">
+    @method('post')
     <div class="input-group">
-        <input type="text" name="q" class="form-control" placeholder="جستجو" />
+        <input type="text" list="sites" name="site_name" class="form-control" placeholder="جستجو" />
+        <datalist id="sites">
+            @foreach($user_sites as $site)
+            <option value="{{$site->name}}">
+            @endforeach
+        </datalist>
         <span class="input-group-btn">
-                                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+                                <button type="submit"  id="search-btn" class="btn btn-flat"><i
+                                        class="fa fa-search"></i></button>
                             </span>
     </div>
 </form>
@@ -21,7 +28,7 @@
 <!-- sidebar menu: : style can be found in sidebar.less -->
 <ul class="sidebar-menu" data-widget="tree">
     <li class="header">منو</li>
-    <li >
+    <li>
         <a href="{{route('dashboard')}}">
             <i class="fa fa-dashboard"></i> <span>میزکار</span>
         </a>

@@ -61,6 +61,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('deployments/{deployment_id}/log', [DeploymentController::class, 'showLog'])->name('deployments.showLog');
     Route::get('deployments/{site_id}/lastDeploymentLog', [DeploymentController::class, 'lastDeploymentLog'])->name('deployments.lastDeploymentLog');
     Route::get('logs/{site_name}/{file_name}', [LogController::class, 'showLog'])->name('logs.show');
+
+    Route::get('search', [\App\Http\Controllers\SearchController::class, 'search'])->name('search');
 });
 Route::get('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 Route::any('trigger_deployment', [App\Http\Controllers\SiteController::class, 'triggerDeployment'])->name('triggerDeployment');
