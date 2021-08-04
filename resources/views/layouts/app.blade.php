@@ -138,11 +138,7 @@
                 <small>{{$description?? ''}}</small>
             </h1>
             <ol class="breadcrumb">
-                <li>
-                    <a href="#"><i class="fa fa-dashboard"></i> خانه</a>
-                </li>
-                <li><a href="#">لایه ها</a></li>
-                <li class="active">باکس</li>
+               @yield('breadcrumb')
             </ol>
         </section>
 

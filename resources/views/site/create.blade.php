@@ -125,3 +125,17 @@
         });
     </script>
 @stop
+
+@section('breadcrumb')
+    <li >
+        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> خانه</a>
+    </li>
+
+    <li >
+        <a href="{{route('sites.index')}}"> سایت های من</a>
+    </li>
+
+    <li class="active">
+        <a > ایجاد سایت جدید</a>
+    </li>
+@endsection

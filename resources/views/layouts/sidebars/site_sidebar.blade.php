@@ -25,7 +25,7 @@
     <li class="header">منو</li>
     <li>
         <a href="{{route('sites.index')}}">
-            <i class="fa fa-arrow-right"></i> <span>بازگشت به لیست سایت ها</span>
+            <i class="fa fa-arrow-right"></i> <span>بازگشت به سایت های من</span>
         </a>
     </li>
     <li>

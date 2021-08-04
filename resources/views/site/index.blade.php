@@ -23,3 +23,13 @@
         @endforeach
     </table>
 @endsection
+
+@section('breadcrumb')
+    <li >
+        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> خانه</a>
+    </li>
+
+    <li class="active" >
+        <a href="{{route('sites.index')}}">سایت های من</a>
+    </li>
+@endsection

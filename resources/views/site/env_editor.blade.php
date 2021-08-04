@@ -17,3 +17,17 @@
     </form>
 @endsection
 @endif
+
+@section('breadcrumb')
+    <li >
+        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> خانه</a>
+    </li>
+
+    <li >
+        <a href="{{route('sites.show',compact('site'))}}"> {{$site->name}}</a>
+    </li>
+
+    <li class="active">
+        <a href="{{url()->current()}}"> {{$title}}</a>
+    </li>
+@endsection
