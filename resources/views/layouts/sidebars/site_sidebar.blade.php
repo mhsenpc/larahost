@@ -53,11 +53,11 @@
             <i class="fa fa-circle"></i> <span>گزارش ها</span>
         </a>
     </li>
-    <li>
-        <a href="{{route('sites.domains',['site'=>$site])}}">
-            <i class="fa fa-circle"></i> <span>دامنه ها</span>
-        </a>
-    </li>
+{{--    <li>--}}
+{{--        <a href="{{route('sites.domains',['site'=>$site])}}">--}}
+{{--            <i class="fa fa-circle"></i> <span>دامنه ها</span>--}}
+{{--        </a>--}}
+{{--    </li>--}}
 
     <li>
         <a href="{{route('sites.workers',['site'=>$site])}}">
