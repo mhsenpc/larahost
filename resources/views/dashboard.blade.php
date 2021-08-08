@@ -19,12 +19,12 @@
                 <div class="inner">
                     <h3>{{$sites_count}}</h3>
 
-                    <p>تعداد سایت ها</p>
+                    <p> سایت ها</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
                 </div>
-                <a href="{{route('sites.index')}}" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left"></i></a>
+                <a href="{{route('admin.sites.index')}}" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left"></i></a>
             </div>
         </div>
 
@@ -40,6 +40,20 @@
                     <i class="ion ion-person-add"></i>
                 </div>
                 <a href="{{route('admin.users.index')}}" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>{{$domains_count}}</h3>
+
+                    <p>دامنه ها</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="{{route('admin.domains.index')}}" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left"></i></a>
             </div>
         </div>
     </div>

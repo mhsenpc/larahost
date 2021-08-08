@@ -67,6 +67,8 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware([\App\Http\Middleware\AdminChecker::class])->group(function () {
         Route::get('admin/users', [\App\Http\Controllers\Admin\UsersController::class, 'index'])->name('admin.users.index');
         Route::get('admin/users/loginAs/{user_id}', [\App\Http\Controllers\Admin\UsersController::class, 'loginAs'])->name('admin.users.loginAs');
+        Route::get('admin/domains', [\App\Http\Controllers\Admin\DomainsController::class, 'index'])->name('admin.domains.index');
+        Route::get('admin/sites', [\App\Http\Controllers\Admin\SitesController::class, 'index'])->name('admin.sites.index');
     });
 });
 Route::get('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');

@@ -33,4 +33,8 @@ class Site extends Model {
     public function getRouteKeyName() {
         return 'name';
     }
+
+    public function domains(){
+        return $this->hasMany(Domain::class);
+    }
 }

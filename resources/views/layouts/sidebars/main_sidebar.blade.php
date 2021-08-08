@@ -61,5 +61,15 @@
                 <i class="fa fa-list"></i> <span>لیست کاربران</span>
             </a>
         </li>
+        <li>
+            <a href="{{route('admin.domains.index')}}">
+                <i class="fa fa-list"></i> <span>لیست دامنه ها</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{route('admin.sites.index')}}">
+                <i class="fa fa-list"></i> <span>لیست سایت ها</span>
+            </a>
+        </li>
     @endif
 </ul>
