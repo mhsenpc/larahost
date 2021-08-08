@@ -63,6 +63,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('logs/{site_name}/{file_name}', [LogController::class, 'showLog'])->name('logs.show');
 
     Route::get('search', [\App\Http\Controllers\SearchController::class, 'search'])->name('search');
+
+    Route::middleware([\App\Http\Middleware\AdminChecker::class])->group(function () {
+        Route::get('admin/users', [\App\Http\Controllers\Admin\UsersController::class, 'index'])->name('admin.users.index');
+        Route::get('admin/users/loginAs/{user_id}', [\App\Http\Controllers\Admin\UsersController::class, 'loginAs'])->name('admin.users.loginAs');
+    });
 });
 Route::get('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 Route::any('trigger_deployment', [App\Http\Controllers\SiteController::class, 'triggerDeployment'])->name('triggerDeployment');

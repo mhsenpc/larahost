@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Site;
 use App\Services\ContainerInfoService;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
@@ -36,5 +37,7 @@ class AppServiceProvider extends ServiceProvider
             $running = ContainerInfoService::getPowerStatus($view->site->name);
             $view->with('running', $running);
         });
+
+        Paginator::useBootstrap();
     }
 }

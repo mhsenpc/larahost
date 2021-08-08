@@ -14,7 +14,7 @@ class DeploymentController extends Controller
             abort(403);
         }
         $site = $deployment->site;
-        $deployment_logs_dir = PathHelper::getDeploymentLogsDir(Auth::user()->email, $deployment->site->name);
+        $deployment_logs_dir = PathHelper::getDeploymentLogsDir($site->user->email, $deployment->site->name);
         $log_content = file_get_contents($deployment_logs_dir .'/'. $deployment->log_file);
         return view('site.show_deployment_log',compact('log_content','site','deployment'));
     }
@@ -24,7 +24,7 @@ class DeploymentController extends Controller
         if(empty($deployment)){
             return response('تاکنون برای این سایت هیچ deployment ای انجام نشده است');
         }
-        $deployment_logs_dir = PathHelper::getDeploymentLogsDir(Auth::user()->email, $deployment->site->name);
+        $deployment_logs_dir = PathHelper::getDeploymentLogsDir($site->user->email, $deployment->site->name);
         $log_content = file_get_contents($deployment_logs_dir .'/'. $deployment->log_file);
         return view('site.last_deployment_log',compact('log_content'));
     }

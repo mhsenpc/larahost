@@ -27,7 +27,7 @@ class SiteController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $sites = Site::get();
+        $sites = Site::query()->paginate();
         return view('site.index', compact('sites'));
     }
 
@@ -44,8 +44,7 @@ class SiteController extends Controller {
         }
         $faker = Faker::create();
         $sites_count = Site::query()->count();
-        $sites_count = 0; //todo: remove
-        if (App::environment('local')) {
+        if (App::environment('local') || Auth::user()->isAdmin()) {
             $sites_count = 0;
         }
 
@@ -69,14 +68,13 @@ class SiteController extends Controller {
             return redirect()->back()->withInput()->withErrors(['متاسفانه این نام قبلا استفاده شده است. لطفا نام دیگری انتخاب نمایید']);
         }
 
-        //todo: remove
-        if (false) {
-            if (!App::environment('local')) {
-                if (Site::query()->count() > 0) {
-                    return response('forbidden', 403);
-                }
+
+        if (!App::environment('local') && !Auth::user()->isAdmin()) {
+            if (Site::query()->count() > 0) {
+                return response('forbidden', 403);
             }
         }
+
 
         $new_site_service = (new NewSiteService(Auth::user()));
         $site = $new_site_service->newSite($request->name, $request->repo, !empty($request->manual_credentials), $request->username, $request->password);
@@ -141,14 +139,14 @@ class SiteController extends Controller {
     }
 
     public function logs(Site $site) {
-        $logs_dir = PathHelper::getLaravelLogsDir(Auth::user()->email, $site->name);
+        $logs_dir = PathHelper::getLaravelLogsDir($site->user->email, $site->name);
         $logs = scandir($logs_dir);
 
         $logs = array_diff($logs, array('..', '.', '.gitignore')); //remove invalid files
 
         if (count($logs) == 1 && substr(reset($logs), -4) == '.log') {
             $file_name = reset($logs);
-            $logs_dir = PathHelper::getLaravelLogsDir(Auth::user()->email, $site->name);
+            $logs_dir = PathHelper::getLaravelLogsDir($site->user->email, $site->name);
             $log_content = file_get_contents($logs_dir . '/' . $file_name);
             return view('site.show_laravel_log', compact('log_content', 'site', 'file_name'));
         } else {
@@ -168,7 +166,7 @@ class SiteController extends Controller {
     }
 
     public function env_editor(Site $site) {
-        $source_dir = PathHelper::getSourceDir(Auth::user()->email, $site->name);
+        $source_dir = PathHelper::getSourceDir($site->user->email, $site->name);
         $env = '';
         if (file_exists($source_dir . '/.env')) {
             $env = file_get_contents($source_dir . '/.env');
@@ -178,7 +176,7 @@ class SiteController extends Controller {
     }
 
     public function handle_env_editor(Request $request, Site $site) {
-        $source_dir = PathHelper::getSourceDir(Auth::user()->email, $site->name);
+        $source_dir = PathHelper::getSourceDir($site->user->email, $site->name);
         file_put_contents($source_dir . '/.env', $request->env);
         return redirect()->back();
     }

@@ -55,4 +55,11 @@
             </li>
         </ul>
     </li>
+    @if(auth()->user()->isAdmin())
+        <li>
+            <a href="{{route('admin.users.index')}}">
+                <i class="fa fa-list"></i> <span>لیست کاربران</span>
+            </a>
+        </li>
+    @endif
 </ul>

@@ -22,6 +22,7 @@
             </tr>
         @endforeach
     </table>
+    {{$sites->links()}}
 @endsection
 
 @section('breadcrumb')
