@@ -31,7 +31,7 @@ class ReverseProxyService
 
     protected function writeSubdomainConfig(){
         if($this->site->subdomain_status){
-            $this->generateConfig("{$this->site->name}.gnulover.ir");
+            $this->generateConfig("{$this->site->name}.lara-host.ir");
         }
         else{
             $this->removeSubdomainConfig();
@@ -46,7 +46,7 @@ class ReverseProxyService
     }
 
     protected function removeSubdomainConfig(){
-        SuperUserAPIService::remove_domain_config("{$this->site->name}.gnulover.ir");
+        SuperUserAPIService::remove_domain_config("{$this->site->name}.lara-host.ir");
     }
 
     protected function removeParkedDomainsConfig(){

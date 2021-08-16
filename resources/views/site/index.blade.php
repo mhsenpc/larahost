@@ -18,7 +18,7 @@
                         <i class="fa fa-refresh" title="در حال نصب و راه اندازی"> </i>
                     @endif
                 </td>
-                <td><a target="_blank" href="http://{{$site1->name}}.gnulover.ir">{{$site1->name}}.gnulover.ir</a></td>
+                <td><a target="_blank" href="http://{{$site1->name}}.lara-host.ir">{{$site1->name}}.lara-host.ir</a></td>
             </tr>
         @endforeach
     </table>

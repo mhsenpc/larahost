@@ -6,7 +6,7 @@
     <div class="pull-right info">
         <p>
             {{$site->name}}
-            <a target="_blank" href="http://{{$site->name}}.gnulover.ir">
+            <a target="_blank" href="http://{{$site->name}}.lara-host.ir">
                 <i class="fa fa-arrow-circle-right text-green"></i>
             </a>
         </p>

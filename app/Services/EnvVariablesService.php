@@ -34,7 +34,7 @@ class EnvVariablesService
         // app name
         $env_editor->changeKey('APP_NAME', $this->site_name);
 
-        $env_editor->changeKey('APP_URL', "http://{$this->site_name}.gnulover.ir");
+        $env_editor->changeKey('APP_URL', "http://{$this->site_name}.lara-host.ir");
 
         // db connection info
         $env_editor->changeKey('DB_CONNECTION', $this->connection_info->db_connection);

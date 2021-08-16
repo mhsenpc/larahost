@@ -86,8 +86,8 @@
                         <p> در حال حاضر سایت شما در حالت تعمیر قرار دارد</p>
                     </div>
                     <p class="text-left text-center"><a target="_blank"
-                                                        href="http://{{$site->name}}.gnulover.ir/{{$maintenace_secret}}">http://{{$site->name}}
-                            .gnulover.ir/{{$maintenace_secret}}</a></p>
+                                                        href="http://{{$site->name}}.lara-host.ir/{{$maintenace_secret}}">http://{{$site->name}}
+                            .lara-host.ir/{{$maintenace_secret}}</a></p>
                 </div>
 
                 <!-- /.box-body -->
