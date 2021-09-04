@@ -9,6 +9,7 @@ use App\Services\ParkDomainService;
 use App\Services\ReservedNamesService;
 use App\Services\ReverseProxyService;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class DomainController extends Controller {
     public function index(Request $request, Site $site) {
@@ -18,7 +19,7 @@ class DomainController extends Controller {
 
     public function parkDomain(Request $request, Site $site) {
         $request->validate([
-            'name' => ['required','unique:domains',new FQDN()]
+            'name' => ['required','unique:domains',new FQDN(),Rule::notIn(['lara-host.ir','ns1.lara-host.ir','ns2.lara-host.ir','my.lara-host.ir'])]
         ]);
 
         if(ParkDomainService::isDomainPointedToUs($request->name)){
@@ -38,6 +39,7 @@ class DomainController extends Controller {
 
         $reverse_proxy_service = new ReverseProxyService($site);
         $reverse_proxy_service->removeDomainConfig($request->name);
+        $reverse_proxy_service->reloadNginx();
         return redirect()->back();
     }
 
