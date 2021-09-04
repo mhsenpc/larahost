@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Domain;
 use App\Models\Site;
 use App\Rules\FQDN;
+use App\Services\ParkDomainService;
+use App\Services\ReservedNamesService;
 use App\Services\ReverseProxyService;
 use Illuminate\Http\Request;
 
@@ -19,14 +21,15 @@ class DomainController extends Controller {
             'name' => ['required','unique:domains',new FQDN()]
         ]);
 
-        $domain = Domain::query()->create([
-            'name' => $request->name,
-            'site_id' => $site->id
-        ]);
-
-        $reverse_proxy_service = new ReverseProxyService($site);
-        $reverse_proxy_service->writeNginxConfigs();
-        return redirect()->back();
+        if(ParkDomainService::isDomainPointedToUs($request->name)){
+            ParkDomainService::parkDomain($site,$request->name);
+            return redirect()->back()->withInput(['دامنه '. $request->domain. ' با موفقیت به سرور شما متصل گردید']) ;
+        }
+        else{
+            if (ReservedNamesService::isNameReserved($request->name)) {
+                return redirect()->back()->withInput()->withErrors(['هنوز name server های دامنه شما به سمت سرور ما اشاره نمی کند']);
+            }
+        }
     }
 
     public function removeDomain(Request $request, Site $site) {

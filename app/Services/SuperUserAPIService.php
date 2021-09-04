@@ -97,4 +97,16 @@ class SuperUserAPIService {
         ]);
         return $response->json();
     }
+
+    public static function bind_domain(string $domain) {
+        $response = Http::get(config('larahost.super_user_api_url') . '/bind_domain', [
+            'domain' => $domain,
+        ]);
+        return $response->json();
+    }
+
+    public static function reload_dns() {
+        $response = Http::get(config('larahost.super_user_api_url') . '/reload_dns');
+        return $response->json();
+    }
 }

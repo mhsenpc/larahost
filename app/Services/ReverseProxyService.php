@@ -22,6 +22,7 @@ class ReverseProxyService
     }
 
     protected function generateConfig(string $domain) {
+        // todo: use new file api
         $template = Storage::get('nginx_vhost.template');
         $template = str_replace('$domain', $domain, $template);
         $template = str_replace('$port', $this->site->port, $template);
