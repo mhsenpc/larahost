@@ -33,7 +33,9 @@ class DomainController extends Controller {
     }
 
     public function removeDomain(Request $request, Site $site) {
-        Domain::query()->where('site_id', $site->id)->where('name', $request->name)->delete();
+        $domain = $site->domains()->where('name',$request->name)->firstOrFail();
+        $domain->delete();
+
         $reverse_proxy_service = new ReverseProxyService($site);
         $reverse_proxy_service->removeDomainConfig($request->name);
         return redirect()->back();
