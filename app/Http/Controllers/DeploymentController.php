@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Deployment;
+use App\Models\Site;
 use App\Services\PathHelper;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,6 +25,7 @@ class DeploymentController extends Controller
         if(empty($deployment)){
             return response('تاکنون برای این سایت هیچ deployment ای انجام نشده است');
         }
+        $site = Site::query()->find($site_id);
         $deployment_logs_dir = PathHelper::getDeploymentLogsDir($site->user->email, $deployment->site->name);
         $log_content = file_get_contents($deployment_logs_dir .'/'. $deployment->log_file);
         return view('site.last_deployment_log',compact('log_content'));
