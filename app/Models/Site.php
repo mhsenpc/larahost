@@ -23,7 +23,7 @@ class Site extends Model {
      */
     protected static function booted() {
         $user = Auth::user();
-        if (!$user->isAdmin()) {
+        if ($user && !$user->isAdmin()) {
             static::addGlobalScope('user_id', function (Builder $builder) use($user) {
                 $builder->where('user_id', $user->id);
             });
