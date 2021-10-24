@@ -38,6 +38,9 @@ class DeploymentCommandsService {
     public function runFirstDeployCommands() {
         Log::debug("first deploy commands");
 
+        $output = SuperUserAPIService::exec_command($this->site->name, 'rm composer.lock');
+        Log::debug($output);
+
         $output = SuperUserAPIService::exec_command($this->site->name, 'chown -R www-data:www-data ./');
         Log::debug($output);
 
