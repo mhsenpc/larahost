@@ -13,11 +13,8 @@ class QueueService {
      */
     protected $site;
 
-    protected $workers_path;
-
     public function __construct(\App\Models\Site $site) {
         $this->site = $site;
-        $this->workers_path = PathHelper::getWorkersDir($this->site->user->email, $this->site->name);
     }
 
     public function createWorker(string $connection, string $queue, int $sleep, int $tries, int $timeout, int $num_procs) {
@@ -41,7 +38,7 @@ class QueueService {
         $template = str_replace('$timeout', $timeout, $template);
         $template = str_replace('$num_procs', $num_procs, $template);
         $template = str_replace('$id', $worker->id, $template);
-        file_put_contents($this->workers_path . "/laravel-worker-{$worker->id}.conf", $template);
+        file_put_contents($this->site->getWorkersDir() . "/laravel-worker-{$worker->id}.conf", $template);
         $this->reloadSupervisor();
 
     }
@@ -50,7 +47,7 @@ class QueueService {
         $worker = Worker::query()->where('site_id', $this->site->id)->findOrFail($worker_id);
 
         // remove config of worker
-        unlink($this->workers_path . "/laravel-worker-{$worker->id}.conf");
+        unlink($this->site->getWorkersDir() . "/laravel-worker-{$worker->id}.conf");
 
         // remove record from db
         $worker->delete();

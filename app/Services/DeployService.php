@@ -7,7 +7,7 @@ namespace App\Services;
 use App\Models\Site;
 use Illuminate\Support\Facades\Log;
 
-class SiteService {
+class DeployService {
     /**
      * @var Site
      */
@@ -29,14 +29,14 @@ class SiteService {
     }
 
     public function firstDeploy() {
-        $this->createRequiredDirectories();
+        $this->createRequiredDirectories($this->site);
         $connection_info = ConnectionInfoGenerator::generate($this->site->name);
 
         $this->docker_compose_service->setConnectionInfo($connection_info);
         $this->docker_compose_service->newSiteContainer();
         if ($this->waitForWakeUp()) {
             if ($this->git_service->cloneRepo()) {
-                $env_updater = new EnvVariablesService($this->git_service->source_dir, $this->site->name, $connection_info);
+                $env_updater = new EnvVariablesService($this->site->getSourceDir() , $this->site->name, $connection_info);
                 $env_updater->updateEnv();
                 $this->deployment_commands_service->runDeployCommands();
                 $this->deployment_commands_service->runFirstDeployCommands();
@@ -68,32 +68,6 @@ class SiteService {
         }
     }
 
-    protected function createRequiredDirectories() {
-        $repos_dir = config('larahost.repos_dir');
-        $email = $this->site->user->email;
-        $project_base_dir = PathHelper::getProjectBaseDir($email, $this->site->name);
-        $source_dir = PathHelper::getSourceDir($email, $this->site->name);
-        $deploy_logs_dir = PathHelper::getDeploymentLogsDir($email, $this->site->name);
-        $docker_compose_dir = PathHelper::getDockerComposeDir($email, $this->site->name);
-        $workers_dir = PathHelper::getWorkersDir($email, $this->site->name);
-
-        /*
-         * check if required directories exist
-         */
-        if (!is_dir($repos_dir)) {
-            mkdir($repos_dir);
-        }
-        if (!is_dir($repos_dir . '/' . $email)) {
-            mkdir($repos_dir . '/' . $email);
-        }
-
-        mkdir($project_base_dir);
-        mkdir($source_dir);
-        mkdir($deploy_logs_dir);
-        mkdir($docker_compose_dir);
-        mkdir($workers_dir);
-    }
-
     protected function waitForWakeUp() {
         $i = 0;
         while (!SuperUserAPIService::exec_command($this->site->name, "ls")['success']) {
@@ -104,5 +78,25 @@ class SiteService {
             }
         }
         return true;
+    }
+
+    public static function createRequiredDirectories(Site $site) {
+        $repos_dir = config('larahost.repos_dir');
+
+        /*
+         * check if required directories exist
+         */
+        if (!is_dir($repos_dir)) {
+            mkdir($repos_dir);
+        }
+        if (!is_dir($repos_dir . '/' . $site->user->email)) {
+            mkdir($repos_dir . '/' . $site->user->email);
+        }
+
+        mkdir($site->getProjectBaseDir());
+        mkdir($site->getSourceDir());
+        mkdir($site->getDeploymentLogsDir());
+        mkdir($site->getDockerComposeDir());
+        mkdir($site->getWorkersDir());
     }
 }

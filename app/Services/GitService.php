@@ -21,7 +21,7 @@ class GitService {
 
     public function __construct(Site $site, DeployLogService $deploy_log_service) {
         $this->site = $site;
-        $this->source_dir = PathHelper::getSourceDir($site->user->email, $site->name);
+        $this->source_dir = $this->site->getSourceDir();
         $this->deploy_log_service = $deploy_log_service;
     }
 
