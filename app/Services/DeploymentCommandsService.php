@@ -41,6 +41,8 @@ class DeploymentCommandsService {
         $output = SuperUserAPIService::exec_command($this->site->name, 'rm composer.lock');
         Log::debug($output);
 
+        $this->runDeployCommands();
+
         $output = SuperUserAPIService::exec_command($this->site->name, 'chown -R www-data:www-data ./');
         Log::debug($output);
 
