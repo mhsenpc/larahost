@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Http;
 
 class SuperUserAPIService {
+    public static function new_folder(string $path){
+        $response = Http::get(config('larahost.super_user_api_url') . '/new_folder', [
+            'path' => $path,
+        ]);
+        return $response->json();
+    }
 
     public static function compose_up(string $site_name, string $compose_dir) {
         if (App::environment('local'))
@@ -51,14 +57,6 @@ class SuperUserAPIService {
 
     public static function reload_nginx() {
         $response = Http::get(config('larahost.super_user_api_url') . '/reload_nginx');
-        return $response->json();
-    }
-
-    public static function remove_site(string $email, string $site_name) {
-        $response = Http::get(config('larahost.super_user_api_url') . '/remove_site', [
-            'email' => $email,
-            'site_name' => $site_name
-        ]);
         return $response->json();
     }
 

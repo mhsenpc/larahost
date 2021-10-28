@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\SuperUserAPIService;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -50,11 +51,11 @@ class User extends Authenticatable {
 
     public function getSSHKeysDir(): string {
         if(!is_dir(config('larahost.keys_dir'))){
-            mkdir(config('larahost.keys_dir'));
+            SuperUserAPIService::new_folder(config('larahost.keys_dir'));
         }
         $user_keys = config('larahost.keys_dir') . '/' . $this->email;
         if(!is_dir($user_keys)){
-            mkdir($user_keys);
+            SuperUserAPIService::new_folder($user_keys);
         }
         return $user_keys;
     }

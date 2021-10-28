@@ -23,7 +23,7 @@ class SiteDestroyerService {
         $docker_compose_service->down();
 
         // remove contents
-        $output = SuperUserAPIService::remove_site($this->site->user->email, $this->site);
+        $output = SuperUserAPIService::remove_dir($this->site->getProjectBaseDir());
 
         // remove nginx config
         $reverse_proxy_service = new ReverseProxyService($this->site);

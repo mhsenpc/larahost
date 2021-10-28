@@ -86,16 +86,16 @@ class DeployService {
          * check if required directories exist
          */
         if (!is_dir($repos_dir)) {
-            mkdir($repos_dir);
+            SuperUserAPIService::new_folder($repos_dir);
         }
         if (!is_dir($repos_dir . '/' . $site->user->email)) {
-            mkdir($repos_dir . '/' . $site->user->email);
+            SuperUserAPIService::new_folder($repos_dir . '/' . $site->user->email);
         }
 
-        mkdir($site->getProjectBaseDir());
-        mkdir($site->getSourceDir());
-        mkdir($site->getDeploymentLogsDir());
-        mkdir($site->getDockerComposeDir());
-        mkdir($site->getWorkersDir());
+        SuperUserAPIService::new_folder($site->getProjectBaseDir());
+        SuperUserAPIService::new_folder($site->getSourceDir());
+        SuperUserAPIService::new_folder($site->getDeploymentLogsDir());
+        SuperUserAPIService::new_folder($site->getDockerComposeDir());
+        SuperUserAPIService::new_folder($site->getWorkersDir());
     }
 }
