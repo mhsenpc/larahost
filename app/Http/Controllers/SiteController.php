@@ -43,12 +43,15 @@ class SiteController extends Controller {
             $public_key = file_get_contents($user_public_key);
         }
         $faker = Faker::create();
-        $sites_count = Site::query()->count();
+        $sitesCount = Site::query()->count();
+        $allowNewSite =  $sitesCount == 0 ;
+
         if (App::environment('local') || Auth::user()->isAdmin()) {
-            $sites_count = 0;
+            $allowNewSite = true;
         }
 
-        return view('site.create', compact('public_key', 'faker', 'sites_count'));
+
+        return view('site.create', compact('public_key', 'faker', 'allowNewSite','sitesCount'));
     }
 
     /**
@@ -59,6 +62,7 @@ class SiteController extends Controller {
      */
     public function store(Request $request) {
         $request->name = strtolower($request->name);
+        $request->name = config('larahost.site_prefix').$request->name;
 
         $request->validate([
             'name' => 'required|alpha_num|unique:sites',

@@ -16,4 +16,5 @@ return [
         'php artisan migrate --force',
         'php artisan queue:restart',
     ],
+    'site_prefix' => env('SITE_PREFIX')
 ];

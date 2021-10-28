@@ -11,13 +11,13 @@
         به لاراهاست خوش آمدید
     </p>
 
-    @isset($is_admin)
+    @isset($isAdmin)
     <div class="row">
         <div class="col-lg-3 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-green">
                 <div class="inner">
-                    <h3>{{$sites_count}}</h3>
+                    <h3>{{$sitesCount}}</h3>
 
                     <p> سایت ها</p>
                 </div>
@@ -32,7 +32,7 @@
             <!-- small box -->
             <div class="small-box bg-yellow">
                 <div class="inner">
-                    <h3>{{$users_count}}</h3>
+                    <h3>{{$usersCount}}</h3>
 
                     <p>کاربران ثبت شده</p>
                 </div>
@@ -46,7 +46,7 @@
             <!-- small box -->
             <div class="small-box bg-aqua">
                 <div class="inner">
-                    <h3>{{$domains_count}}</h3>
+                    <h3>{{$domainsCount}}</h3>
 
                     <p>دامنه ها</p>
                 </div>

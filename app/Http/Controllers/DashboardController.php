@@ -16,12 +16,12 @@ class DashboardController extends Controller {
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index() {
-        $is_admin = Auth::user()->isAdmin();
-        if ($is_admin) {
-            $users_count = User::query()->count();
-            $sites_count = Site::query()->count();
-            $domains_count = Domain::query()->count();
-            return view('dashboard', compact('is_admin', 'users_count', 'sites_count', 'domains_count'));
+        $isAdmin = Auth::user()->isAdmin();
+        if ($isAdmin) {
+            $usersCount = User::query()->count();
+            $sitesCount = Site::query()->count();
+            $domainsCount = Domain::query()->count();
+            return view('dashboard', compact('isAdmin', 'usersCount', 'sitesCount', 'domainsCount'));
         } else {
             return view('dashboard');
         }

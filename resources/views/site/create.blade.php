@@ -1,7 +1,7 @@
 @extends('layouts.single_box')
 @php($title="ایجاد سایت جدید")
 @section('content')
-    @if($sites_count)
+    @if(!$allowNewSite)
         <div class="alert alert-warning">
             ضمن تشکر از علاقه مندی شما به سرویس لاراهاست، لازم به ذکر هست که در حال حاضر هر کاربر مجاز به ساخت فقط یک
             سایت می باشد. یقینا پس از اتمام دوره آزمایشی و اعمال هزینه بر روی سرویس، میزبان سایت های شما به تعداد
@@ -97,7 +97,7 @@
 
                 <div class="box-footer">
                     <input type="submit" value="راه اندازی سایت" class="btn btn-primary"
-                           @if($sites_count) disabled @endif/>
+                           @if(!$allowNewSite) disabled @endif/>
                 </div>
             </div>
         </form>
