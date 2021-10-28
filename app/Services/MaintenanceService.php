@@ -46,6 +46,6 @@ class MaintenanceService {
     }
 
     protected function getDownFilePath() {
-        return PathHelper::getSourceDir($this->site->user->email, $this->site->name) . "/storage/framework/down";
+        return $this->site->getSourceDir() . "/storage/framework/down";
     }
 }

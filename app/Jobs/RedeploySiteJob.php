@@ -12,7 +12,7 @@ use App\Services\GitService;
 use App\Services\DeploymentCommandsService;
 use App\Services\ProgressService;
 use App\Services\ReverseProxyService;
-use App\Services\SiteService;
+use App\Services\DeployService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -44,7 +44,7 @@ class RedeploySiteJob implements ShouldQueue {
      */
     public function handle() {
         ProgressService::start("deploy_{$this->site->name}");
-        $site_service = new SiteService($this->site);
+        $site_service = new DeployService($this->site);
         $site_service->reDeploy();
         SiteDeployed::dispatch($this->site);
         ProgressService::finish("deploy_{$this->site->name}");

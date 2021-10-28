@@ -37,7 +37,7 @@ class SiteController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        $user_public_key = PathHelper::getSSHKeysDir(Auth::user()->email) . '/id_rsa.pub';
+        $user_public_key = Auth::user()->getSSHKeysDir() . '/id_rsa.pub';
         $public_key = "";
         if (file_exists($user_public_key)) {
             $public_key = file_get_contents($user_public_key);
@@ -170,7 +170,7 @@ class SiteController extends Controller {
     }
 
     public function env_editor(Site $site) {
-        $source_dir = PathHelper::getSourceDir($site->user->email, $site->name);
+        $source_dir = $site->getSourceDir();
         $env = '';
         if (file_exists($source_dir . '/.env')) {
             $env = file_get_contents($source_dir . '/.env');
@@ -180,8 +180,7 @@ class SiteController extends Controller {
     }
 
     public function handle_env_editor(Request $request, Site $site) {
-        $source_dir = PathHelper::getSourceDir($site->user->email, $site->name);
-        file_put_contents($source_dir . '/.env', $request->env);
+        file_put_contents($site->getSourceDir() . '/.env', $request->env);
         return redirect()->back();
     }
 

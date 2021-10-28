@@ -47,4 +47,15 @@ class User extends Authenticatable {
     public function sites() {
         return $this->hasMany(Site::class);
     }
+
+    public function getSSHKeysDir(): string {
+        if(!is_dir(config('larahost.keys_dir'))){
+            mkdir(config('larahost.keys_dir'));
+        }
+        $user_keys = config('larahost.keys_dir') . '/' . $this->email;
+        if(!is_dir($user_keys)){
+            mkdir($user_keys);
+        }
+        return $user_keys;
+    }
 }
