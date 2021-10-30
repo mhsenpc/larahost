@@ -181,6 +181,7 @@ class SiteController extends Controller {
 
     public function handle_env_editor(Request $request, Site $site) {
         file_put_contents($site->getSourceDir() . '/.env', $request->env);
+        SuperUserAPIService::exec($site->name, 'php artisan config:clear');
         return redirect()->back();
     }
 

@@ -58,22 +58,22 @@ class QueueService {
 
     public function reloadSupervisor(): void {
         // reload supervisor
-        SuperUserAPIService::exec_command($this->site->name, 'supervisorctl reread');
-        SuperUserAPIService::exec_command($this->site->name, 'supervisorctl update');
-        SuperUserAPIService::exec_command($this->site->name, 'supervisorctl start laravel-worker:*');
+        SuperUserAPIService::exec($this->site->name, 'supervisorctl reread');
+        SuperUserAPIService::exec($this->site->name, 'supervisorctl update');
+        SuperUserAPIService::exec($this->site->name, 'supervisorctl start laravel-worker:*');
     }
 
     public function restartSupervisor(): void {
-        SuperUserAPIService::exec_command($this->site->name, 'service supervisor stop');
-        SuperUserAPIService::exec_command($this->site->name, 'service supervisor start');
+        SuperUserAPIService::exec($this->site->name, 'service supervisor stop');
+        SuperUserAPIService::exec($this->site->name, 'service supervisor start');
     }
 
     public function restartWorker(int $id) {
-        SuperUserAPIService::exec_command($this->site->name, "supervisorctl restart worker-$id:");
+        SuperUserAPIService::exec($this->site->name, "supervisorctl restart worker-$id:");
     }
 
     public function getWorkerLog(int $id) {
-        $result = SuperUserAPIService::exec_command($this->site->name, "cat /var/log/worker-$id.log");
+        $result = SuperUserAPIService::exec($this->site->name, "cat /var/log/worker-$id.log");
         if($result['data'])
             return $result['data'];
         else
@@ -81,7 +81,7 @@ class QueueService {
     }
 
     public function getWorkersStatus(){
-        $result = SuperUserAPIService::exec_command($this->site->name, "supervisorctl status");
+        $result = SuperUserAPIService::exec($this->site->name, "supervisorctl status");
         if($result['data'])
             return $result['data'];
         else

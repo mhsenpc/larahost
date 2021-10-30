@@ -17,7 +17,7 @@ class CommandsController extends Controller
     }
 
     public function execCommand(Request $request, Site $site) {
-        $result = SuperUserAPIService::exec_command($site->name, $request->command);
+        $result = SuperUserAPIService::exec($site->name, $request->command);
         CommandHistory::query()->create([
             'user_id' => Auth::id(),
             'site_id' => $site->id,

@@ -28,7 +28,7 @@ class GitService {
     public function cloneRepo(): bool {
         $repo_url = $this->getFullRepoUrl();
         $command = "git clone {$repo_url} .";
-        $output = SuperUserAPIService::exec_command($this->site->name, $command);
+        $output = SuperUserAPIService::exec($this->site->name, $command);
         $this->deploy_log_service->addLog($command, $output['data']);
         return $this->isValidRepo();
     }
@@ -37,7 +37,7 @@ class GitService {
      */
     public function pull() {
         if ($this->isValidRepo()) {
-            $output = SuperUserAPIService::exec_command($this->site->name,'git pull');
+            $output = SuperUserAPIService::exec($this->site->name,'git pull');
             $this->deploy_log_service->addLog("git pull",  $output['data']);
             return true;
         } else {

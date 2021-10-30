@@ -18,7 +18,7 @@ class MaintenanceService {
     }
 
     public function up() {
-        SuperUserAPIService::exec_command($this->site->name, 'php artisan up');
+        SuperUserAPIService::exec($this->site->name, 'php artisan up');
     }
 
     public function down($secret) {
@@ -27,7 +27,7 @@ class MaintenanceService {
             $command .= " --secret=\"$secret\"";
         }
 
-        SuperUserAPIService::exec_command($this->site->name, $command);
+        SuperUserAPIService::exec($this->site->name, $command);
     }
 
     public function isDown() {

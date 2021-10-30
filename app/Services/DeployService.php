@@ -69,7 +69,7 @@ class DeployService {
 
     protected function waitForWakeUp() {
         $i = 0;
-        while (!SuperUserAPIService::exec_command($this->site->name, "ls")['success']) {
+        while (!SuperUserAPIService::exec($this->site->name, "ls")['success']) {
             $i++;
             sleep(2000);
             if ($i > 30) {
