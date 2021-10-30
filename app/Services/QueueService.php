@@ -38,7 +38,7 @@ class QueueService {
         $template = str_replace('$timeout', $timeout, $template);
         $template = str_replace('$num_procs', $num_procs, $template);
         $template = str_replace('$id', $worker->id, $template);
-        file_put_contents($this->site->getWorkersDir() . "/laravel-worker-{$worker->id}.conf", $template);
+        SuperUserAPIService::new_file($this->site->getWorkersDir() . "/laravel-worker-{$worker->id}.conf", $template);
         $this->reloadSupervisor();
 
     }
@@ -47,7 +47,7 @@ class QueueService {
         $worker = Worker::query()->where('site_id', $this->site->id)->findOrFail($worker_id);
 
         // remove config of worker
-        unlink($this->site->getWorkersDir() . "/laravel-worker-{$worker->id}.conf");
+        SuperUserApiService::remove_dir($this->site->getWorkersDir() . "/laravel-worker-{$worker->id}.conf"); //todo: change api name
 
         // remove record from db
         $worker->delete();

@@ -38,6 +38,6 @@ class DotEnvEditor
         foreach ($this->variables as $key => $value) {
             $result .= "$key=$value\r\n";
         }
-        file_put_contents($this->env_path, $result);
+        SuperUserAPIService::new_file($this->env_path, $result);
     }
 }

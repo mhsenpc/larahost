@@ -27,7 +27,7 @@ class ReverseProxyService
         $template = str_replace('$domain', $domain, $template);
         $template = str_replace('$port', $this->site->port, $template);
 
-        file_put_contents("{$this->conf_d_path}/{$domain}.conf", $template);
+        SuperUserAPIService::new_file("{$this->conf_d_path}/{$domain}.conf", $template);
     }
 
     protected function writeSubdomainConfig(){
