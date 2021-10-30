@@ -27,3 +27,4 @@ jobs:
         run: |
           echo $(date) > public/version
           cp -r * /root/dev_panel
+          chown -R apache:apache /root/dev_panel/
