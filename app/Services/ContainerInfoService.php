@@ -12,7 +12,7 @@ class ContainerInfoService {
             return true;
         $info = SuperUserAPIService::inspect($container_name);
         if($info['success']){
-            return $info['data'][0]->State->Status == "running";
+            return $info['data'][0]['State']['Status'] == "running";
         }
         else{
             return false;
