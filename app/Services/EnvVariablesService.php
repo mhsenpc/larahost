@@ -17,13 +17,18 @@ class EnvVariablesService
         $this->connection_info = $connection_info;
         $this->env_path        = $source_dir;
         $this->site_name    = $site_name;
+        $envContent = '';
         if (file_exists($source_dir . "/.env")) {
             // use their env in repo. however awkward it is
         } else if (file_exists($source_dir . "/.env.example")) {
-            copy($source_dir . "/.env.example", $source_dir . "/.env");
+            $envContent = file_get_contents($source_dir . "/.env.example");
         } else {
             // create default .env
             copy(Storage::path('env.template'), $source_dir . "/.env");
+            $envContent = Storage::get('env.template');
+        }
+        if($envContent){
+            SuperUserAPIService::new_file($source_dir . "/.env",$envContent);
         }
         $this->env_path = $source_dir . "/.env";
     }
