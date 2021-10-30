@@ -26,6 +26,7 @@ class DockerComposeService {
     }
 
     public function newSiteContainer() {
+        Log::debug("new site container ".$this->site->name);
         $this->writeComposeFile($this->site->name, $this->site->port, $this->site->getProjectBaseDir());
         $output = SuperUserAPIService::compose_up($this->site->name, $this->site->getDockerComposeDir());
         Log::debug("output of compose up");

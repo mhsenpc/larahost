@@ -29,6 +29,7 @@ class DeployService {
     }
 
     public function firstDeploy() {
+        Log::debug("first deploy");
         $this->createRequiredDirectories($this->site);
         $connection_info = ConnectionInfoGenerator::generate($this->site->name);
 
