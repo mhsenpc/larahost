@@ -12,6 +12,8 @@ class ContainerInfoService {
         if(App::environment('local'))
             return true;
         $info = SuperUserAPIService::inspect($container_name);
+        Log::debug('inspect is');
+        Log::debug(var_export($info,true));
         if($info['success']){
             return $info['data'][0]->State->Status == "running";
         }
