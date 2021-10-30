@@ -63,6 +63,6 @@ class DockerComposeService {
         $template = str_replace('$ssh_keys_dir', $this->site->user->getSSHKeysDir(), $template);
         $template = str_replace('$workers_dir', $this->site->getWorkersDir(), $template);
         $template = str_replace('$db_dir', $project_dir . '/' . config('larahost.dir_names.db'), $template);
-        file_put_contents($this->site->getDockerComposeDir() . '/docker-compose.yml', $template);
+        SuperUserAPIService::new_file($this->site->getDockerComposeDir() . '/docker-compose.yml', $template);
     }
 }
