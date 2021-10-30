@@ -5,9 +5,11 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class SuperUserAPIService {
     protected static function sendApiRequest($functionName, $arguments = []) {
+        Log::debug("superuserapi: $functionName with arguments: ".print_r($arguments,true));
         if (App::environment('local'))
             return true;
         $response = Http::get(config('larahost.super_user_api_url') . '/' . $functionName, $arguments);
