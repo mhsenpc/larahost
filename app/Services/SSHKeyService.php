@@ -17,6 +17,6 @@ class SSHKeyService {
         $keys_dir = $user->getSSHKeysDir();
         $config = "Host *
     StrictHostKeyChecking no";
-        SuperUserAPIService::new_file("$keys_dir/config", $config);
+        SuperUserAPIService::put_contents("$keys_dir/config", $config);
     }
 }

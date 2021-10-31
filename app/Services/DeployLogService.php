@@ -28,7 +28,7 @@ class DeployLogService {
     public function write(bool $success) {
         $dep_logs_dir = $this->site->getDeploymentLogsDir();
         $file_name = date('YmdHis') . '.log';
-        SuperUserAPIService::new_file($dep_logs_dir . '/' . $file_name, $this->getFormattedDeployLog());
+        SuperUserAPIService::put_contents($dep_logs_dir . '/' . $file_name, $this->getFormattedDeployLog());
         Deployment::create([
             'site_id' => $this->site->id,
             'log_file' => $file_name,

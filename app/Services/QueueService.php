@@ -38,7 +38,7 @@ class QueueService {
         $template = str_replace('$timeout', $timeout, $template);
         $template = str_replace('$num_procs', $num_procs, $template);
         $template = str_replace('$id', $worker->id, $template);
-        SuperUserAPIService::new_file($this->site->getWorkersDir() . "/laravel-worker-{$worker->id}.conf", $template);
+        SuperUserAPIService::put_contents($this->site->getWorkersDir() . "/laravel-worker-{$worker->id}.conf", $template);
         $this->reloadSupervisor();
 
     }

@@ -22,12 +22,11 @@ class ReverseProxyService
     }
 
     protected function generateConfig(string $domain) {
-        // todo: use new file api
         $template = Storage::get('nginx_vhost.template');
         $template = str_replace('$domain', $domain, $template);
         $template = str_replace('$port', $this->site->port, $template);
 
-        SuperUserAPIService::new_file("{$this->conf_d_path}/{$domain}.conf", $template);
+        SuperUserAPIService::put_contents("{$this->conf_d_path}/{$domain}.conf", $template);
     }
 
     protected function writeSubdomainConfig(){

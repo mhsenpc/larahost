@@ -180,7 +180,7 @@ class SiteController extends Controller {
     }
 
     public function handle_env_editor(Request $request, Site $site) {
-        SuperUserAPIService::new_file($site->getSourceDir() . '/.env', $request->env);
+        SuperUserAPIService::put_contents($site->getSourceDir() . '/.env', $request->env);
         SuperUserAPIService::exec($site->name, 'php artisan config:clear');
         return redirect()->back();
     }

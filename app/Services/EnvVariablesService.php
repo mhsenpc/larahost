@@ -28,7 +28,7 @@ class EnvVariablesService
             $envContent = Storage::get('env.template');
         }
         if($envContent){
-            SuperUserAPIService::new_file($source_dir . "/.env",$envContent);
+            SuperUserAPIService::put_contents($source_dir . "/.env",$envContent);
         }
         $this->env_path = $source_dir . "/.env";
     }

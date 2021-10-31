@@ -8,11 +8,15 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class SuperUserAPIService {
-    protected static function sendApiRequest($functionName, $arguments = []) {
-        Log::debug("superuserapi: $functionName with arguments: ".print_r($arguments,true));
+    protected static function sendApiRequest($functionName, $arguments = [], string $method = 'get' ) {
         if (App::environment('local'))
             return true;
-        $response = Http::get(config('larahost.super_user_api_url') . '/' . $functionName, $arguments);
+        if($method == 'get'){
+            $response = Http::get(config('larahost.super_user_api_url') . '/' . $functionName, $arguments);
+        }
+        else{
+            $response = Http::post(config('larahost.super_user_api_url') . '/' . $functionName, $arguments);
+        }
         return $response->json();
     }
 
@@ -58,6 +62,10 @@ class SuperUserAPIService {
 
     public static function new_file(string $file_name, string $content) {
         return self::sendApiRequest(__FUNCTION__,compact('file_name','content'));
+    }
+
+    public static function put_contents(string $file_name, string $content) {
+        return self::sendApiRequest(__FUNCTION__,compact('file_name','content'),'post');
     }
 
     public static function bind_domain(string $domain) {
