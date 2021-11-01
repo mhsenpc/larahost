@@ -2,6 +2,13 @@
 
 namespace App\Providers;
 
+use App\Events\Site\Created;
+use App\Events\Site\Creating;
+use App\Events\Site\Deployed;
+use App\Events\Site\Deploying;
+use App\Listeners\SiteCreatedProgress;
+use App\Listeners\SiteCreatingProgress;
+use App\Listeners\SiteDeployingProgress;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -18,6 +25,18 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        Creating::class => [
+            SiteCreatingProgress::class
+        ],
+        Created::class => [
+            SiteCreatedProgress::class
+        ],
+        Deploying::class =>[
+            SiteDeployingProgress::class
+        ],
+        Deployed::class =>[
+            SiteDeployingProgress::class
+        ]
     ];
 
     /**

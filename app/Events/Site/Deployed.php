@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Site;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -10,13 +10,21 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class SiteDeployed implements ShouldBroadcast
+class Deployed
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $site_id;
     public $site_name;
     private $user_id;
+    private $site;
+
+    /**
+     * @return mixed
+     */
+    public function getSite() {
+        return $this->site;
+    }
 
     /**
      * Create a new event instance.
@@ -28,6 +36,7 @@ class SiteDeployed implements ShouldBroadcast
         $this->site_id = $site->id;
         $this->site_name = $site->name;
         $this->user_id = $site->user_id;
+        $this->site = $site;
     }
 
     /**

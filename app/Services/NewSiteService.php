@@ -4,6 +4,8 @@
 namespace App\Services;
 
 
+use App\Events\Site\Creating;
+use App\Events\Site\Deploying;
 use App\Jobs\CreateNewSiteJob;
 use App\Models\Site;
 use App\Models\User;
@@ -16,6 +18,8 @@ class NewSiteService {
     }
 
     public function newSite(string $site_name, string $repo_url, bool $https_credentials, ?string $git_user, ?string $git_password): Site {
+        Creating::dispatch($site_name);
+        Deploying::dispatch($site_name);
         $site = $this->insertSiteRecord($site_name, $repo_url, $https_credentials, $git_user, $git_password);
         CreateNewSiteJob::dispatch($site);
         return $site;

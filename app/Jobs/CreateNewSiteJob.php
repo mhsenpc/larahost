@@ -2,8 +2,10 @@
 
 namespace App\Jobs;
 
-use App\Events\SiteCreated;
-use App\Events\SiteDeployed;
+use App\Events\Site\Created;
+use App\Events\Site\Creating;
+use App\Events\Site\Deployed;
+use App\Events\Site\Deploying;
 use App\Models\Site;
 use App\Services\ConnectionInfoGenerator;
 use App\Services\DeployLogService;
@@ -43,13 +45,8 @@ class CreateNewSiteJob implements ShouldQueue {
      * @return void
      */
     public function handle() {
-        ProgressService::start("create_{$this->site->name}");
-        ProgressService::start("deploy_{$this->site->name}");
+
         $site_service = new DeployService($this->site);
         $site_service->firstDeploy();
-        SiteCreated::dispatch($this->site);
-        SiteDeployed::dispatch($this->site);
-        ProgressService::finish("create_{$this->site->name}");
-        ProgressService::finish("deploy_{$this->site->name}");
     }
 }

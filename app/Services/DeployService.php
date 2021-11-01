@@ -4,6 +4,8 @@
 namespace App\Services;
 
 
+use App\Events\Site\Created;
+use App\Events\Site\Deployed;
 use App\Models\Site;
 use Illuminate\Support\Facades\Log;
 
@@ -51,6 +53,7 @@ class DeployService {
             $this->deploy_log_service->write(false);
             Log::critical("failed to create new container {$this->site->name}");
         }
+        $this->postDeploy();
     }
 
     public function reDeploy() {
@@ -66,6 +69,12 @@ class DeployService {
             $this->deploy_log_service->write(true);
             $this->reverse_proxy_service->writeNginxConfigs();
         }
+        $this->postDeploy();
+    }
+
+    protected function postDeploy(){
+        Created::dispatch($this->site);
+        Deployed::dispatch($this->site);
     }
 
     protected function waitForWakeUp() {

@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Site;
 
-use App\Services\ProgressService;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -11,22 +10,29 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class SiteCreated implements ShouldBroadcast {
+class Deploying
+{
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $site_id;
-    public $site_name;
-    private $user_id;
+    private \App\Models\Site $site;
+
+    /**
+     * @return \App\Models\Site
+     */
+    public function getSite(): \App\Models\Site {
+        return $this->site;
+    }
 
     /**
      * Create a new event instance.
      *
-     * @param $site
+     * @param \App\Models\Site $site
+     * @param string $siteName
+     * @return void
      */
-    public function __construct($site) {
-        $this->site_id = $site->id;
-        $this->site_name = $site->name;
-        $this->user_id = $site->user_id;
+    public function __construct(\App\Models\Site $site)
+    {
+        $this->site = $site;
     }
 
     /**
@@ -34,11 +40,8 @@ class SiteCreated implements ShouldBroadcast {
      *
      * @return \Illuminate\Broadcasting\Channel|array
      */
-    public function broadcastOn() {
-        return new Channel('user-' . $this->user_id);
-    }
-
-    public function broadcastAs() {
-        return 'site.created';
+    public function broadcastOn()
+    {
+        return new PrivateChannel('site-deploying');
     }
 }
