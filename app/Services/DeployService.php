@@ -33,8 +33,8 @@ class DeployService {
     public function firstDeploy() {
         Log::debug("first deploy");
         $this->createRequiredDirectories($this->site);
-        $this->docker_compose_service->newSiteContainer();
-        if ($this->waitForWakeUp()) {
+        $siteContainer =  $this->docker_compose_service->createContainer();
+        if ($siteContainer->waitForWakeUp()) {
             if ($this->git_service->cloneRepo()) {
                 $env_updater = new EnvVariablesService($this->site->getSourceDir() , $this->site->name);
                 $env_updater->updateEnv();
@@ -72,18 +72,6 @@ class DeployService {
     protected function postDeploy(){
         Created::dispatch($this->site);
         Deployed::dispatch($this->site);
-    }
-
-    protected function waitForWakeUp() {
-        $i = 0;
-        while (!SuperUserAPIService::exec($this->site->name, "ls")['success']) {
-            $i++;
-            sleep(2000);
-            if ($i > 30) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public static function createRequiredDirectories(Site $site) {
