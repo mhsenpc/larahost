@@ -6,15 +6,11 @@ namespace App\Services;
 
 use App\Events\Site\Created;
 use App\Events\Site\Deployed;
-use App\Models\Site;
+
 use Illuminate\Support\Facades\Log;
 
 class DeployService {
-    /**
-     * @var Site
-     */
     private $site;
-
     protected $deploy_log_service;
     protected $git_service;
     protected $docker_compose_service;
@@ -23,32 +19,32 @@ class DeployService {
 
     public function __construct(Site $site) {
         $this->site = $site;
-        $this->deploy_log_service = new DeployLogService($this->site);
-        $this->git_service = new GitService($this->site, $this->deploy_log_service);
-        $this->docker_compose_service = new DockerComposeService($this->site);
-        $this->reverse_proxy_service = new ReverseProxyService($this->site);
-        $this->deployment_commands_service = new DeploymentCommandsService($this->site, $this->deploy_log_service);
+        $this->deploy_log_service = new DeployLogService($site->getModel());
+        $this->git_service = new GitService($site->getModel(), $this->deploy_log_service);
+        $this->docker_compose_service = new DockerComposeService($site->getModel());
+        $this->reverse_proxy_service = new ReverseProxyService($site->getModel());
+        $this->deployment_commands_service = new DeploymentCommandsService($site->getModel(), $this->deploy_log_service);
     }
 
     public function firstDeploy() {
         Log::debug("first deploy");
-        $this->createRequiredDirectories($this->site);
+        $this->site->createRequiredDirectories();
         $siteContainer =  $this->docker_compose_service->createContainer();
         if ($siteContainer->waitForWakeUp()) {
             if ($this->git_service->cloneRepo()) {
-                $env_updater = new EnvVariablesService($this->site->getSourceDir() , $this->site->name);
+                $env_updater = new EnvVariablesService($this->site->getModel()->getSourceDir() , $this->site->getName());
                 $env_updater->updateEnv();
                 $this->deployment_commands_service->runFirstDeployCommands();
                 $this->deploy_log_service->write(true);
                 $this->reverse_proxy_service->writeNginxConfigs();
             } else {
-                $this->deploy_log_service->addLog("git clone {$this->site->repo} .", "Failed to clone the repository with the provided credentials");
+                $this->deploy_log_service->addLog("git clone {$this->site->getModel()->repo} .", "Failed to clone the repository with the provided credentials");
                 $this->deploy_log_service->write(false);
             }
         } else {
-            $this->deploy_log_service->addLog("site new {$this->site->name}", "Unable to setup a new site. Contact Administrator");
+            $this->deploy_log_service->addLog("site new {$this->site->getName()}", "Unable to setup a new site. Contact Administrator");
             $this->deploy_log_service->write(false);
-            Log::critical("failed to create new container {$this->site->name}");
+            Log::critical("failed to create new container {$this->site->getName()}");
         }
         $this->postDeploy();
     }
@@ -61,7 +57,7 @@ class DeployService {
         }
 
         if ($valid_repo) {
-            $deployment_commands_service = new DeploymentCommandsService($this->site, $this->deploy_log_service);
+            $deployment_commands_service = new DeploymentCommandsService($this->site->getModel(), $this->deploy_log_service);
             $deployment_commands_service->runDeployCommands();
             $this->deploy_log_service->write(true);
             $this->reverse_proxy_service->writeNginxConfigs();
@@ -70,27 +66,7 @@ class DeployService {
     }
 
     protected function postDeploy(){
-        Created::dispatch($this->site);
-        Deployed::dispatch($this->site);
-    }
-
-    public static function createRequiredDirectories(Site $site) {
-        $repos_dir = config('larahost.repos_dir');
-
-        /*
-         * check if required directories exist
-         */
-        if (!is_dir($repos_dir)) {
-            SuperUserAPIService::new_folder($repos_dir);
-        }
-        if (!is_dir($repos_dir . '/' . $site->user->email)) {
-            SuperUserAPIService::new_folder($repos_dir . '/' . $site->user->email);
-        }
-
-        SuperUserAPIService::new_folder($site->getProjectBaseDir());
-        SuperUserAPIService::new_folder($site->getSourceDir());
-        SuperUserAPIService::new_folder($site->getDeploymentLogsDir());
-        SuperUserAPIService::new_folder($site->getDockerComposeDir());
-        SuperUserAPIService::new_folder($site->getWorkersDir());
+        Created::dispatch($this->site->getModel());
+        Deployed::dispatch($this->site->getModel());
     }
 }

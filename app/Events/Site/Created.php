@@ -2,11 +2,9 @@
 
 namespace App\Events\Site;
 
+use App\Models\Site;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
@@ -20,22 +18,22 @@ class Created
     private $site;
 
     /**
-     * @return mixed
-     */
-    public function getSite() {
-        return $this->site;
-    }
-
-    /**
      * Create a new event instance.
      *
      * @param $site
      */
-    public function __construct($site) {
+    public function __construct(Site $site) {
         $this->site_id = $site->id;
         $this->site_name = $site->name;
         $this->user_id = $site->user_id;
         $this->site = $site;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSite() {
+        return $this->site;
     }
 
     /**

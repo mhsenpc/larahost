@@ -158,7 +158,8 @@ class SiteController extends Controller {
         }
     }
 
-    public function redeploy(Site $site) {
+    public function redeploy(Site $siteModel) {
+        $site = new \App\Services\Site($siteModel);
         RedeploySiteJob::dispatch($site);
         return redirect()->back();
     }
@@ -195,9 +196,10 @@ class SiteController extends Controller {
         $request->validate([
             'token' => 'required|exists:sites,deploy_token'
         ]);
-        $site = Site::query()->withoutGlobalScopes()->where('deploy_token', $request->token)->firstOrFail();
+        $siteModel = Site::query()->withoutGlobalScopes()->where('deploy_token', $request->token)->firstOrFail();
+        $site = new \App\Services\Site($siteModel);
         RedeploySiteJob::dispatch($site);
-        return response()->json(['success' => true, 'message' => 'Deployment started for site ' . $site->name]);
+        return response()->json(['success' => true, 'message' => 'Deployment started for site ' . $site->getName()]);
     }
 
     public function maintenanceUp(Site $site) {

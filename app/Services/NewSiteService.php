@@ -7,7 +7,6 @@ namespace App\Services;
 use App\Events\Site\Creating;
 use App\Events\Site\Deploying;
 use App\Jobs\CreateNewSiteJob;
-use App\Models\Site;
 use App\Models\User;
 
 class NewSiteService {
@@ -20,7 +19,8 @@ class NewSiteService {
     public function newSite(string $site_name, string $repo_url, bool $https_credentials, ?string $git_user, ?string $git_password): Site {
         Creating::dispatch($site_name);
         Deploying::dispatch($site_name);
-        $site = $this->insertSiteRecord($site_name, $repo_url, $https_credentials, $git_user, $git_password);
+        $siteModel = $this->insertSiteRecord($site_name, $repo_url, $https_credentials, $git_user, $git_password);
+        $site = new Site($siteModel);
         CreateNewSiteJob::dispatch($site);
         return $site;
     }
@@ -30,7 +30,7 @@ class NewSiteService {
      * @param string $repo_url
      * @return mixed
      */
-    public function insertSiteRecord(string $site_name, string $repo_url, bool $https_credentials, ?string $git_user, ?string $git_password) {
+    protected function insertSiteRecord(string $site_name, string $repo_url, bool $https_credentials, ?string $git_user, ?string $git_password):\App\Models\Site {
         $deploy_commands = implode("\r\n", config('larahost.deploy_commands'));
 
         $data = [
@@ -45,7 +45,7 @@ class NewSiteService {
             $data['git_user'] = $git_user;
             $data['git_password'] = $git_password;
         }
-        $site = Site::create($data);
-        return $site;
+        $siteModel = \App\Models\Site::create($data);
+        return $siteModel;
     }
 }
