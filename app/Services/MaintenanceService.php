@@ -10,7 +10,7 @@ class MaintenanceService {
     /**
      * @var Site
      */
-    private $site;
+    protected $site;
 
     public function __construct(\App\Models\Site $site) {
 

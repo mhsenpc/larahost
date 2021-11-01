@@ -21,10 +21,6 @@ class DockerComposeService {
         $this->site = $site;
     }
 
-    public function setConnectionInfo(ConnectionInfo $connectionInfo) {
-        $this->connection_info = $connectionInfo;
-    }
-
     public function newSiteContainer() {
         Log::debug("new site container ".$this->site->name);
         $this->writeComposeFile($this->site->name, $this->site->port, $this->site->getProjectBaseDir());
@@ -56,10 +52,11 @@ class DockerComposeService {
      * @param string $project_dir
      */
     public function writeComposeFile(string $name, int $port, string $project_dir) {
+        $connection_info = ConnectionInfo::getInstance($this->site->name);
         $template = Storage::get('docker_compose.template');
         $template = str_replace('$project_name', $name, $template);
         $template = str_replace('$port', $port, $template);
-        $template = str_replace('$db_password', $this->connection_info->db_password, $template);
+        $template = str_replace('$db_password', $connection_info->getDbPassword() , $template);
         $template = str_replace('$source_dir', $this->site->getSourceDir(), $template);
         $template = str_replace('$ssh_keys_dir', $this->site->user->getSSHKeysDir(), $template);
         $template = str_replace('$workers_dir', $this->site->getWorkersDir(), $template);

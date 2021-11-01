@@ -33,13 +33,10 @@ class DeployService {
     public function firstDeploy() {
         Log::debug("first deploy");
         $this->createRequiredDirectories($this->site);
-        $connection_info = ConnectionInfoGenerator::generate($this->site->name);
-
-        $this->docker_compose_service->setConnectionInfo($connection_info);
         $this->docker_compose_service->newSiteContainer();
         if ($this->waitForWakeUp()) {
             if ($this->git_service->cloneRepo()) {
-                $env_updater = new EnvVariablesService($this->site->getSourceDir() , $this->site->name, $connection_info);
+                $env_updater = new EnvVariablesService($this->site->getSourceDir() , $this->site->name);
                 $env_updater->updateEnv();
                 $this->deployment_commands_service->runFirstDeployCommands();
                 $this->deploy_log_service->write(true);

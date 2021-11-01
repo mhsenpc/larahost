@@ -9,12 +9,10 @@ use Illuminate\Support\Facades\Storage;
 
 class EnvVariablesService
 {
-    protected $connection_info;
     protected $env_path;
-    private $site_name;
+    private  $site_name;
 
-    public function __construct(string $source_dir, string $site_name, ConnectionInfo $connection_info) {
-        $this->connection_info = $connection_info;
+    public function __construct(string $source_dir, string $site_name) {
         $this->env_path        = $source_dir;
         $this->site_name    = $site_name;
         $envContent = '';
@@ -35,6 +33,7 @@ class EnvVariablesService
 
     public function updateEnv() {
         $env_editor = new DotEnvEditor($this->env_path);
+        $connection_info = ConnectionInfo::getInstance($this->site_name);
 
         // app name
         $env_editor->changeKey('APP_NAME', $this->site_name);
@@ -42,12 +41,12 @@ class EnvVariablesService
         $env_editor->changeKey('APP_URL', "http://{$this->site_name}.lara-host.ir");
 
         // db connection info
-        $env_editor->changeKey('DB_CONNECTION', $this->connection_info->db_connection);
-        $env_editor->changeKey('DB_HOST', $this->connection_info->db_host);
-        $env_editor->changeKey('DB_PORT', $this->connection_info->db_port);
-        $env_editor->changeKey('DB_DATABASE', $this->connection_info->db_name);
-        $env_editor->changeKey('DB_USERNAME', $this->connection_info->db_username);
-        $env_editor->changeKey('DB_PASSWORD', $this->connection_info->db_password);
+        $env_editor->changeKey('DB_CONNECTION', $connection_info->getDbConnection());
+        $env_editor->changeKey('DB_HOST', $connection_info->getDbHost());
+        $env_editor->changeKey('DB_PORT', $connection_info->getDbPort());
+        $env_editor->changeKey('DB_DATABASE', $connection_info->getDbName());
+        $env_editor->changeKey('DB_USERNAME', $connection_info->getDbUsername());
+        $env_editor->changeKey('DB_PASSWORD', $connection_info->getDbPassword());
         $env_editor->changeKey('CACHE_DRIVER', 'redis');
         $env_editor->changeKey('SESSION_DRIVER', 'redis');
         $env_editor->changeKey('REDIS_HOST', "{$this->site_name}_redis");
