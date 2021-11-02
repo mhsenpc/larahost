@@ -52,7 +52,7 @@ class Site implements SiteInterface {
     }
 
     public function getApplication(): ApplicationInterface {
-        return new Laravel($this->getName(),$this->getFilesystem());
+        return new Laravel($this->getName(), $this->getFilesystem(), $this->getContainer()->getSupervisor());
     }
 
     public function getDomain(): DomainInterface {

@@ -44,4 +44,8 @@ class Container implements ContainerInterface {
         }
         return true;
     }
+
+    public function getSupervisor(): Supervisor {
+        return new Supervisor($this->siteName);
+    }
 }

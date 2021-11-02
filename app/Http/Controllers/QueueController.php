@@ -58,19 +58,19 @@ class QueueController extends Controller {
 
     public function restartSupervisor(Request $request, Site $siteModel) {
         $site = new \App\Services\Site($siteModel);
-        $site->getApplication()->getQueue()->restartSupervisor();
+        $site->getContainer()->getSupervisor()->restart();
         return redirect()->back();
     }
 
     public function restartWorker(Site $siteModel, int $worker_id){
         $site = new \App\Services\Site($siteModel);
-        $site->getApplication()->getQueue()->restartWorker($worker_id);
+        $site->getContainer()->getSupervisor()->restartWorker($worker_id);
         return redirect()->back();
     }
 
     public function getWorkersStatus(Site $siteModel){
         $site = new \App\Services\Site($siteModel);
-        return $site->getApplication()->getQueue()->getWorkersStatus();
+        return $site->getContainer()->getSupervisor()->getStatus();
     }
 
     public function getWorkerLog(Site $siteModel,int $worker_id){

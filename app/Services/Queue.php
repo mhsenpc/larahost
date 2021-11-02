@@ -13,10 +13,12 @@ class Queue {
      */
     private string $siteName;
     private string $workersDir;
+    private Supervisor $supervisor;
 
-    public function __construct(string $siteName, string $workersDir) {
+    public function __construct(string $siteName, string $workersDir, \App\Services\Supervisor $supervisor) {
         $this->siteName = $siteName;
         $this->workersDir = $workersDir;
+        $this->supervisor = $supervisor;
     }
 
     public function createWorker(int $siteId, string $connection, string $queue, int $sleep, int $tries, int $timeout, int $num_procs) {
@@ -41,7 +43,7 @@ class Queue {
         $template = str_replace('$num_procs', $num_procs, $template);
         $template = str_replace('$id', $worker->id, $template);
         SuperUserAPIService::put_contents($this->workersDir . "/laravel-worker-{$worker->id}.conf", $template);
-        $this->reloadSupervisor();
+        $this->supervisor->reload();
 
     }
 
@@ -55,24 +57,7 @@ class Queue {
         $worker->delete();
 
         // reload supervisor
-        $this->reloadSupervisor();
-    }
-
-    //todo: move supervisor functions to container
-    protected function reloadSupervisor(): void {
-        // reload supervisor
-        SuperUserAPIService::exec($this->siteName, 'supervisorctl reread');
-        SuperUserAPIService::exec($this->siteName, 'supervisorctl update');
-        SuperUserAPIService::exec($this->siteName, 'supervisorctl start laravel-worker:*');
-    }
-
-    public function restartSupervisor(): void {
-        SuperUserAPIService::exec($this->siteName, 'service supervisor stop');
-        SuperUserAPIService::exec($this->siteName, 'service supervisor start');
-    }
-
-    public function restartWorker(int $id) {
-        SuperUserAPIService::exec($this->siteName, "supervisorctl restart worker-$id:");
+        $this->supervisor->reload();
     }
 
     public function getWorkerLog(int $id) {
@@ -81,13 +66,5 @@ class Queue {
             return $result['data'];
         else
             return "No contents yet";
-    }
-
-    public function getWorkersStatus(){
-        $result = SuperUserAPIService::exec($this->siteName, "supervisorctl status");
-        if($result['data'])
-            return $result['data'];
-        else
-            return "No workers is running";
     }
 }
