@@ -32,8 +32,7 @@ class DeployService {
             $gitPass = $this->site->getModel()->git_password;
             $repoUrl = $this->site->getModel()->repo;
             if ($this->site->getRepository()->cloneRepo($repoUrl,$gitUser,$gitPass) ) {
-                $env_updater = new EnvVariablesService($this->site->getModel()->getSourceDir() , $this->site->getName());
-                $env_updater->updateEnv();
+                $this->site->getApplication()->initializeEnvVariables();
                 $this->deployment_commands_service->runFirstDeployCommands();
                 DeployLogger::write(true);
                 $this->reverse_proxy_service->writeNginxConfigs();
