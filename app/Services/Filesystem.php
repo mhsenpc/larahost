@@ -42,4 +42,24 @@ class Filesystem implements FileSystemInterface {
     public function getWorkersDir() {
         return $this->getProjectBaseDir() . '/' . config('larahost.dir_names.workers');
     }
+
+    public function createRequiredDirectories() {
+        $repos_dir = config('larahost.repos_dir');
+
+        /*
+         * check if required directories exist
+         */
+        if (!is_dir($repos_dir)) {
+            SuperUserAPIService::new_folder($repos_dir);
+        }
+        if (!is_dir($repos_dir . '/' . $this->userDir)) {
+            SuperUserAPIService::new_folder($repos_dir . '/' . $this->userDir);
+        }
+
+        SuperUserAPIService::new_folder($this->getProjectBaseDir());
+        SuperUserAPIService::new_folder($this->getSourceDir());
+        SuperUserAPIService::new_folder($this->getDeploymentLogsDir());
+        SuperUserAPIService::new_folder($this->getDockerComposeDir());
+        SuperUserAPIService::new_folder($this->getWorkersDir());
+    }
 }

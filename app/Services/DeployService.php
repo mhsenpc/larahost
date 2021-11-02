@@ -28,7 +28,7 @@ class DeployService {
 
     public function firstDeploy() {
         Log::debug("first deploy");
-        $this->site->createRequiredDirectories();
+        $this->site->getFilesystem()->createRequiredDirectories();
         $siteContainer =  $this->docker_compose_service->createContainer();
         if ($siteContainer->waitForWakeUp()) {
             if ($this->git_service->cloneRepo()) {

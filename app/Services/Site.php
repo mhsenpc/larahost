@@ -40,28 +40,8 @@ class Site implements SiteInterface, ApplicationableInterface {
         return $this->model->user;
     }
 
-    public function createRequiredDirectories() {
-        $repos_dir = config('larahost.repos_dir');
-
-        /*
-         * check if required directories exist
-         */
-        if (!is_dir($repos_dir)) {
-            SuperUserAPIService::new_folder($repos_dir);
-        }
-        if (!is_dir($repos_dir . '/' . $this->getModel()->user->email)) {
-            SuperUserAPIService::new_folder($repos_dir . '/' . $this->getModel()->user->email);
-        }
-
-        SuperUserAPIService::new_folder($this->getModel()->getProjectBaseDir());
-        SuperUserAPIService::new_folder($this->getModel()->getSourceDir());
-        SuperUserAPIService::new_folder($this->getModel()->getDeploymentLogsDir());
-        SuperUserAPIService::new_folder($this->getModel()->getDockerComposeDir());
-        SuperUserAPIService::new_folder($this->getModel()->getWorkersDir());
-    }
-
     public function getFilesystem(): FileSystemInterface {
-        // TODO: Implement getFilesystem() method.
+        return new Filesystem($this->getUser()->email,$this->getName());
     }
 
     public function getRepository(): RepositoryInterface {
