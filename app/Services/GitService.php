@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Models\Site;
+use App\Singleton\DeployLogger;
 use Illuminate\Support\Facades\Log;
 use \CzProject\GitPhp\Git;
 
@@ -14,22 +15,20 @@ class GitService {
      * @var Site
      */
     private $site;
-    /**
-     * @var DeployLogService
-     */
-    protected $deploy_log_service;
 
-    public function __construct(Site $site, DeployLogService $deploy_log_service) {
+    protected $deployLogger;
+
+    public function __construct(Site $site) {
         $this->site = $site;
         $this->source_dir = $this->site->getSourceDir();
-        $this->deploy_log_service = $deploy_log_service;
+        $this->deployLogger = DeployLogger::getInstance($this->site);
     }
 
     public function cloneRepo(): bool {
         $repo_url = $this->getFullRepoUrl();
         $command = "git clone {$repo_url} .";
         $output = SuperUserAPIService::exec($this->site->name, $command);
-        $this->deploy_log_service->addLog($command, $output['data']);
+        $this->deployLogger->addLog($command, $output['data']);
         return $this->isValidRepo();
     }
 
@@ -38,7 +37,7 @@ class GitService {
     public function pull() {
         if ($this->isValidRepo()) {
             $output = SuperUserAPIService::exec($this->site->name,'git pull');
-            $this->deploy_log_service->addLog("git pull",  $output['data']);
+            $this->deployLogger->addLog("git pull",  $output['data']);
             return true;
         } else {
             return false;

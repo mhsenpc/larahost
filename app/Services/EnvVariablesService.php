@@ -4,7 +4,7 @@
 namespace App\Services;
 
 
-use App\Classes\ConnectionInfo;
+use App\Singleton\ConnectionInfo;
 use Illuminate\Support\Facades\Storage;
 
 class EnvVariablesService

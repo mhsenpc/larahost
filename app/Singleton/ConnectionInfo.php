@@ -1,13 +1,14 @@
 <?php
 
 
-namespace App\Classes;
+namespace App\Singleton;
 
 
 use Illuminate\Support\Str;
 
 class ConnectionInfo
 {
+    //todo: fix this singleton
     protected static $instance;
 
     public $db_connection;

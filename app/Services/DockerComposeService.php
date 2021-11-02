@@ -4,7 +4,7 @@
 namespace App\Services;
 
 
-use App\Classes\ConnectionInfo;
+use App\Singleton\ConnectionInfo;
 use App\Models\Site;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;

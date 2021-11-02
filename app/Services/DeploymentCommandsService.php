@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Models\Deployment;
 use App\Models\Site;
+use App\Singleton\DeployLogger;
 use Illuminate\Support\Facades\Log;
 
 class DeploymentCommandsService {
@@ -15,22 +16,20 @@ class DeploymentCommandsService {
     protected $site;
 
     protected $commands = [];
-    /**
-     * @var DeployLogService
-     */
-    protected $deploy_log_service;
 
-    public function __construct(Site $site, DeployLogService $deploy_log_service) {
+    protected $deployLogger;
+
+    public function __construct(Site $site) {
         $this->site = $site;
         $this->commands = preg_split("/\r\n|\n|\r/", $this->site->deploy_commands);
-        $this->deploy_log_service = $deploy_log_service;
+        $this->deployLogger = DeployLogger::getInstance($this->site);
     }
 
     public function runDeployCommands() {
         Log::debug("runDeployCommands");
         foreach ($this->commands as $command) {
             $output = SuperUserAPIService::exec($this->site->name, $command);
-            $this->deploy_log_service->addLog($command, $output['data']);
+            $this->deployLogger->addLog($command, $output['data']);
             Log::debug($output['data']);
         }
     }
