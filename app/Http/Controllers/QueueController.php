@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Site;
 use App\Models\Worker;
-use App\Services\PathHelper;
-use App\Services\QueueService;
-use App\Services\SuperUserAPIService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+
 
 class QueueController extends Controller {
     public function index(Request $request, Site $site) {
@@ -16,7 +13,7 @@ class QueueController extends Controller {
         return view('site.workers', compact('workers','site'));
     }
 
-    public function createWorker(Request $request, Site $site) {
+    public function createWorker(Request $request, Site $siteModel) {
         $request->validate([
             'timeout' => 'nullable|numeric',
             'sleep' => 'nullable|numeric',
@@ -48,36 +45,36 @@ class QueueController extends Controller {
             $request->tries = 1;
         }
 
-        $queue_service = new QueueService($site);
-        $queue_service->createWorker($request->connection, $request->queue, $request->sleep, $request->tries, $request->timeout, $request->num_procs);
+        $site = new \App\Services\Site($siteModel);
+        $site->getApplication()->getQueue()->createWorker($siteModel->id, $request->connection, $request->queue, $request->sleep, $request->tries, $request->timeout, $request->num_procs);
         return redirect()->back();
     }
 
-    public function removeWorker(Site $site,int $worker_id) {
-        $queue_service = new QueueService($site);
-        $queue_service->removeWorker($worker_id);
+    public function removeWorker(Site $siteModel, int $worker_id) {
+        $site = new \App\Services\Site($siteModel);
+        $site->getApplication()->getQueue()->removeWorker($siteModel->id, $worker_id);
         return redirect()->back();
     }
 
-    public function restartSupervisor(Request $request, Site $site) {
-        $queue_service = new QueueService($site);
-        $queue_service->restartSupervisor();
+    public function restartSupervisor(Request $request, Site $siteModel) {
+        $site = new \App\Services\Site($siteModel);
+        $site->getApplication()->getQueue()->restartSupervisor();
         return redirect()->back();
     }
 
-    public function restartWorker(Site $site,int $worker_id){
-        $queue_service = new QueueService($site);
-        $queue_service->restartWorker($worker_id);
+    public function restartWorker(Site $siteModel, int $worker_id){
+        $site = new \App\Services\Site($siteModel);
+        $site->getApplication()->getQueue()->restartWorker($worker_id);
         return redirect()->back();
     }
 
-    public function getWorkersStatus(Site $site){
-        $queue_service = new QueueService($site);
-        return $queue_service->getWorkersStatus();
+    public function getWorkersStatus(Site $siteModel){
+        $site = new \App\Services\Site($siteModel);
+        return $site->getApplication()->getQueue()->getWorkersStatus();
     }
 
-    public function getWorkerLog(Site $site,int $worker_id){
-        $queue_service = new QueueService($site);
-        return $queue_service->getWorkerLog($worker_id);
+    public function getWorkerLog(Site $siteModel,int $worker_id){
+        $site = new \App\Services\Site($siteModel);
+        return $site->getApplication()->getQueue()->getWorkerLog($worker_id);
     }
 }

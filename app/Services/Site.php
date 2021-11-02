@@ -4,7 +4,6 @@
 namespace App\Services;
 
 
-use App\Contracts\ApplicationableInterface;
 use App\Contracts\ApplicationInterface;
 use App\Contracts\ContainerInterface;
 use App\Contracts\DomainInterface;
@@ -13,11 +12,11 @@ use App\Contracts\RepositoryInterface;
 use App\Contracts\SiteInterface;
 use App\Models\User;
 
-class Site implements SiteInterface, ApplicationableInterface {
+class Site implements SiteInterface {
     private \App\Models\Site $model;
 
-    public function __construct(\App\Models\Site $model) {
-        $this->model = $model;
+    public function __construct(\App\Models\Site $modelModel) {
+        $this->model = $modelModel;
     }
 
     public static function createFromSiteId(int $id): Site {
@@ -53,7 +52,7 @@ class Site implements SiteInterface, ApplicationableInterface {
     }
 
     public function getApplication(): ApplicationInterface {
-        // TODO: Implement getApplication() method.
+        return new Laravel($this->getName(),$this->getFilesystem()->getWorkersDir());
     }
 
     public function getDomain(): DomainInterface {
