@@ -4,19 +4,41 @@
 namespace App\Services;
 
 
-class Container {
-    private string $siteName;
+use App\Contracts\ContainerInterface;
+use Illuminate\Support\Facades\Log;
 
-    public function __construct(string $siteName) {
+class Container implements ContainerInterface {
+    private string $siteName;
+    private \App\Contracts\FileSystemInterface $fileSystem;
+
+    public function __construct(string $siteName, \App\Contracts\FileSystemInterface $fileSystem) {
         $this->siteName = $siteName;
+        $this->fileSystem = $fileSystem;
     }
 
-    public function waitForWakeUp() {
+    public function rebuildContainers() {
+        $this->down();
+        $this->up();
+    }
+
+    public function up() {
+        $output = SuperUserAPIService::compose_up($this->siteName, $this->fileSystem->getDockerComposeDir());
+        Log::debug("docker compose start");
+        Log::debug($output);
+    }
+
+    public function down() {
+        $output = SuperUserAPIService::compose_down($this->siteName, $this->fileSystem->getDockerComposeDir());
+        Log::debug("docker compose stop");
+        Log::debug($output);
+    }
+
+    public function waitForWakeUp(int $maxTries = 30) {
         $i = 0;
         while (!SuperUserAPIService::exec($this->siteName, "ls")['success']) {
             $i++;
-            sleep(2000);
-            if ($i > 30) {
+            sleep(2);
+            if ($i > $maxTries) {
                 return false;
             }
         }

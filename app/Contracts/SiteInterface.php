@@ -5,9 +5,8 @@ namespace App\Contracts;
 
 
 interface SiteInterface {
-    public function start();
-    public function stop();
-
-    public function queue():QueueInterface;
-
+    public function getFilesystem():FileSystemInterface;
+    public function getRepository():RepositoryInterface;
+    public function getContainer():ContainerInterface;
+    public function getDomain():DomainInterface;
 }

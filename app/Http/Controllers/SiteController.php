@@ -131,9 +131,9 @@ class SiteController extends Controller {
         return redirect(route('sites.index'));
     }
 
-    public function factoryReset(Site $site) {
-        $docker_compose_service = new DockerComposeService($site);
-        $docker_compose_service->rebuildContainers();
+    public function factoryReset(Site $siteModel) {
+        $site = new \App\Services\Site($siteModel);
+        $site->getContainer()->rebuildContainers();
         return redirect()->back();
     }
 

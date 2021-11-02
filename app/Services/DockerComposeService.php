@@ -27,24 +27,7 @@ class DockerComposeService {
         $output = SuperUserAPIService::compose_up($this->site->name, $this->site->getDockerComposeDir());
         Log::debug("output of compose up");
         Log::debug($output);
-        return New Container($this->site->name);
-    }
-
-    public function up() {
-        $output = SuperUserAPIService::compose_up($this->site->name, $this->site->getDockerComposeDir());
-        Log::debug("docker compose start");
-        Log::debug($output);
-    }
-
-    public function down() {
-        $output = SuperUserAPIService::compose_down($this->site->name, $this->site->getDockerComposeDir());
-        Log::debug("docker compose stop");
-        Log::debug($output);
-    }
-
-    public function rebuildContainers() {
-        $this->down();
-        $this->up();
+        return (new \App\Services\Site($this->site))->getContainer();
     }
 
     /**
