@@ -12,14 +12,12 @@ use Illuminate\Support\Facades\Log;
 
 class DeployService {
     private $site;
-    protected $git_service;
     protected $docker_compose_service;
     protected $reverse_proxy_service;
     protected $deployment_commands_service;
 
     public function __construct(Site $site) {
         $this->site = $site;
-        $this->git_service = new GitService($site->getModel());
         $this->docker_compose_service = new DockerComposeService($site->getModel());
         $this->reverse_proxy_service = new ReverseProxyService($site->getModel());
         $this->deployment_commands_service = new DeploymentCommandsService($site->getModel());
@@ -30,7 +28,10 @@ class DeployService {
         $this->site->getFilesystem()->createRequiredDirectories();
         $siteContainer =  $this->docker_compose_service->createContainer();
         if ($siteContainer->waitForWakeUp()) {
-            if ($this->git_service->cloneRepo()) {
+            $gitUser = $this->site->getModel()->git_user;
+            $gitPass = $this->site->getModel()->git_password;
+            $repoUrl = $this->site->getModel()->repo;
+            if ($this->site->getRepository()->cloneRepo($repoUrl,$gitUser,$gitPass) ) {
                 $env_updater = new EnvVariablesService($this->site->getModel()->getSourceDir() , $this->site->getName());
                 $env_updater->updateEnv();
                 $this->deployment_commands_service->runFirstDeployCommands();
@@ -49,10 +50,14 @@ class DeployService {
     }
 
     public function reDeploy() {
+        $repoUrl = $this->site->getModel()->repo;
+        $gitUser = $this->site->getModel()->git_user;
+        $gitPass = $this->site->getModel()->git_password;
+
         // try pull. if there were any problems with pull, let's clone repo again
-        $valid_repo = $this->git_service->pull();
+        $valid_repo = $this->site->getRepository()->pull();
         if (!$valid_repo) {
-            $valid_repo = $this->git_service->cloneRepo();
+            $valid_repo = $this->site->getRepository()->cloneRepo($repoUrl,$gitUser,$gitPass);
         }
 
         if ($valid_repo) {

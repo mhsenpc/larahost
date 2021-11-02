@@ -20,7 +20,7 @@ class Site implements SiteInterface, ApplicationableInterface {
         $this->model = $model;
     }
 
-    public static function createFromSiteId(int $id):Site{
+    public static function createFromSiteId(int $id): Site {
         $siteModel = \App\Models\Site::find($id);
         return new Site($siteModel);
     }
@@ -41,15 +41,15 @@ class Site implements SiteInterface, ApplicationableInterface {
     }
 
     public function getFilesystem(): FileSystemInterface {
-        return new Filesystem($this->getUser()->email,$this->getName());
+        return new Filesystem($this->getUser()->email, $this->getName());
     }
 
     public function getRepository(): RepositoryInterface {
-        // TODO: Implement getRepository() method.
+        return new Repository($this->getModel(), $this->getName(), $this->getFilesystem()->getSourceDir());
     }
 
     public function getContainer(): ContainerInterface {
-        return new Container($this->getName(),$this->getFilesystem());
+        return new Container($this->getName(), $this->getFilesystem());
     }
 
     public function getApplication(): ApplicationInterface {
