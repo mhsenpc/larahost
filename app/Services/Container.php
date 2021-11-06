@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Contracts\ContainerInterface;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 
 class Container implements ContainerInterface {
@@ -47,5 +48,18 @@ class Container implements ContainerInterface {
 
     public function getSupervisor(): Supervisor {
         return new Supervisor($this->siteName);
+    }
+
+    public function isRunning():bool{
+        if(App::environment('local'))
+            return true;
+        $info = SuperUserAPIService::inspect($this->siteName);
+        if($info['success']){
+            $data = json_decode($info['data']);
+            return $data[0]->State->Status == "running";
+        }
+        else{
+            return false;
+        }
     }
 }

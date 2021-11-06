@@ -6,19 +6,17 @@ namespace App\Services;
 
 use App\Models\Site;
 
-class MaintenanceService {
-    /**
-     * @var Site
-     */
-    protected $site;
+class Maintenance {
+    private string $siteName;
+    private string $sourceDir;
 
-    public function __construct(\App\Models\Site $site) {
-
-        $this->site = $site;
+    public function __construct(string $siteName, string $sourceDir) {
+        $this->siteName = $siteName;
+        $this->sourceDir = $sourceDir;
     }
 
     public function up() {
-        SuperUserAPIService::exec($this->site->name, 'php artisan up');
+        SuperUserAPIService::exec($this->siteName, 'php artisan up');
     }
 
     public function down($secret) {
@@ -27,7 +25,7 @@ class MaintenanceService {
             $command .= " --secret=\"$secret\"";
         }
 
-        SuperUserAPIService::exec($this->site->name, $command);
+        SuperUserAPIService::exec($this->siteName, $command);
     }
 
     public function isDown() {
@@ -46,6 +44,6 @@ class MaintenanceService {
     }
 
     protected function getDownFilePath() {
-        return $this->site->getSourceDir() . "/storage/framework/down";
+        return $this->sourceDir . "/storage/framework/down";
     }
 }

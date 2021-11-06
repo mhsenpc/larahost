@@ -3,18 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\RedeploySiteJob;
-use App\Models\CommandHistory;
 use App\Models\Deployment;
-use App\Models\Domain;
 use App\Models\Site;
-use App\Services\DockerComposeService;
-use App\Services\MaintenanceService;
-use App\Services\PathHelper;
 use App\Services\ReservedNamesService;
-use App\Services\SiteDestroyerService;
-use App\Services\NewSiteService;
+use App\Services\SiteFactory;
 use App\Services\SuperUserAPIService;
-use App\Services\TokenCreatorService;
+use App\Services\TokenGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -80,8 +74,8 @@ class SiteController extends Controller {
         }
 
 
-        $new_site_service = (new NewSiteService(Auth::user()));
-        $site = $new_site_service->newSite($request->name, $request->repo, !empty($request->manual_credentials), $request->username, $request->password);
+        $new_site_service = (new SiteFactory(Auth::user()));
+        $site = $new_site_service->getSite($request->name, $request->repo, !empty($request->manual_credentials), $request->username, $request->password);
         return redirect(route('sites.index'));
     }
 
@@ -92,9 +86,9 @@ class SiteController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show(Site $site) {
-        $maintance_service = new MaintenanceService($site);
-        $maintenace_status = $maintance_service->isDown();
-        $maintenace_secret = $maintance_service->getSecret();
+        $siteObj = new \App\Services\Site($site);
+        $maintenace_status = $siteObj->getApplication()->getMaintenance()->isDown();
+        $maintenace_secret = $siteObj->getApplication()->getMaintenance()->getSecret();
         return view('site.show', compact('site', 'maintenace_status', 'maintenace_secret'));
     }
 
@@ -122,12 +116,12 @@ class SiteController extends Controller {
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Site $site
+     * @param \App\Models\Site $siteModle
      * @return \Illuminate\Http\Response
      */
-    public function remove(Site $site) {
-        $site_destroyer = new SiteDestroyerService($site);
-        $site_destroyer->destroy();
+    public function remove(Site $siteModel) {
+        $site= new \App\Services\Site($siteModel);
+        $site->destroy();
         return redirect(route('sites.index'));
     }
 
@@ -171,23 +165,20 @@ class SiteController extends Controller {
     }
 
     public function env_editor(Site $site) {
-        $source_dir = $site->getSourceDir();
-        $env = '';
-        if (file_exists($source_dir . '/.env')) {
-            $env = file_get_contents($source_dir . '/.env');
-        }
+        $siteObj = new \App\Services\Site($site);
+        $env = $siteObj->getApplication()->getEnvFile();
 
         return view('site.env_editor', compact('site', 'env'));
     }
 
-    public function handle_env_editor(Request $request, Site $site) {
-        SuperUserAPIService::put_contents($site->getSourceDir() . '/.env', $request->env);
-        SuperUserAPIService::exec($site->name, 'php artisan config:clear');
+    public function handle_env_editor(Request $request, Site $siteModel) {
+        $site = new \App\Services\Site($siteModel);
+        $site->getApplication()->updateEnvFile($request->env);
         return redirect()->back();
     }
 
     public function regenerateDeployToken(Site $site) {
-        $site->deploy_token = TokenCreatorService::generateDeployToken();
+        $site->deploy_token = (new TokenGenerator())->generate();
         $site->save();
         return redirect()->back();
     }
@@ -202,15 +193,16 @@ class SiteController extends Controller {
         return response()->json(['success' => true, 'message' => 'Deployment started for site ' . $site->getName()]);
     }
 
-    public function maintenanceUp(Site $site) {
-        $maintenance_service = new MaintenanceService($site);
-        $maintenance_service->up();
+    public function maintenanceUp(Site $siteModel) {
+        $site = new \App\Services\Site($siteModel);
+        $site->getApplication()->getMaintenance()->up();
         return redirect()->back();
     }
 
-    public function maintenanceDown(Request $request, Site $site) {
-        $maintenance_service = new MaintenanceService($site);
-        $maintenance_service->down($request->secret);
+    public function maintenanceDown(Request $request, Site $siteModel) {
+        $site = new \App\Services\Site($siteModel);
+        $site->getApplication()->getMaintenance()->down($request->secret);
+
         return redirect()->back();
     }
 

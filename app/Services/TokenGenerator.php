@@ -6,8 +6,8 @@ namespace App\Services;
 
 use Illuminate\Support\Str;
 
-class TokenCreatorService {
-    public static function generateDeployToken(){
+class TokenGenerator {
+    public function generate(){
         return Str::random(40);
     }
 }

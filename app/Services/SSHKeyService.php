@@ -10,6 +10,7 @@ use App\Models\User;
 class SSHKeyService {
     public static function generateKeyPair(User $user) {
         SuperUserAPIService::generate_key_pair($user->email, $user->getSSHKeysDir());
+        self::writeSSHConfig($user);
         return true;
     }
 

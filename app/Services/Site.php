@@ -10,6 +10,7 @@ use App\Contracts\DomainInterface;
 use App\Contracts\FileSystemInterface;
 use App\Contracts\RepositoryInterface;
 use App\Contracts\SiteInterface;
+use App\Models\Domain;
 use App\Models\User;
 
 class Site implements SiteInterface {
@@ -57,5 +58,21 @@ class Site implements SiteInterface {
 
     public function getDomain(): DomainInterface {
         // TODO: Implement getDomain() method.
+    }
+
+    public function destroy() {
+        $this->getContainer()->down();
+
+        // remove contents
+        $output = SuperUserAPIService::remove_dir($this->getFilesystem()->getProjectBaseDir());
+
+        $this->getModel()->domains()->delete();
+
+        // remove nginx config
+        $reverse_proxy_service = new ReverseProxyService($this->getModel());
+        $reverse_proxy_service->removeNginxConfigs();
+
+        // remove database record
+        $this->getModel()->delete();
     }
 }

@@ -34,7 +34,8 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::composer(['layouts.sidebars.site_sidebar','site.show'], function ($view) {
-            $running = ContainerInfoService::getPowerStatus($view->site->name);
+            $site = new \App\Services\Site($view->site);
+            $running = $site->getContainer()->isRunning();
             $view->with('running', $running);
         });
 
