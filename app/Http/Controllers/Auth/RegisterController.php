@@ -71,7 +71,6 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        SSHKeyService::generateKeyPair($user);
         return $user;
     }
 }

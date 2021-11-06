@@ -59,4 +59,21 @@ class User extends Authenticatable {
         }
         return $user_keys;
     }
+
+    protected static function booted() {
+        static::created(function ($user) {
+            $user->generateKeyPair();
+        });
+    }
+
+    public function generateKeyPair(){
+        // generate key pair
+        SuperUserAPIService::generate_key_pair($this->email, $this->getSSHKeysDir());
+
+        //disable strict host checking
+        $config = "Host *
+    StrictHostKeyChecking no";
+        SuperUserAPIService::put_contents("{$this->getSSHKeysDir()}/config", $config);
+
+    }
 }

@@ -27,6 +27,6 @@ class ParkDomainService {
     public static function isDomainPointedToUs(string $domain) {
         $whois = Factory::get()->createWhois();
 
-        return strpos($whois->lookupDomain($domain)->text, 'ns1.lara-host.ir') !== false;
+        return strpos($whois->lookupDomain($domain)->text, config('larahost.domain.nameserver')) !== false;
     }
 }

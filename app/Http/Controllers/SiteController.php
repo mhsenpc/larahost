@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\RedeploySiteJob;
 use App\Models\Deployment;
 use App\Models\Site;
+use App\Services\Hosting;
 use App\Services\ReservedNamesService;
 use App\Services\SiteFactory;
 use App\Services\SuperUserAPIService;
@@ -62,7 +63,7 @@ class SiteController extends Controller {
             'name' => 'required|alpha_num|unique:sites',
             'repo' => 'required',
         ]);
-        if (ReservedNamesService::isNameReserved($request->name)) {
+        if (Hosting::isNameReserved($request->name)) {
             return redirect()->back()->withInput()->withErrors(['متاسفانه این نام قبلا استفاده شده است. لطفا نام دیگری انتخاب نمایید']);
         }
 
@@ -74,8 +75,8 @@ class SiteController extends Controller {
         }
 
 
-        $new_site_service = (new SiteFactory(Auth::user()));
-        $site = $new_site_service->getSite($request->name, $request->repo, !empty($request->manual_credentials), $request->username, $request->password);
+        $new_site_service = (new SiteFactory());
+        $site = $new_site_service->getSite(Auth::id(), $request->name, $request->repo, !empty($request->manual_credentials), $request->username, $request->password);
         return redirect(route('sites.index'));
     }
 
@@ -187,8 +188,7 @@ class SiteController extends Controller {
         $request->validate([
             'token' => 'required|exists:sites,deploy_token'
         ]);
-        $siteModel = Site::query()->withoutGlobalScopes()->where('deploy_token', $request->token)->firstOrFail();
-        $site = new \App\Services\Site($siteModel);
+        $site = SiteFactory::getSiteByDeployToken($request->token);
         RedeploySiteJob::dispatch($site);
         return response()->json(['success' => true, 'message' => 'Deployment started for site ' . $site->getName()]);
     }

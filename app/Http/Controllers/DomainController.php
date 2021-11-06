@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Domain;
 use App\Models\Site;
 use App\Rules\FQDN;
+use App\Services\Hosting;
 use App\Services\ParkDomainService;
-use App\Services\ReservedNamesService;
 use App\Services\ReverseProxyService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -27,7 +27,7 @@ class DomainController extends Controller {
             return redirect()->back()->withInput(['دامنه '. $request->domain. ' با موفقیت به سرور شما متصل گردید']) ;
         }
         else{
-            if (ReservedNamesService::isNameReserved($request->name)) {
+            if (Hosting::isNameReserved($request->name)) {
                 return redirect()->back()->withInput()->withErrors(['هنوز name server های دامنه شما به سمت سرور ما اشاره نمی کند']);
             }
         }
