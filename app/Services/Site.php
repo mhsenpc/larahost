@@ -10,7 +10,6 @@ use App\Contracts\DomainInterface;
 use App\Contracts\FileSystemInterface;
 use App\Contracts\RepositoryInterface;
 use App\Contracts\SiteInterface;
-use App\Models\Domain;
 use App\Models\User;
 
 class Site implements SiteInterface {
@@ -36,6 +35,10 @@ class Site implements SiteInterface {
         return $this->model->name;
     }
 
+    public function getPort(): int {
+        return $this->model->port;
+    }
+
     public function getUser(): User {
         return $this->model->user;
     }
@@ -57,22 +60,25 @@ class Site implements SiteInterface {
     }
 
     public function getDomain(): DomainInterface {
-        // TODO: Implement getDomain() method.
+        return new \App\Services\Domain($this->getName(),$this->getPort());
     }
 
     public function destroy() {
         $this->getContainer()->down();
 
-        // remove contents
-        $output = SuperUserAPIService::remove_dir($this->getFilesystem()->getProjectBaseDir());
+        // remove domains
+        $domains = $this->model->domains()->get();
+        foreach ($domains as $domain) {
+            $this->getDomain()->remove($domain);
+        }
 
+        // remove subdomains
+        $this->getDomain()->remove($this->getName(). '.lara-host.ir');
         $this->getModel()->domains()->delete();
-
-        // remove nginx config
-        $reverse_proxy_service = new ReverseProxyService($this->getModel());
-        $reverse_proxy_service->removeNginxConfigs();
 
         // remove database record
         $this->getModel()->delete();
+
+        $this->getFilesystem()->removeAllSiteFiles();
     }
 }

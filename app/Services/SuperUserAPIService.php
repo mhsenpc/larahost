@@ -68,6 +68,11 @@ class SuperUserAPIService {
         return self::sendApiRequest(__FUNCTION__,compact('file_name','content'),'post');
     }
 
+    /**
+     * Generates dns config for bind to respond to dns requests of this domain
+     * @param string $domain
+     * @return array|bool|mixed
+     */
     public static function bind_domain(string $domain) {
         return self::sendApiRequest(__FUNCTION__,compact('domain'));
     }

@@ -62,4 +62,8 @@ class Filesystem implements FileSystemInterface {
         SuperUserAPIService::new_folder($this->getDockerComposeDir());
         SuperUserAPIService::new_folder($this->getWorkersDir());
     }
+
+    public function removeAllSiteFiles(){
+        return SuperUserAPIService::remove_dir($this->getProjectBaseDir());
+    }
 }

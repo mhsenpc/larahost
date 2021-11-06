@@ -19,7 +19,7 @@ class DeployService {
     public function __construct(Site $site) {
         $this->site = $site;
         $this->docker_compose_service = new DockerComposeService($site->getModel());
-        $this->reverse_proxy_service = new ReverseProxyService($site->getModel());
+        $this->reverse_proxy_service = new ReverseProxy($site->getModel());
         $this->deployment_commands_service = new DeploymentCommandsService($site->getModel());
     }
 
@@ -35,7 +35,7 @@ class DeployService {
                 $this->site->getApplication()->initializeEnvVariables();
                 $this->deployment_commands_service->runFirstDeployCommands();
                 DeployLogger::write(true);
-                $this->reverse_proxy_service->writeNginxConfigs();
+                $this->site->getDomain()->add( $this->site->getName() . '.lara-host.ir');
             } else {
                 DeployLogger::addLog("git clone {$this->site->getModel()->repo} .", "Failed to clone the repository with the provided credentials");
                 DeployLogger::write(false);
@@ -63,7 +63,6 @@ class DeployService {
             $deployment_commands_service = new DeploymentCommandsService($this->site->getModel());
             $deployment_commands_service->runDeployCommands();
             DeployLogger::write(true);
-            $this->reverse_proxy_service->writeNginxConfigs();
         }
         $this->postDeploy();
     }

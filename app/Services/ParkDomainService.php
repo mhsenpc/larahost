@@ -9,19 +9,19 @@ use Illuminate\Support\Facades\Log;
 use Iodev\Whois\Factory;
 
 class ParkDomainService {
-    public static function parkDomain(Site $site, string $domain) {
-        $site->domains()->create(
+    public static function parkDomain(Site $siteModel, string $domain) {
+        $siteModel->domains()->create(
             [
                 'name' => $domain,
-                'site_id' => $site->id
+                'site_id' => $siteModel->id
             ]);
 
         SuperUserAPIService::bind_domain($domain);
         SuperUserAPIService::reload_dns();
         Log::debug("dns config created for " . $domain);
 
-        $reverse_proxy_service = new ReverseProxyService($site);
-        $reverse_proxy_service->writeNginxConfigs();
+        $site = new \App\Services\Site($siteModel);
+        $site->getDomain()->add($domain);
     }
 
     public static function isDomainPointedToUs(string $domain) {
