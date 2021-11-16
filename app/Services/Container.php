@@ -44,7 +44,7 @@ class Container implements ContainerInterface {
 
     public function waitForWakeUp(int $maxTries = 30) {
         $i = 0;
-        while (!SuperUserAPIService::exec($this->siteName, "ls")['success']) {
+        while (!SuperUserAPIService::exec($this->siteName, "ls -la")['success']) {
             $i++;
             sleep(2);
             if ($i > $maxTries) {
