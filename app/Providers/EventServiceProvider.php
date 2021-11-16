@@ -8,6 +8,7 @@ use App\Events\Site\Deployed;
 use App\Events\Site\Deploying;
 use App\Listeners\SiteCreatedProgress;
 use App\Listeners\SiteCreatingProgress;
+use App\Listeners\SiteDeployedProgress;
 use App\Listeners\SiteDeployingProgress;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -35,7 +36,7 @@ class EventServiceProvider extends ServiceProvider
             SiteDeployingProgress::class
         ],
         Deployed::class =>[
-            SiteDeployingProgress::class
+            SiteDeployedProgress::class
         ]
     ];
 
