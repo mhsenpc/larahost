@@ -13,7 +13,7 @@ class QueueController extends Controller {
         return view('site.workers', compact('workers','site'));
     }
 
-    public function createWorker(Request $request, Site $siteModel) {
+    public function createWorker(Request $request, Site $site) {
         $request->validate([
             'timeout' => 'nullable|numeric',
             'sleep' => 'nullable|numeric',
@@ -45,36 +45,36 @@ class QueueController extends Controller {
             $request->tries = 1;
         }
 
-        $site = new \App\Services\Site($siteModel);
-        $site->getApplication()->getQueue()->createWorker($siteModel->id, $request->connection, $request->queue, $request->sleep, $request->tries, $request->timeout, $request->num_procs);
+        $siteObj = new \App\Services\Site($site);
+        $siteObj->getApplication()->getQueue()->createWorker($site->id, $request->connection, $request->queue, $request->sleep, $request->tries, $request->timeout, $request->num_procs);
         return redirect()->back();
     }
 
-    public function removeWorker(Site $siteModel, int $worker_id) {
-        $site = new \App\Services\Site($siteModel);
-        $site->getApplication()->getQueue()->removeWorker($siteModel->id, $worker_id);
+    public function removeWorker(Site $site, int $worker_id) {
+        $siteObj = new \App\Services\Site($site);
+        $siteObj->getApplication()->getQueue()->removeWorker($site->id, $worker_id);
         return redirect()->back();
     }
 
-    public function restartSupervisor(Request $request, Site $siteModel) {
-        $site = new \App\Services\Site($siteModel);
-        $site->getContainer()->getSupervisor()->restart();
+    public function restartSupervisor(Request $request, Site $site) {
+        $siteObj = new \App\Services\Site($site);
+        $siteObj->getContainer()->getSupervisor()->restart();
         return redirect()->back();
     }
 
-    public function restartWorker(Site $siteModel, int $worker_id){
-        $site = new \App\Services\Site($siteModel);
-        $site->getContainer()->getSupervisor()->restartWorker($worker_id);
+    public function restartWorker(Site $site, int $worker_id){
+        $siteObj = new \App\Services\Site($site);
+        $siteObj->getContainer()->getSupervisor()->restartWorker($worker_id);
         return redirect()->back();
     }
 
-    public function getWorkersStatus(Site $siteModel){
-        $site = new \App\Services\Site($siteModel);
-        return $site->getContainer()->getSupervisor()->getStatus();
+    public function getWorkersStatus(Site $site){
+        $siteObj = new \App\Services\Site($site);
+        return $siteObj->getContainer()->getSupervisor()->getStatus();
     }
 
-    public function getWorkerLog(Site $siteModel,int $worker_id){
-        $site = new \App\Services\Site($siteModel);
-        return $site->getApplication()->getQueue()->getWorkerLog($worker_id);
+    public function getWorkerLog(Site $site, int $worker_id){
+        $siteObj = new \App\Services\Site($site);
+        return $siteObj->getApplication()->getQueue()->getWorkerLog($worker_id);
     }
 }
