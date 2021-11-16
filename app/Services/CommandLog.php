@@ -19,7 +19,10 @@ class CommandLog {
         return $this->logs;
     }
 
-    public function add(string $command, string $output) {
+    public function add(string $command, $output) {
+        if(is_array($output)){
+            $output = implode("\r\n",$output);
+        }
         $this->logs[$command] = $output;
     }
 
