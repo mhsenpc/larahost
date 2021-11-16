@@ -17,7 +17,7 @@ class AdminChecker
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!Auth::user()->isAdmin()){
+        if(!optional(Auth::user())->isAdmin()){
             abort(403,'Permission denied');
         }
         return $next($request);

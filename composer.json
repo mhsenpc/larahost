@@ -12,6 +12,7 @@
         "guzzlehttp/guzzle": "^7.3",
         "io-developer/php-whois": "^4.1",
         "laravel/framework": "^8.40",
+        "laravel/telescope": "^4.6",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "pusher/pusher-php-server": "^7.0",
