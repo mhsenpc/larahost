@@ -93,11 +93,11 @@
             <div class="box-body">
                 @if($site->subdomain_status)
                     <div class="alert alert-info">
-                        بصورت پیش فرض زیردامنه {{$site->name}}.lara-host.ir به سایت شما متصل گردیده است.
+                        بصورت پیش فرض زیردامنه {{$site->name}}{{config('larahost.sudomain')}} به سایت شما متصل گردیده است.
                     </div>
                 @else
                     <div class="alert alert-warning">
-                        در حال حاضر زیردامنه {{$site->name}}.lara-host.ir توسط شما غیرفعال شده است. شما می توانید آن را
+                        در حال حاضر زیردامنه {{$site->name}}{{config('larahost.sudomain')}} توسط شما غیرفعال شده است. شما می توانید آن را
                         مجددا فعال نمایید
                     </div>
                 @endif

@@ -23,7 +23,7 @@ trait DeployTrait {
             if ($result['success']) {
                 $commandLog->addFrom($result['logs']);
                 $commandLog->addFrom($this->getApplication()->setup());;
-                $this->getDomain()->add($this->getName() . '.lara-host.ir');
+                $this->getDomain()->add($this->getName() . config('larahost.sudomain'));
                 $this->getLogWriter()->write($commandLog, true);
             } else {
                 $commandLog->add("git clone {$this->getModel()->repo} .", "Failed to clone the repository with the provided credentials");

@@ -21,7 +21,7 @@
                     @endif
 
                 </td>
-                <td><a target="_blank" href="http://{{$site1->name}}.lara-host.ir">{{$site1->name}}.lara-host.ir</a></td>
+                <td><a target="_blank" href="http://{{$site1->name}}{{config('larahost.sudomain')}}">{{$site1->name}}{{config('larahost.sudomain')}}</a></td>
             </tr>
         @endforeach
     </table>

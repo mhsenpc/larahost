@@ -46,7 +46,7 @@ class DomainController extends Controller {
         $site->save();
 
         $siteObj = new \App\Services\Site($site);
-        $domain = $siteObj->getName() . ".lara-host.ir";
+        $domain = $siteObj->getName() . config('larahost.sudomain');
         $siteObj->getDomain()->add($domain);
         return redirect()->back();
     }
@@ -56,7 +56,7 @@ class DomainController extends Controller {
         $site->save();
 
         $siteObj = new \App\Services\Site($site);
-        $domain = $siteObj->getName() . ".lara-host.ir";
+        $domain = $siteObj->getName() . config('larahost.sudomain');
         $siteObj->getDomain()->remove($domain);
         return redirect()->back();
     }

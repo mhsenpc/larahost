@@ -15,7 +15,7 @@ trait DestroyTrait {
         }
 
         // remove subdomains
-        $this->getDomain()->remove($this->getName(). '.lara-host.ir');
+        $this->getDomain()->remove($this->getName(). config('larahost.sudomain'));
         $this->getModel()->domains()->delete();
 
         // remove database record

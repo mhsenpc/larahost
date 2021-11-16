@@ -6,7 +6,7 @@
     <div class="pull-right info">
         <p>
             {{$site->name}}
-            <a target="_blank" href="http://{{$site->name}}.lara-host.ir">
+            <a target="_blank" href="http://{{$site->name}}{{config('larahost.sudomain')}}">
                 <i class="fa fa-arrow-circle-right text-green"></i>
             </a>
         </p>

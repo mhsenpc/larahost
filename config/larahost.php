@@ -24,5 +24,6 @@ return [
             'database',
             'redis'
         ]
-    ]
+    ],
+    'sudomain' => '.lara-host.ir'
 ];

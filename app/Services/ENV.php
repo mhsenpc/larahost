@@ -43,7 +43,7 @@ class ENV {
         // app name
         $env_editor->changeKey('APP_NAME', $this->siteName);
 
-        $env_editor->changeKey('APP_URL', "http://{$this->siteName}.lara-host.ir");
+        $env_editor->changeKey('APP_URL', "http://{$this->siteName}".config('larahost.sudomain'));
 
         // db connection info
         $env_editor->changeKey('DB_CONNECTION', $connection_info->getDbConnection());
