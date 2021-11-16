@@ -47,8 +47,8 @@ class Laravel implements ApplicationInterface {
     }
 
     public function setup():CommandLog{
-        $logs = (new LaravelDeployCommands($this->siteName,$this->deployCommands))->executeOneTimeCommands();
         $this->initializeEnvVariables();
+        $logs = (new LaravelDeployCommands($this->siteName,$this->deployCommands))->executeOneTimeCommands();
         return $logs;
     }
 }
