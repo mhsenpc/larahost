@@ -43,14 +43,14 @@ trait DeployTrait {
         $gitUser = $this->getModel()->git_user;
         $gitPass = $this->getModel()->git_password;
 
+        $commandLog = new CommandLog($this->getName());
         // try pull. if there were any problems with pull, let's clone repo again
         $pullResult = $this->getRepository()->pull();
         if (!$pullResult['success']) {
             $cloneResult = $this->getRepository()->cloneRepo($repoUrl, $gitUser, $gitPass);
+            $commandLog->addFrom($cloneResult['logs']);
         }
 
-        $commandLog = new CommandLog($this->getName());
-        $commandLog->addFrom($cloneResult['logs']);
         if ($this->getRepository()->isvalid()) {
             $deployment_commands_service = new LaravelDeployCommands($this->getName(), $this->getModel()->deploy_commands);
             $commandLog->addFrom($deployment_commands_service->execute());;
