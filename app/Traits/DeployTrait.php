@@ -20,7 +20,7 @@ trait DeployTrait {
         $commandLog = new CommandLog($this->getName());
         if ($container->waitForWakeUp()) {
             $result = $this->getRepository()->cloneRepo($this->getModel()->repo, $this->getModel()->git_user, $this->getModel()->git_password);
-            if ($result['status']) {
+            if ($result['success']) {
                 $commandLog->addFrom($result['logs']);
                 $commandLog->addFrom($this->getApplication()->setup());;
                 $this->getDomain()->add($this->getName() . '.lara-host.ir');
