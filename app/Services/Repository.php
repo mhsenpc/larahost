@@ -69,6 +69,6 @@ class Repository implements RepositoryInterface {
         } catch (Exception $exception) {
             return false;
         }
-        return count($branches) > 0;
+        return !empty($repo->getCurrentBranchName());
     }
 }
