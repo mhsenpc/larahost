@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Site\Deploying;
 use App\Jobs\RedeploySiteJob;
 use App\Models\Deployment;
 use App\Models\Site;
 use App\Services\Hosting;
-use App\Services\ReservedNamesService;
 use App\Services\SiteFactory;
 use App\Services\SuperUserAPIService;
 use App\Services\TokenGenerator;
@@ -137,24 +137,24 @@ class SiteController extends Controller {
         return view('site.deployments', compact('deployments', 'site'));
     }
 
-    public function logs(Site $site) {
-        $logs_dir = PathHelper::getLaravelLogsDir($site->user->email, $site->name);
+    public function logs(Site $siteModel) {
+        $site = new \App\Services\Site($siteModel);
+        $logs_dir = $site->getFilesystem()->getLaravelLogsDir();
         $logs = scandir($logs_dir);
-
         $logs = array_diff($logs, array('..', '.', '.gitignore')); //remove invalid files
 
         if (count($logs) == 1 && substr(reset($logs), -4) == '.log') {
             $file_name = reset($logs);
-            $logs_dir = PathHelper::getLaravelLogsDir($site->user->email, $site->name);
             $log_content = file_get_contents($logs_dir . '/' . $file_name);
-            return view('site.show_laravel_log', compact('log_content', 'site', 'file_name'));
+            return view('site.show_laravel_log', compact('log_content', 'siteModel', 'file_name'));
         } else {
-            return view('site.laravel_logs', compact('logs', 'site'));
+            return view('site.laravel_logs', compact('logs', 'siteModel'));
         }
     }
 
     public function redeploy(Site $siteModel) {
         $site = new \App\Services\Site($siteModel);
+        Deploying::dispatch($this->getModel());
         RedeploySiteJob::dispatch($site);
         return redirect()->back();
     }
@@ -189,6 +189,7 @@ class SiteController extends Controller {
             'token' => 'required|exists:sites,deploy_token'
         ]);
         $site = SiteFactory::getSiteByDeployToken($request->token);
+        Deploying::dispatch($this->getModel());
         RedeploySiteJob::dispatch($site);
         return response()->json(['success' => true, 'message' => 'Deployment started for site ' . $site->getName()]);
     }

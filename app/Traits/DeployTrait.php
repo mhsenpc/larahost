@@ -14,8 +14,6 @@ use Illuminate\Support\Facades\Log;
 
 trait DeployTrait {
     public function firstDeploy() {
-        Creating::dispatch($this->getModel());
-        Deploying::dispatch($this->getModel());
         Log::debug("first deploy");
         $this->getFilesystem()->createRequiredDirectories();
         $container = $this->getContainer()->create($this->getPort());
@@ -44,7 +42,6 @@ trait DeployTrait {
     }
 
     public function reDeploy() {
-        Deploying::dispatch($this->getModel());
         $repoUrl = $this->getModel()->repo;
         $gitUser = $this->getModel()->git_user;
         $gitPass = $this->getModel()->git_password;

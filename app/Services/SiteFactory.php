@@ -35,9 +35,9 @@ class SiteFactory {
     }
 
     public function getSite(int $userId, string $site_name, string $repo_url, bool $https_credentials, ?string $git_user, ?string $git_password): Site {
-        Creating::dispatch($site_name);
-        Deploying::dispatch($site_name);
         $siteModel = $this->insertSiteRecord($userId, $site_name, $repo_url, $https_credentials, $git_user, $git_password);
+        Creating::dispatch($siteModel);
+        Deploying::dispatch($siteModel);
         $site = new Site($siteModel);
         CreateNewSiteJob::dispatch($site);
         return $site;
