@@ -95,7 +95,7 @@ class SiteService {
 
     protected function waitForWakeUp() {
         $i = 0;
-        while (!SuperUserAPIService::exec_command($this->site->name, "ls")['success']) {
+        while (!SuperUserAPIService::exec_command($this->site->name, "ls -la")['success']) {
             $i++;
             sleep(2000);
             if ($i > 30) {
