@@ -34,11 +34,11 @@ class SiteFactory {
         $this->port = $port;
     }
 
-    public function getSite(int $userId, string $site_name, string $repo_url, bool $https_credentials, ?string $git_user, ?string $git_password): Site {
+    public function getSite(int $userId, string $site_name, string $repo_url, bool $https_credentials, ?string $git_user, ?string $git_password): \App\Services\Site {
         $siteModel = $this->insertSiteRecord($userId, $site_name, $repo_url, $https_credentials, $git_user, $git_password);
         Creating::dispatch($siteModel);
         Deploying::dispatch($siteModel);
-        $site = new Site($siteModel);
+        $site = new \App\Services\Site($siteModel);
         CreateNewSiteJob::dispatch($site);
         return $site;
     }

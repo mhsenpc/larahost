@@ -76,7 +76,7 @@ class SiteController extends Controller {
 
 
         $new_site_service = (new SiteFactory());
-        $site = $new_site_service->getSite(Auth::id(), $request->name, $request->repo, !empty($request->manual_credentials), $request->username, $request->password);
+        $new_site_service->getSite(Auth::id(), $request->name, $request->repo, !empty($request->manual_credentials), $request->username, $request->password);
         return redirect(route('sites.index'));
     }
 
