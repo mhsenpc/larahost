@@ -40,14 +40,14 @@ class SiteController extends Controller {
         }
         $faker = Faker::create();
         $sitesCount = Site::query()->count();
-        $allowNewSite =  $sitesCount == 0 ;
+        $allowNewSite = $sitesCount == 0;
 
         if (App::environment('local') || Auth::user()->isAdmin()) {
             $allowNewSite = true;
         }
 
 
-        return view('site.create', compact('public_key', 'faker', 'allowNewSite','sitesCount'));
+        return view('site.create', compact('public_key', 'faker', 'allowNewSite', 'sitesCount'));
     }
 
     /**
@@ -58,7 +58,7 @@ class SiteController extends Controller {
      */
     public function store(Request $request) {
         $request->name = strtolower($request->name);
-        $request->name = config('larahost.site_prefix').$request->name;
+        $request->name = config('larahost.site_prefix') . $request->name;
 
         $request->validate([
             'name' => 'required|alpha_num|unique:sites',
@@ -122,7 +122,7 @@ class SiteController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function remove(Site $site) {
-        $siteObj= new \App\Services\Site($site);
+        $siteObj = new \App\Services\Site($site);
         $siteObj->destroy();
         return redirect(route('sites.index'));
     }
@@ -155,7 +155,7 @@ class SiteController extends Controller {
 
     public function redeploy(Site $site) {
         $siteObj = new \App\Services\Site($site);
-        Deploying::dispatch($this->getModel());
+        Deploying::dispatch($site);
         RedeploySiteJob::dispatch($siteObj);
         return redirect()->back();
     }
@@ -190,7 +190,7 @@ class SiteController extends Controller {
             'token' => 'required|exists:sites,deploy_token'
         ]);
         $site = SiteFactory::getSiteByDeployToken($request->token);
-        Deploying::dispatch($this->getModel());
+        Deploying::dispatch($site->getModel());
         RedeploySiteJob::dispatch($site);
         return response()->json(['success' => true, 'message' => 'Deployment started for site ' . $site->getName()]);
     }
