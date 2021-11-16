@@ -32,32 +32,32 @@ class DomainController extends Controller {
         }
     }
 
-    public function removeDomain(Request $request, Site $siteModel) {
-        $domain = $siteModel->domains()->where('name', $request->name)->firstOrFail();
+    public function removeDomain(Request $request, Site $site) {
+        $domain = $site->domains()->where('name', $request->name)->firstOrFail();
         $domain->delete();
 
-        $site = new \App\Services\Site($siteModel);
-        $site->getDomain()->remove($request->name);
+        $siteObj = new \App\Services\Site($site);
+        $siteObj->getDomain()->remove($request->name);
         return redirect()->back();
     }
 
-    public function enableSubDomain(Request $request, Site $siteModel) {
-        $siteModel->subdomain_status = true;
-        $siteModel->save();
+    public function enableSubDomain(Request $request, Site $site) {
+        $site->subdomain_status = true;
+        $site->save();
 
-        $site = new \App\Services\Site($siteModel);
-        $domain = $site->getName() . ".lara-host.ir";
-        $site->getDomain()->add($domain);
+        $siteObj = new \App\Services\Site($site);
+        $domain = $siteObj->getName() . ".lara-host.ir";
+        $siteObj->getDomain()->add($domain);
         return redirect()->back();
     }
 
-    public function disableSubDomain(Request $request, Site $siteModel) {
-        $siteModel->subdomain_status = false;
-        $siteModel->save();
+    public function disableSubDomain(Request $request, Site $site) {
+        $site->subdomain_status = false;
+        $site->save();
 
-        $site = new \App\Services\Site($siteModel);
-        $domain = $site->getName() . ".lara-host.ir";
-        $site->getDomain()->remove($domain);
+        $siteObj = new \App\Services\Site($site);
+        $domain = $siteObj->getName() . ".lara-host.ir";
+        $siteObj->getDomain()->remove($domain);
         return redirect()->back();
     }
 
