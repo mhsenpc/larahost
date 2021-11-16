@@ -69,6 +69,7 @@ class GitService {
             Log::debug("branch name is $branch_name");
             return true;
         } catch (\Exception $exception) {
+            Log::error($exception);
             return false;
         }
     }
