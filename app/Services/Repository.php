@@ -63,12 +63,11 @@ class Repository implements RepositoryInterface {
     public function isvalid(): bool {
         $git = new Git;
         $repo = $git->open($this->source_dir);
-        $branches = [];
         try {
-            $branches = $repo->getBranches();
+            $branchName = $repo->getCurrentBranchName();
+            return true;
         } catch (Exception $exception) {
             return false;
         }
-        return !empty($repo->getCurrentBranchName());
     }
 }
