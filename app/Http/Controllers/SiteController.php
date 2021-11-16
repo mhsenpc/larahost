@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Faker\Factory as Faker;
+use Illuminate\Support\Facades\Log;
 
 class SiteController extends Controller {
     /**
@@ -117,18 +118,18 @@ class SiteController extends Controller {
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Site $siteModle
+     * @param \App\Models\Site $site
      * @return \Illuminate\Http\Response
      */
-    public function remove(Site $siteModel) {
-        $site= new \App\Services\Site($siteModel);
-        $site->destroy();
+    public function remove(Site $site) {
+        $siteObj= new \App\Services\Site($site);
+        $siteObj->destroy();
         return redirect(route('sites.index'));
     }
 
-    public function factoryReset(Site $siteModel) {
-        $site = new \App\Services\Site($siteModel);
-        $site->getContainer()->rebuildContainers();
+    public function factoryReset(Site $site) {
+        $siteObj = new \App\Services\Site($site);
+        $siteObj->getContainer()->rebuildContainers();
         return redirect()->back();
     }
 
@@ -137,25 +138,25 @@ class SiteController extends Controller {
         return view('site.deployments', compact('deployments', 'site'));
     }
 
-    public function logs(Site $siteModel) {
-        $site = new \App\Services\Site($siteModel);
-        $logs_dir = $site->getFilesystem()->getLaravelLogsDir();
+    public function logs(Site $site) {
+        $siteObj = new \App\Services\Site($site);
+        $logs_dir = $siteObj->getFilesystem()->getLaravelLogsDir();
         $logs = scandir($logs_dir);
         $logs = array_diff($logs, array('..', '.', '.gitignore')); //remove invalid files
 
         if (count($logs) == 1 && substr(reset($logs), -4) == '.log') {
             $file_name = reset($logs);
             $log_content = file_get_contents($logs_dir . '/' . $file_name);
-            return view('site.show_laravel_log', compact('log_content', 'siteModel', 'file_name'));
+            return view('site.show_laravel_log', compact('log_content', 'site', 'file_name'));
         } else {
-            return view('site.laravel_logs', compact('logs', 'siteModel'));
+            return view('site.laravel_logs', compact('logs', 'site'));
         }
     }
 
-    public function redeploy(Site $siteModel) {
-        $site = new \App\Services\Site($siteModel);
+    public function redeploy(Site $site) {
+        $siteObj = new \App\Services\Site($site);
         Deploying::dispatch($this->getModel());
-        RedeploySiteJob::dispatch($site);
+        RedeploySiteJob::dispatch($siteObj);
         return redirect()->back();
     }
 
@@ -172,9 +173,9 @@ class SiteController extends Controller {
         return view('site.env_editor', compact('site', 'env'));
     }
 
-    public function handle_env_editor(Request $request, Site $siteModel) {
-        $site = new \App\Services\Site($siteModel);
-        $site->getApplication()->updateEnvFile($request->env);
+    public function handle_env_editor(Request $request, Site $site) {
+        $siteObj = new \App\Services\Site($site);
+        $siteObj->getApplication()->updateEnvFile($request->env);
         return redirect()->back();
     }
 
@@ -194,15 +195,15 @@ class SiteController extends Controller {
         return response()->json(['success' => true, 'message' => 'Deployment started for site ' . $site->getName()]);
     }
 
-    public function maintenanceUp(Site $siteModel) {
-        $site = new \App\Services\Site($siteModel);
-        $site->getApplication()->getMaintenance()->up();
+    public function maintenanceUp(Site $site) {
+        $siteObj = new \App\Services\Site($site);
+        $siteObj->getApplication()->getMaintenance()->up();
         return redirect()->back();
     }
 
-    public function maintenanceDown(Request $request, Site $siteModel) {
-        $site = new \App\Services\Site($siteModel);
-        $site->getApplication()->getMaintenance()->down($request->secret);
+    public function maintenanceDown(Request $request, Site $site) {
+        $siteObj = new \App\Services\Site($site);
+        $siteObj->getApplication()->getMaintenance()->down($request->secret);
 
         return redirect()->back();
     }
