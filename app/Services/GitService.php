@@ -29,7 +29,6 @@ class GitService {
         $repo_url = $this->getFullRepoUrl();
         $command = "git clone {$repo_url} .";
         $output = SuperUserAPIService::exec_command($this->site->name, $command);
-        sleep(40);
         $this->deploy_log_service->addLog($command, $output['data']);
         return $this->isValidRepo();
     }
