@@ -20,7 +20,7 @@ class Repository implements RepositoryInterface {
         $this->siteName = $siteName;
     }
 
-    public function cloneRepo(string $repoUrl, string $gitUser, string $gitPass): array {
+    public function cloneRepo(string $repoUrl, ?string $gitUser, ?string $gitPass): array {
         $repo_url = $this->appengAuthToUrl($repoUrl, $gitUser, $gitPass);
         $command = "git clone {$repo_url} .";
         $output = SuperUserAPIService::exec($this->siteName, $command);
@@ -47,7 +47,7 @@ class Repository implements RepositoryInterface {
 
     }
 
-    protected function appengAuthToUrl(string $repo, string $user, string $pass): string {
+    protected function appengAuthToUrl(string $repo, ?string $user, ?string $pass): string {
         if (!empty($user)) {
             $result = $repo;
             $result = str_replace('https://www.', '', $result);

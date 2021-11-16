@@ -19,10 +19,7 @@ trait DeployTrait {
         $container = $this->getContainer()->create($this->getPort());
         $commandLog = new CommandLog($this->getName());
         if ($container->waitForWakeUp()) {
-            $gitUser = $this->getModel()->git_user;
-            $gitPass = $this->getModel()->git_password;
-            $repoUrl = $this->getModel()->repo;
-            $result = $this->getRepository()->cloneRepo($repoUrl, $gitUser, $gitPass);
+            $result = $this->getRepository()->cloneRepo($this->getModel()->repo, $this->getModel()->git_user, $this->getModel()->git_password);
             if ($result['status']) {
                 $commandLog->addFrom($result['logs']);
                 $commandLog->addFrom($this->getApplication()->setup());;
