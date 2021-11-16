@@ -5,47 +5,46 @@ namespace App\Services;
 
 
 use App\Contracts\RepositoryInterface;
-use App\Models\Site;
-use App\Singleton\DeployLogger;
 use CzProject\GitPhp\Git;
+use Exception;
 use Illuminate\Support\Facades\Log;
 
 class Repository implements RepositoryInterface {
 
     protected $source_dir;
-    /**
-     * @var Site
-     */
-    private $siteModel;
-
     protected $deployLogger;
-    private string $siteName;
+    protected string $siteName;
 
-    public function __construct(Site $siteModel, string $siteName,string $sourceDir) {
-        $this->siteModel = $siteModel;
+    public function __construct(string $siteName, string $sourceDir) {
         $this->source_dir = $sourceDir;
-        $this->deployLogger = DeployLogger::getInstance($this->siteModel);
         $this->siteName = $siteName;
     }
 
-    public function cloneRepo(string $repoUrl,string $gitUser,string $gitPass): bool {
-        $repo_url = $this->appengAuthToUrl($repoUrl,$gitUser,$gitPass);
+    public function cloneRepo(string $repoUrl, string $gitUser, string $gitPass): array {
+        $repo_url = $this->appengAuthToUrl($repoUrl, $gitUser, $gitPass);
         $command = "git clone {$repo_url} .";
         $output = SuperUserAPIService::exec($this->siteName, $command);
-        $this->deployLogger->addLog($command, $output['data']);
-        return $this->isvalid();
+        $commandLog = new CommandLog($this->siteName);
+
+        $commandLog->add($command, $output['data']);
+        return [
+            'success' => $this->isvalid(),
+            'logs' => $commandLog
+        ];
     }
 
     /*
      */
     public function pull() {
+        $commandLog = new CommandLog($this->siteName);
         if ($this->isvalid()) {
-            $output = SuperUserAPIService::exec($this->siteName,'git pull');
-            $this->deployLogger->addLog("git pull",  $output['data']);
-            return true;
+            $output = SuperUserAPIService::exec($this->siteName, 'git pull');
+            $commandLog->add('git pull', $output['data']);
+            return ['success' => true, 'logs' => $output['data']];
         } else {
-            return false;
+            return ['success' => false];
         }
+
     }
 
     protected function appengAuthToUrl(string $repo, string $user, string $pass): string {
@@ -67,7 +66,7 @@ class Repository implements RepositoryInterface {
         $branches = [];
         try {
             $branches = $repo->getBranches();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return false;
         }
         return count($branches) > 0;

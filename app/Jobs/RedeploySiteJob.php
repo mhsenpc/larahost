@@ -2,10 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Events\Site\Deployed;
-use App\Events\Site\Deploying;
-use App\Services\ProgressService;
-use App\Services\DeployService;
 use App\Services\Site;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -36,10 +32,6 @@ class RedeploySiteJob implements ShouldQueue {
      * @return void
      */
     public function handle() {
-        Deploying::dispatch($this->site->getModel());
-        ProgressService::start("deploy_{$this->site->getName()}");
-        $site_service = new DeployService($this->site);
-        $site_service->reDeploy();
-        Deployed::dispatch($this->site->getModel());
+        $this->site->reDeploy();
     }
 }

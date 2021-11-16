@@ -11,18 +11,20 @@ class Laravel implements ApplicationInterface {
     private string $siteName;
     private Filesystem $fileSystem;
     private Supervisor $supervisor;
+    private string $deployCommands;
 
-    public function __construct(string $siteName, FileSystemInterface $fileSystem, \App\Services\Supervisor $supervisor) {
+    public function __construct(string $siteName, FileSystemInterface $fileSystem, Supervisor $supervisor, string $deployCommands) {
         $this->siteName = $siteName;
         $this->fileSystem = $fileSystem;
         $this->supervisor = $supervisor;
+        $this->deployCommands = $deployCommands;
     }
 
     public function getQueue(): Queue {
         return new Queue($this->siteName, $this->fileSystem->getWorkersDir(), $this->supervisor);
     }
 
-    public function initializeEnvVariables() {
+    protected function initializeEnvVariables() {
         $env = new  ENV($this->siteName, $this->fileSystem->getSourceDir());
         $env->initializeEnvVariables();
     }
@@ -42,5 +44,11 @@ class Laravel implements ApplicationInterface {
 
     public function getMaintenance(): Maintenance {
         return new Maintenance($this->siteName, $this->fileSystem->getSourceDir());
+    }
+
+    public function setup():CommandLog{
+        $logs = (new LaravelDeployCommands($this->siteName,$this->deployCommands))->executeOneTimeCommands();
+        $this->initializeEnvVariables();
+        return $logs;
     }
 }

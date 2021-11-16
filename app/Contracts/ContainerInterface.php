@@ -5,7 +5,7 @@ namespace App\Contracts;
 
 
 interface ContainerInterface {
-    public function waitForWakeUp(int $maxTries);
+    public function waitForWakeUp(int $maxTries = 30);
 
     public function isRunning(): bool;
 

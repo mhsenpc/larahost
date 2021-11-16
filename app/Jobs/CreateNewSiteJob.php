@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Services\DeployService;
 use App\Services\Site;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -33,8 +32,6 @@ class CreateNewSiteJob implements ShouldQueue {
      * @return void
      */
     public function handle() {
-
-        $site_service = new DeployService($this->site);
-        $site_service->firstDeploy();
+        $this->site->firstDeploy();
     }
 }

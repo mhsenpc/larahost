@@ -13,10 +13,13 @@
             <tr>
                 <td>{{$key+1}}.</td>
                 <td>
-                    <a href="{{route('sites.show',$site1)}}">{{$site1->name}}</a>
                     @if(\App\Services\ProgressService::isActive("create_{$site1->name}"))
+                        <a >{{$site1->name}}</a>
                         <i class="fa fa-refresh" title="در حال نصب و راه اندازی"> </i>
+                    @else
+                        <a href="{{route('sites.show',$site1)}}">{{$site1->name}}</a>
                     @endif
+
                 </td>
                 <td><a target="_blank" href="http://{{$site1->name}}.lara-host.ir">{{$site1->name}}.lara-host.ir</a></td>
             </tr>

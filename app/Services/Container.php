@@ -5,16 +5,24 @@ namespace App\Services;
 
 
 use App\Contracts\ContainerInterface;
+use App\Contracts\FileSystemInterface;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 
 class Container implements ContainerInterface {
     private string $siteName;
-    private \App\Contracts\FileSystemInterface $fileSystem;
+    private FileSystemInterface $fileSystem;
 
-    public function __construct(string $siteName, \App\Contracts\FileSystemInterface $fileSystem) {
+    public function __construct(string $siteName, FileSystemInterface $fileSystem) {
         $this->siteName = $siteName;
         $this->fileSystem = $fileSystem;
+    }
+
+    public function create(int $port): Container {
+        $compose = new DockerCompose($this->siteName, $this->fileSystem);
+        $compose->write($port);
+        $compose->execute();
+        return $this;
     }
 
     public function rebuildContainers() {
@@ -50,15 +58,14 @@ class Container implements ContainerInterface {
         return new Supervisor($this->siteName);
     }
 
-    public function isRunning():bool{
-        if(App::environment('local'))
+    public function isRunning(): bool {
+        if (App::environment('local'))
             return true;
         $info = SuperUserAPIService::inspect($this->siteName);
-        if($info['success']){
+        if ($info['success']) {
             $data = json_decode($info['data']);
             return $data[0]->State->Status == "running";
-        }
-        else{
+        } else {
             return false;
         }
     }
