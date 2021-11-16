@@ -59,6 +59,7 @@ class GitService {
     }
 
     protected function isValidRepo(): bool {
+        return true; //temp fix
         $git = new Git;
         $repo = $git->open($this->source_dir);
         Log::debug('check for source dir');
