@@ -11,6 +11,7 @@
 @else
 @section('box_content')
     <form method="post" action="{{route('sites.handle_env_editor',['site'=>$site])}}">
+        @csrf
         <textarea dir="ltr" class="col-md-12" style="height: 25em" name="env">{{$env}}</textarea>
         <div class="clearfix">&nbsp;</div>
         <input type="submit" class="btn btn-primary" value="ذخیره">
@@ -19,11 +20,11 @@
 @endif
 
 @section('breadcrumb')
-    <li >
+    <li>
         <a class="fa fa-dashboard" href="{{route('dashboard')}}"> خانه</a>
     </li>
 
-    <li >
+    <li>
         <a href="{{route('sites.show',compact('site'))}}"> {{$site->name}}</a>
     </li>
 
