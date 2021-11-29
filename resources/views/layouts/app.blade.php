@@ -61,6 +61,26 @@
 
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
+                    
+                    <li class="dropdown">
+                        @php $locale = session()->get('locale'); @endphp
+                        <a class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            @switch($locale)
+                                @case('fa')
+                                فارسی
+                                @break
+                                @case('en')
+                                english
+                                @break
+                            @endswitch
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="lang/fa">فارسی</a></li>
+                            <li><a class="dropdown-item" href="lang/en">English</a></li>
+                        </ul>
+
+                    </li>
                     <!-- Notifications: style can be found in dropdown.less -->
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
