@@ -1,34 +1,6 @@
 <?php
 return [
 
-'panel' => 'panel',
-'lara-host' => 'larahost',
-'online' => 'online',
-'desk' => 'desk',
-'my-sites' => 'my sites',
-'list-of-users' => 'list of users',
-'list-of-domains' => 'list of domains',
-'list-of-sites' => 'list of sites',
-'search' => 'search',
-'menu' => 'menu',
-'new-site' => 'Create new Site',
-'all-sites' => 'All Sites',
-
-'user' => 'user',
-'profile' => 'profile',
-'exit' => 'exit',
-'new-notification' => 'new notification',
-'free-servicess-notif' => 'services are available as free until further notice',
-'larahost-welcome-notif' => 'welcome to your larahost',
-'all-notif' => 'show all notification',
-
-'dashbord' => 'dashbord',
-'sites' => 'sites',
-'registered-user' => 'registered user',
-'domins' => 'domins',
-'more-information' => 'more information',
-'reserved-right' => 'All rights reserved by larahost ©2021',
-
 //site-sidebar
 
 'site-sidebar-off' => 'OFF',
@@ -98,7 +70,7 @@ return [
 'commands-exec-button' => 'Execution',
 'commands-history-command-box-title' => 'Execution history of Commands',
 'commands-history-command-box-table-thead-user' => 'User',
-'commands-history-command-box-table-thead-user' => 'Syntax',
+'commands-history-command-box-table-thead-syntax' => 'Syntax',
 'commands-history-command-box-table-thead-date' => 'Date',
 'commands-history-command-box-table-thead-status' => 'Status',
 'commands-history-command-box-table-tbody-status-success' => 'successfully',
@@ -255,5 +227,53 @@ return [
 'main-sidebar-userlist' => 'List of Users',
 'main-sidebar-domainlist' => 'List of Domains',
 'main-sidebar-sitelist' => 'List of Sites',
+
+//auth/login
+
+'login-title' => 'Login | Control panel',
+'login-content-loginbox-titlelink' => 'Login to site',
+'login-content-loginbox-message' => 'Filling the below Form and Login to site',
+'login-content-loginbox-form-emailinput-placeholder' => 'Email',
+'login-content-loginbox-form-passwordinput-placeholder' => 'Password',
+'login-content-loginbox-form-remember input-placeholder' => 'Remember Me',
+'login-content-loginbox-form-submitbutton' => 'Login',
+'login-content-passwordrequest-link' => 'Forget my password',
+'login-content-register-requestlink' => 'Register',
+
+//auth/register
+
+'register-title' => 'Register | Control panel',
+'register-content-registerbox-titlelink' => 'Site Registering',
+'register-content-registerbox-message' => 'Registering new User',
+'register-content-registerbox-form-nameinput-placeholder' => 'first name and last name',
+'register-content-registerbox-form-emailinput-placeholder' => 'email',
+'register-content-registerbox-form-passwordinput-placeholder' => 'password',
+'register-content-registerbox-form-confirmpasswordinput-placeholder' => 'confirm password',
+'register-content-registerbox-form-terms&conditioncheckbox-agree' => 'I agree',
+'register-content-registerbox-form-terms&conditioncheckbox-link' => 'the Terms & Conditions',
+'register-content-registerbox-form-terms&conditioncheckbox-accept' => 'and accept it',
+'register-content-registerbox-form-submitbutton' => 'Register',
+'register-content-registerbox-loginlink' => 'I have already registered',
+
+//auth/passwords/email
+
+'email-title' => 'Forget password | Control panel',
+'email-content-loginbox-titlelink' => 'Forget the Password',
+'email-content-loginbox-message' => 'Enter the correct registered email address',
+'email-content-loginbox-form-emailinput-placeholder' => 'Email',
+'email-content-loginbox-form-submitbutton' => 'Send reset link',
+'email-content-loginbox-registerlink' => 'Register',
+
+//auth/passwords/reset
+
+'reset-title' => 'Reset the Password | Control panel',
+'reset-content-registerbox-titlelink' => 'Reset the Password',
+'reset-content-registerbox-message' => 'Reset the Password',
+'reset-content-registerbox-form-emailinput-placeholder' => 'email',
+'reset-content-registerbox-form-passwordinput-placeholder' => 'password',
+'reset-content-registerbox-form-confirmpasswordinput-placeholder' => 'confirmation password',
+'reset-content-registerbox-form-submitbutton' => 'Reset Password',
+'reset-content-registerbox-loginlink' => 'I am already registered',
+'reset-content-registerbox-registerlink' => 'Register new User',
 
 ];

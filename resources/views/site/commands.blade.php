@@ -8,19 +8,19 @@
             @csrf
             <div class="box-header with-border">
                 <div class="pull-right">
-                    اجرا
+                {{ __('message.commands-exec-command')}}                    
                 </div>
             </div>
             <div class="box-body">
                 <div class="alert alert-info">
-                    تمامی command هایی که اجرا می کنید در پوشه root سایت شما به آدرس
+                {{ __('message.commands-exec-command-alert1')}}
                     <span class="text-red">/var/www/html</span>
-                    توسط کاربر
+                    {{ __('message.commands-exec-command-alert2')}}
                     <span class="text-red">root</span>
-                    اجرا می شوند
+                    {{ __('message.commands-exec-command-alert3')}}
                 </div>
                 <div class="form-group row">
-                    <label for="command" class="col-md-3 col-form-label text-right">دستور</label>
+                    <label for="command" class="col-md-3 col-form-label text-right">{{ __('message.commands-exec-syntax')}}</label>
                     <div class="col-md-8">
                         <input id="command" required name="command" type="text" class="form-control text-left dir-ltr"
                                placeholder="ls -la">
@@ -30,7 +30,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                <button class="btn btn-success" type="submit"><span>اجرا</span></button>
+                <button class="btn btn-success" type="submit"><span>{{ __('message.commands-exec-button')}}</span></button>
             </div>
         </form>
     </div>
@@ -38,7 +38,7 @@
     <div class="box">
         <div class="box-header with-border">
             <div class="pull-right">
-                تاریخچه اجرای دستورات
+            {{ __('message.commands-history-command-box-title')}}
             </div>
         </div>
 
@@ -47,10 +47,10 @@
                 <table class="table">
                     <tr>
                         <th style="width: 10px">#</th>
-                        <th>کاربر</th>
-                        <th>دستور</th>
-                        <th>تاریخ</th>
-                        <th>وضعیت</th>
+                        <th>{{ __('message.commands-history-command-box-table-thead-user')}}</th>
+                        <th>{{ __('message.commands-history-command-box-table-thead-syntax')}}</th>
+                        <th>{{ __('message.commands-history-command-box-table-thead-date')}}</th>
+                        <th>{{ __('message.commands-history-command-box-table-thead-status')}}</th>
                         <th></th>
                     </tr>
 
@@ -60,7 +60,7 @@
                             <td>{{$history->user->name}}</td>
                             <td class="text-red">{{$history->command}}</td>
                             <td>{{$history->created_at}}</td>
-                            <td> {!!  ($history->success)?'<span class="command_status bg-green">موفق</span>':'<span class="command_status bg-red">ناموفق</span>' !!}</td>
+                            <td> {!!  ($history->success)?'<span class="command_status bg-green">{{ __('message.commands-history-command-box-table-tbody-status-success')}}</span>':'<span class="command_status bg-red">{{ __('message.commands-history-command-box-table-tbody-status-faile')}}</span>' !!}</td>
                             <td>
                                 <div class="input-group-btn col-md-1">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
@@ -68,10 +68,10 @@
                                         <span class="fa  fa-ellipsis-v"></span></button>
                                     <ul class="dropdown-menu">
                                         <li><a class="show_output_modal" data-toggle="modal"
-                                               data-target="#modal-output" data-command="{{$history->command}}" data-output="{{$history->output}}" href="#">نمایش
-                                                خروجی</a></li>
+                                               data-target="#modal-output" data-command="{{$history->command}}" data-output="{{$history->output}}" href="#">{{ __('message.commands-history-command-box-table-tbody-panelbutton-history-output')}}
+                                                </a></li>
                                         <li>
-                                            <a href="#1" onclick="document.getElementById('form_{{$history->id}}').submit()" >اجرای مجدد</a>
+                                            <a href="#1" onclick="document.getElementById('form_{{$history->id}}').submit()" >{{ __('commands-history-command-box-table-tbody-panelbutton-run-again')}}</a>
                                             <form method="post"
                                                   id="form_{{$history->id}}"
                                                   action="{{route('sites.exec_command',['site'=>$site])}}">
@@ -87,7 +87,7 @@
                 </table>
             @else
                 <div class="alert alert-info Disabled">
-                    تاکنون هیچ دستوری روی این سایت اجرا نکرده اید
+                   {{ __('message.commands-history-command-box-table-tbody-panelbutton-null')}}
                 </div>
             @endif
 
@@ -100,13 +100,13 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">خروجی دستور <small class="text-muted" id="command-content"></small></h4>
+                    <h4 class="modal-title">{{ __('message.commands-history-command-resultbox-title')}} <small class="text-muted" id="command-content"></small></h4>
                 </div>
                 <div class="modal-body">
                     <pre class="console"><code id="output-content"></code></pre>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">بستن</button>
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{ __('message.commands-history-command-resultbox-footerbutton')}}</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -125,7 +125,7 @@
 
 @section('breadcrumb')
     <li >
-        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> خانه</a>
+        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.commands-breadcrumb-homeaddress')}}</a>
     </li>
 
     <li >

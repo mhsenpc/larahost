@@ -7,25 +7,25 @@ return [
 'desk' => 'میزکار',
 'my-sites' => 'سایت های من',
 'list-of-users' => 'لیست کاربران',
-'list-of-domains' => 'لیست دامنه&zwnj;ها',
-'list-of-sites' => 'لیست سایت&zwnj;ها',
-'search' => 'جست&zwnj;جو',
+'list-of-domains' => 'لیست دامنه ها',
+'list-of-sites' => 'لیست سایت ها',
+'search' => 'جست جو',
 'menu' => 'منو',
 'new-site' => 'سایت جدید',
-'all-sites' => 'همه ی سایت&zwnj;ها',
+'all-sites' => 'همه ی سایت ها',
 
 'user' => 'کاربر سایت',
 'profile' => 'پروفایل',
 'exit' => 'خروج',
 'new-notification' => 'اعلان جدید',
-'free-servicess-notif' => 'سرویس&zwnj;ها تا اطلاع ثانوی رایگان هستند',
+'free-servicess-notif' => 'سرویس ها تا اطلاع ثانوی رایگان هستند',
 'larahost-welcome-notif' => 'به لاراهاست خوش آمدید',
 'all-notif' => 'نمایش همه',
 
 'dashbord' => 'داشبورد',
-'sites' => 'سایت&zwnj;ها',
+'sites' => 'سایت ها',
 'registered-user' => 'کاربران ثبت شده',
-'domins' => 'دامنه&zwnj;ها',
+'domins' => 'دامنه ها',
 'more-information' => 'اطلاعات بیشتر',
 'reserved-right' => 'تمامی حقوق مادی و معنوی این سرویس متعلق به لاراهاست می باشد',
 
@@ -38,8 +38,8 @@ return [
 'site-sidebar-environment' => 'Environment',
 'site-sidebar-deployments' => 'Deployments',
 'site-sidebar-syntax' => 'دستورات',
-'site-sidebar-reports' => 'گزارش&zwnj;ها',
-'site-sidebar-domins' => 'دامنه&zwnj;ها',
+'site-sidebar-reports' => 'گزارش ها',
+'site-sidebar-domins' => 'دامنه ها',
 'site-sidebar-queue' => 'Queue',
 
 //action_button
@@ -47,7 +47,7 @@ return [
 'action-button-site-control' => 'کنترل سایت',
 'action-button-edit-env-file' => 'ویرایش فایل ENV',
 'action-button-edit-apache-setting' => 'ویرایش تنظیمات Apache',
-'action-button-restart' => 'راه&zwnj;اندازی مجدد',
+'action-button-restart' => 'راه اندازی مجدد',
 'action-button-restart-apache' => 'Restart Apache',
 'action-button-restart-mysql' => 'Restart Mysql',
 'action-button-restart-redis' => 'Restart Redis',
@@ -64,7 +64,7 @@ return [
 'app-logo-mini' => 'پنل',
 'app-logo-lg' => 'لاراهاست',
 'app-new-notification' => 'اعلان جدید',
-'app-free-service-notification' => 'سرویس&zwnj;ها تا اطلاع ثانوی رایگان هستند',
+'app-free-service-notification' => 'سرویس ها تا اطلاع ثانوی رایگان هستند',
 'app-welcome-notification' => 'به لاراهاست خوش آمدید',
 'app-all-notif' => 'نمایش همه',
 'app-user-status-title' => 'کاربر سایت',
@@ -81,9 +81,9 @@ return [
 
 'dashbord-title' => 'داشبورد',
 'dashbord-welcome-text' => 'به لاراهاست خوش آمدید',
-'dashbord-sitescount-title' => 'سایت&zwnj;ها',
+'dashbord-sitescount-title' => 'سایت ها',
 'dashbord-userscount-title' => 'کاربران ثبت شده',
-'dashbord-domainscount-title' => 'دامنه&zwnj;ها',
+'dashbord-domainscount-title' => 'دامنه ها',
 'dashbord-moreinfo' => 'اطلاعات بیشتر',
 'dashbord-desktop' => 'میزکار',
 
@@ -98,7 +98,7 @@ return [
 'commands-exec-button' => 'اجرا',
 'commands-history-command-box-title' => 'تاریخچه اجرای دستورات',
 'commands-history-command-box-table-thead-user' => 'کاربر',
-'commands-history-command-box-table-thead-user' => 'دستور',
+'commands-history-command-box-table-thead-syntax' => 'دستور',
 'commands-history-command-box-table-thead-date' => 'تاریخ',
 'commands-history-command-box-table-thead-status' => 'وضعیت',
 'commands-history-command-box-table-tbody-status-success' => 'موفق',
@@ -256,5 +256,53 @@ return [
 'main-sidebar-userlist' => 'لیست کاربران',
 'main-sidebar-domainlist' => 'لیست دامنه ها',
 'main-sidebar-sitelist' => 'لیست سایت ها',
+
+//auth/login
+
+'login-title' => 'ورود | کنترل پنل',
+'login-content-loginbox-titlelink' => 'ورود به سایت',
+'login-content-loginbox-message' => 'فرم زیر را تکمیل کنید و ورود بزنید',
+'login-content-loginbox-form-emailinput-placeholder' => 'ایمیل',
+'login-content-loginbox-form-passwordinput-placeholder' => 'رمز عبور',
+'login-content-loginbox-form-remember input-placeholder' => 'مرا به خاطر بسپار',
+'login-content-loginbox-form-submitbutton' => 'ورود',
+'login-content-passwordrequest-link' => 'رمز عبورم را فراموش کرده ام.',
+'login-content-register-requestlink' => 'ثبت نام',
+
+//auth/register
+
+'register-title' => 'ثبت نام | کنترل پنل',
+'register-content-registerbox-titlelink' => 'ثبت نام در سایت',
+'register-content-registerbox-message' => 'ثبت نام کاربر جدید',
+'register-content-registerbox-form-nameinput-placeholder' => 'نام و نام خانوادگی',
+'register-content-registerbox-form-emailinput-placeholder' => 'ایمیل',
+'register-content-registerbox-form-passwordinput-placeholder' => 'رمز عبور',
+'register-content-registerbox-form-confirmpasswordinput-placeholder' => 'تکرار رمز عبور',
+'register-content-registerbox-form-terms&conditioncheckbox-agree' => 'من',
+'register-content-registerbox-form-terms&conditioncheckbox-link' => 'قوانین و شرایط',
+'register-content-registerbox-form-terms&conditioncheckbox-accept' => 'را قبول میکنم.',
+'register-content-registerbox-form-submitbutton' => 'ثبت نام',
+'register-content-registerbox-loginlink' => 'من قبلا ثبت نام کرده ام',
+
+//auth/passwords/email
+
+'email-title' => 'فراموشی رمز عبور | کنترل پنل',
+'email-content-loginbox-titlelink' => 'فراموشی رمز عبور',
+'email-content-loginbox-message' => 'ایمیلی که با آن ثبت نام کرده اید را وارد نمایید',
+'email-content-loginbox-form-emailinput-placeholder' => 'ایمیل',
+'email-content-loginbox-form-submitbutton' => 'ارسال لینک بازنشانی',
+'email-content-loginbox-registerlink' => 'ثبت نام',
+
+//auth/passwords/reset
+
+'reset-title' => 'بازنشانی رمز عبور | کنترل پنل',
+'reset-content-registerbox-titlelink' => 'بازنشانی رمز عبور',
+'reset-content-registerbox-message' => 'بازنشانی رمز عبور',
+'reset-content-registerbox-form-emailinput-placeholder' => 'ایمیل',
+'reset-content-registerbox-form-passwordinput-placeholder' => 'رمز عبور',
+'reset-content-registerbox-form-confirmpasswordinput-placeholder' => 'تکرار رمز عبور',
+'reset-content-registerbox-form-submitbutton' => 'بازنشانی رمز',
+'reset-content-registerbox-loginlink' => 'من قبلا ثبت نام کرده ام',
+'reset-content-registerbox-registerlink' => 'ثبت نام کاربر جدید',
 
 ];
