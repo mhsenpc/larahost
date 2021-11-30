@@ -1,5 +1,5 @@
 @extends('layouts.single_box')
-@php($title="تاریخچه Deploy")
+@php($title=__('message.deployments-title'))
 @php($sidebar="layouts.sidebars.site_sidebar")
 
 @if(count($deployments) == 0)

@@ -1,5 +1,5 @@
 @extends('layouts.single_box')
-@php($title="دامنه های متصل به سایت")
+@php($title=__('message.domains-title'))
 @php($sidebar="layouts.sidebars.site_sidebar")
 
 @section('content')

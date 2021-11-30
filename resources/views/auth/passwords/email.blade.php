@@ -1,18 +1,18 @@
 @extends('layouts.guest')
-@section('title')فراموشی رمز عبور | کنترل پنل@stop
+@section('title'){{ __('message.email-title')}}@stop
 @section('content')
     <div class="login-box">
         <div class="login-logo">
-            <a><b>فراموشی رمز عبور</b></a>
+            <a><b>{{ __('message.email-content-loginbox-titlelink')}}</b></a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
-            <p class="login-box-msg">ایمیلی که با آن ثبت نام کرده اید را وارد نمایید</p>
+            <p class="login-box-msg">{{ __('message.email-content-loginbox-message')}}</p>
 
             <form method="POST" action="{{ route('password.email') }}">
                 @csrf
                 <div class="form-group has-feedback @error('email') has-error @enderror">
-                    <input type="email" class="form-control" placeholder="ایمیل" name="email" value="{{ old('email') }}"
+                    <input type="email" class="form-control" placeholder="{{ __('message.email-content-loginbox-form-emailinput-placeholder')}}" name="email" value="{{ old('email') }}"
                            required autocomplete="email" autofocus>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 
@@ -32,13 +32,32 @@
                 <div class="row">
                     <!-- /.col -->
                     <div class="col-xs-12">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">ارسال لینک بازنشانی</button>
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">{{ __('message.email-content-loginbox-form-submitbutton')}}</button>
                     </div>
                     <!-- /.col -->
                 </div>
             </form>
 
-            <a href="{{route('register')}}" class="text-center">ثبت نام</a>
+            <a href="{{route('register')}}" class="text-center">{{ __('message.email-content-loginbox-registerlink')}}</a>
+            <span class="dropdown lang-login">
+                        @php $locale = session()->get('locale'); @endphp
+                        <a class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            @switch($locale)
+                                @case('fa')
+                                فارسی
+                                @break
+                                @case('en')
+                                english
+                                @break
+                            @endswitch
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="lang/fa">فارسی</a></li>
+                            <li><a class="dropdown-item" href="lang/en">English</a></li>
+                        </ul>
+
+            </span>
 
         </div>
         <!-- /.login-box-body -->

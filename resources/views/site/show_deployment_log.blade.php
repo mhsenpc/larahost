@@ -1,5 +1,5 @@
 @extends('layouts.single_box')
-@php($title="گزارش Deployment")
+@php($title=__('message.show-deployment-log-title'))
 @php($sidebar="layouts.sidebars.site_sidebar")
 @php($description=$deployment->created_at)
 
@@ -9,7 +9,7 @@
 
 @section('breadcrumb')
     <li >
-        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> خانه</a>
+        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.show-deployment-log-breadcrumb-dashbord-homeaddress')}}</a>
     </li>
 
     <li >

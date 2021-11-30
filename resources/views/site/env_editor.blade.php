@@ -1,11 +1,11 @@
 @extends('layouts.single_box')
-@php($title="ویرایش فایل env")
+@php($title=__('message.env-editor-title'))
 @php($sidebar="layouts.sidebars.site_sidebar")
 
 @if(empty($env))
 @section('content')
     <div class="alert alert-warning">
-        متاسفانه فایل env پروژه شما پیدا نشد
+        {{ __('message.env-editor-contentbox-none')}}
     </div>
 @endsection
 @else
@@ -14,14 +14,14 @@
         @csrf
         <textarea dir="ltr" class="col-md-12" style="height: 25em" name="env">{{$env}}</textarea>
         <div class="clearfix">&nbsp;</div>
-        <input type="submit" class="btn btn-primary" value="ذخیره">
+        <input type="submit" class="btn btn-primary" value="{{ __('message.env-editor-formbox-submitbutton')}}">
     </form>
 @endsection
 @endif
 
 @section('breadcrumb')
     <li>
-        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> خانه</a>
+        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.env-editor-breadcrumb-dashbord-homeaddress')}}</a>
     </li>
 
     <li>

@@ -1,5 +1,5 @@
 @extends('layouts.single_box')
-@php($title="اجرای دستورات ")
+@php($title= __('message.commands-title'))
 @php($sidebar="layouts.sidebars.site_sidebar")
 
 @section('content')

@@ -1,45 +1,31 @@
 <?php
 return [
 
-'panel' => 'پانل',
-'lara-host' => 'لاراهاست',
-'online' => 'آنلاین',
-'desk' => 'میزکار',
-'my-sites' => 'سایت های من',
-'list-of-users' => 'لیست کاربران',
-'list-of-domains' => 'لیست دامنه ها',
-'list-of-sites' => 'لیست سایت ها',
-'search' => 'جست جو',
-'menu' => 'منو',
-'new-site' => 'سایت جدید',
-'all-sites' => 'همه ی سایت ها',
+//main-sidebar
 
-'user' => 'کاربر سایت',
-'profile' => 'پروفایل',
-'exit' => 'خروج',
-'new-notification' => 'اعلان جدید',
-'free-servicess-notif' => 'سرویس ها تا اطلاع ثانوی رایگان هستند',
-'larahost-welcome-notif' => 'به لاراهاست خوش آمدید',
-'all-notif' => 'نمایش همه',
-
-'dashbord' => 'داشبورد',
-'sites' => 'سایت ها',
-'registered-user' => 'کاربران ثبت شده',
-'domins' => 'دامنه ها',
-'more-information' => 'اطلاعات بیشتر',
-'reserved-right' => 'تمامی حقوق مادی و معنوی این سرویس متعلق به لاراهاست می باشد',
+'main-sidebar-userpanel-onlinelink' => 'آنلاین',
+'main-sidebar-form-inputsitename-placeholder' => 'جستجو',
+'main-sidebar-sidebarmenu-header' => 'منو',
+'main-sidebar-menu-dashbord-title' => 'میزکار',
+'main-sidebar-menu-dashbord-mysite-link' => 'سایت های من',
+'main-sidebar-menu-dashbord-newsite-link' => 'سایت جدید',
+'main-sidebar-menu-dashbord-allsite-link' => 'همه سایت ها',
+'main-sidebar-menu-dashbord-userslist-link' => 'لیست کاربران',
+'main-sidebar-menu-dashbord-domainslist-link' => 'لیست دامنه ها',
+'main-sidebar-menu-dashbord-siteslist-link' => 'لیست سایت ها',
 
 //site-sidebar
 
 'site-sidebar-off' => 'خاموش',
 'site-sidebar-on' => 'روشن',
+'site-sidebar-menu-title' => 'منو',
 'site-sidebar-return-to-my-sites' => 'بازگشت به سایت های من',
 'site-sidebar-site-desktop' => 'میزکار سایت',
 'site-sidebar-environment' => 'Environment',
 'site-sidebar-deployments' => 'Deployments',
 'site-sidebar-syntax' => 'دستورات',
 'site-sidebar-reports' => 'گزارش ها',
-'site-sidebar-domins' => 'دامنه ها',
+'site-sidebar-domains' => 'دامنه ها',
 'site-sidebar-queue' => 'Queue',
 
 //action_button
@@ -189,7 +175,7 @@ return [
 
 //site/laravel-logs
 
-'laravel-logs-title' => 'گزارش های سایت',
+'laravel-logs-title' => 'گزارش های سایت |',
 'laravel-logs-content-none' => 'تا کنون فایل log ای توسط این سایت تولید نشده است',
 'laravel-logs-tablebox-filenameth' => 'نام فایل',
 'laravel-logs-tablebox-showlogsbutton' => 'نمایش محتویات Log',
@@ -243,19 +229,6 @@ return [
 'workers-listworkercontent-table-none' => 'تاکنون هیچ worker ای برای این سایت تعریف نکرده اید',
 'workers-modalworker-closebutton' => 'بستن',
 'workers-breadcrumb-dashbord-homeaddress' => 'خانه',
-
-//sidebars/main_sidebar
-
-'main-sidebar-online' => 'آنلاین',
-'main-sidebar-searchform-placeholder' => 'جستجو',
-'main-sidebar-title' => 'منو',
-'main-sidebar-dashbord-title' => 'میزکار',
-'main-sidebar-mysites' => 'سایت های من',
-'main-sidebar-sitecreate' => 'سایت جدید',
-'main-sidebar-siteindex' => 'همه سایت ها',
-'main-sidebar-userlist' => 'لیست کاربران',
-'main-sidebar-domainlist' => 'لیست دامنه ها',
-'main-sidebar-sitelist' => 'لیست سایت ها',
 
 //auth/login
 

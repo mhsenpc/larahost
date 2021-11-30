@@ -1,5 +1,5 @@
 @extends('layouts.single_box')
-@php($title="صف (Queue) ")
+@php($title=__('message.workers-title'))
 @php($sidebar="layouts.sidebars.site_sidebar")
 
 @section('content')
@@ -8,14 +8,12 @@
             @csrf
             <div class="box-header with-border">
                 <div class="pull-right">
-                    ایجاد worker جدید
+                    {{ __('workers-createworker-formbox-title')}}
                 </div>
             </div>
             <div class="box-body">
                 <div class="alert alert-info">
-                    در این قسمت به هر تعداد که نیاز دارید می توانید queue worker بسازید. worker ها بصورت خودکار توسط
-                    برنامه supervisor مانیتور خواهند شد و در صورت بروز مشکل، مجددا اجرا خواهند شد. تمامی worker در صورت
-                    restart کردن سرور، بطور اتوماتیک اجرا می شوند.
+                    {{ __('message.workers-createworker-formbox-info')}}
                 </div>
                 <div class="form-group row">
                     <label for="connection" class="col-md-3 col-form-label text-right">Connection</label>
@@ -70,7 +68,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                <button class="btn btn-success" type="submit"><span>افزودن</span></button>
+                <button class="btn btn-success" type="submit"><span>{{ __('message.workers-createworker-formbox-footer-addsubmitbutton')}}</span></button>
             </div>
         </form>
     </div>
@@ -78,7 +76,7 @@
     <div class="box">
         <div class="box-header with-border">
             <div class="pull-right">
-                لیست Worker ها
+                {{ __('message.workers-listworkercontent-title')}}
             </div>
 
             <div class="pull-left">
@@ -94,10 +92,10 @@
                 <table class="table">
                     <tr>
                         <th style="width: 10px">#</th>
-                        <th>صف</th>
+                        <th>{{ __('message.workers-listworkercontent-table-queueth')}}</th>
                         <th>Timeout</th>
-                        <th>تعداد پردازش</th>
-                        <th>تلاش ها</th>
+                        <th>{{ __('message.workers-listworkercontent-table-processcountth')}}</th>
+                        <th>{{ __('message.workers-listworkercontent-table-effortsth')}}</th>
                         <th>Restart</th>
                         <th></th>
                     </tr>
@@ -133,7 +131,7 @@
                 </table>
             @else
                 <div class="alert alert-info Disabled">
-                    تاکنون هیچ worker ای برای این سایت تعریف نکرده اید
+                    {{ __('message.workers-listworkercontent-table-none')}}
                 </div>
             @endif
 
@@ -156,7 +154,7 @@
                         </code></pre>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">بستن</button>
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{ __('message.workers-modalworker-closebutton')}}</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -187,7 +185,7 @@
 
 @section('breadcrumb')
     <li >
-        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> خانه</a>
+        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.workers-breadcrumb-dashbord-homeaddress')}}</a>
     </li>
 
     <li >

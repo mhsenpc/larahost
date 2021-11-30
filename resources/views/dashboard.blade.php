@@ -1,5 +1,5 @@
 @extends('layouts.single_box')
-@php($title="داشبورد")
+@php($title=__('message.dashbord-title'))
 @section('box_content')
     @if (session('status'))
         <div class="alert alert-success" role="alert">

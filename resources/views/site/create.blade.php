@@ -1,5 +1,5 @@
 @extends('layouts.single_box')
-@php($title="ایجاد سایت جدید")
+@php($title=__('message.create-newsite-title'))
 @section('content')
     @if(!$allowNewSite)
         <div class="alert alert-warning">
@@ -42,8 +42,8 @@
 
                 <div class="nav-tabs-custom lara_hidden" id="private_repository">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#ssh_key" data-toggle="tab">{{ __('message.create-formbox-navtabs-sshkey-links-title)}}</a></li>
-                        <li><a href="#basic_auth" data-toggle="tab">{{ __('message.create-formbox-navtabs-basicauth-links-title)}}</a></li>
+                        <li class="active"><a href="#ssh_key" data-toggle="tab">{{ __('message.create-formbox-navtabs-sshkey-links-title')}}</a></li>
+                        <li><a href="#basic_auth" data-toggle="tab">{{ __('message.create-formbox-navtabs-basicauth-links-title')}}</a></li>
                     </ul>
 
                     <div class="tab-content">
