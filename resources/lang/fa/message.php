@@ -194,7 +194,7 @@ return [
 
 //site/show
 
-'show-title' => 'میزکار سایت',
+'show-title' => 'میزکار سایت ',
 'show-contentbox-info' => 'اگر انتظار دارید که به محض push کردن در نرم افزار کنترل نسخه، عملیات deploy شروع شود، لازم است که تریگر مربوطه که در بخش Deployment Trigger URL وجود دارد را تنظیم نمایید',
 'show-contentbox-footer-lastdeploymentreport-button' => 'دیدن گزارش آخرین Deployment',
 'show-formbox-description' => 'در این بخش می توانید دستوراتی که بعد از هر deploy لازم است در سرور اجرا شوند را تعیین نمایید',
@@ -277,5 +277,42 @@ return [
 'reset-content-registerbox-form-submitbutton' => 'بازنشانی رمز',
 'reset-content-registerbox-loginlink' => 'من قبلا ثبت نام کرده ام',
 'reset-content-registerbox-registerlink' => 'ثبت نام کاربر جدید',
+
+//admin/domains
+
+'admin-domains-title' => 'دامنه ها',
+'admin-domains-description' => 'لیست دامنه ها',
+'admin-domains-boxcontent-table-domainth' => 'دامنه',
+'admin-domains-boxcontent-table-sitenameth' => 'نام سایت',
+'admin-domains-boxcontent-table-vendorth' => 'مالک',
+'admin-domains-breadcrumb-dashbord-homeaddress' => 'خانه',
+'admin-domains-breadcrumb-management' => 'مدیریت',
+'admin-domains-breadcrumb-domainslist' => 'لیست دامنه ها',
+
+//admin/site
+
+'admin-site-title' => 'سایت ها',
+'admin-site-description' => 'لیست تمامی سایت ها',
+'admin-site-boxcontent-table-sitenameth' => 'نام سایت',
+'admin-site-boxcontent-table-domainscountth' => 'تعداد دامنه ها',
+'admin-site-boxcontent-table-vendorth' => 'مالک',
+'admin-site-breadcrumb-dashbord-homeaddress' => 'خانه',
+'admin-site-breadcrumb-management' => 'مدیریت',
+'admin-site-breadcrumb-siteslist' => 'لیست سایت ها',
+
+//admin/users
+
+'admin-users-title' => 'کاربران سایت',
+'admin-users-description' => 'لیست تمامی کاربرانی که ثبت نام کرده اند',
+'admin-users-contentbox-table-nameth' => 'نام',
+'admin-users-contentbox-table-emailth' => 'ایمیل',
+'admin-users-contentbox-table-sitesth' => 'سایت ها',
+'admin-users-contentbox-table-loginastd' => 'ورود',
+'admin-users-breadcrumb-dashbord-homeaddress' => 'خانه',
+'admin-users-breadcrumb-management' => 'مدیریت',
+'admin-users-breadcrumb-userslist' => 'لیست کاربران',
+
+
+
 
 ];

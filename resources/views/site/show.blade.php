@@ -15,7 +15,7 @@
         </div>
         <div class="box-body">
             <div class="alert alert-info">
-                {{ __(message.show-contentbox-info)}}
+                {{ __('message.show-contentbox-info')}}
             </div>
         </div>
         <!-- /.box-body -->
@@ -103,7 +103,7 @@
                 </div>
                 <div class="box-body">
                     <div class="alert alert-info">
-                        {{ __('message.show-maintenace-status-formbox-infoconten')}}
+                        {{ __('message.show-maintenace-status-formbox-infocontent')}}
                     </div>
                     <div class="form-group row"><label for="secret" class="col-md-3 col-form-label text-md-right">عبارت
                             مخفی</label>

@@ -8,7 +8,7 @@
             @csrf
             <div class="box-header with-border">
                 <div class="pull-right">
-                    {{ __('workers-createworker-formbox-title')}}
+                    {{ __('message.workers-createworker-formbox-title')}}
                 </div>
             </div>
             <div class="box-body">

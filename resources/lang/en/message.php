@@ -193,7 +193,7 @@ return [
 
 //site/show
 
-'show-title' => 'Site Desktop',
+'show-title' => 'Site Desktop ',
 'show-contentbox-info' => 'if you expect to Begining deploy operation as soon as after push in the control version software, it is necessary to Set the relevant trigger in the Deployment Trigger URl section.',
 'show-contentbox-footer-lastdeploymentreport-button' => 'See the latest Deployment report',
 'show-formbox-description' => 'in this section you can Determine the necessary execute commands after each deploy',
@@ -276,5 +276,39 @@ return [
 'reset-content-registerbox-form-submitbutton' => 'Reset Password',
 'reset-content-registerbox-loginlink' => 'I am already registered',
 'reset-content-registerbox-registerlink' => 'Register new User',
+
+//admin/domains
+
+'admin-domains-title' => 'Domains',
+'admin-domains-description' => 'Domains list',
+'admin-domains-boxcontent-table-domainth' => 'Domain',
+'admin-domains-boxcontent-table-sitenameth' => 'Site name',
+'admin-domains-boxcontent-table-vendorth' => 'vendor',
+'admin-domains-breadcrumb-dashbord-homeaddress' => 'Home',
+'admin-domains-breadcrumb-management' => 'Management',
+'admin-domains-breadcrumb-domainslist' => 'Domains list',
+
+//admin/site
+
+'admin-site-title' => 'Sites',
+'admin-site-description' => 'list of all Sites',
+'admin-site-boxcontent-table-sitenameth' => 'Site name',
+'admin-site-boxcontent-table-domainscountth' => 'Domains count',
+'admin-site-boxcontent-table-vendorth' => 'Vendor',
+'admin-site-breadcrumb-dashbord-homeaddress' => 'Home',
+'admin-site-breadcrumb-management' => 'Management',
+'admin-site-breadcrumb-siteslist' => 'Sites List',
+
+//admin/users
+
+'admin-users-title' => 'Site Users',
+'admin-users-description' => 'List of all registered users',
+'admin-users-contentbox-table-nameth' => 'Name',
+'admin-users-contentbox-table-emailth' => 'Email',
+'admin-users-contentbox-table-sitesth' => 'Sites',
+'admin-users-contentbox-table-loginastd' => 'Login',
+'admin-users-breadcrumb-dashbord-homeaddress' => 'Home',
+'admin-users-breadcrumb-management' => 'Management',
+'admin-users-breadcrumb-userslist' => 'Users list',
 
 ];
