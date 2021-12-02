@@ -98,11 +98,11 @@ return [
 
 //site/create
 
-'create-newsite-title' => 'Creat new Site',
+'create-newsite-title' => 'Create new Site',
 'create-allownewsite-alert' => 'Thank you for your interest in the Larahost Services, We should be noted that each user is allowed to build only one site. be sure, after complete the trialing term task and apply fees (price) service, we have been unlimited Hosting for your sites.',
-'create-formbox-header-title' => 'Site Setting up',
+'create-formbox-header-title' => 'Site setting up',
 'create-formbox-name-label' => 'Site name',
-'create-formbox-repository-label' => 'Repository Address',
+'create-formbox-repository-label' => 'Repository address',
 'create-formbox-checkbox-value1-title' => 'This Repository is dedicated and needs authentication',
 'create-formbox-navtabs-sshkey-links-title' => 'Authentication by the Key',
 'create-formbox-navtabs-basicauth-links-title' => 'Traditional authentication (Basically auth)',
@@ -112,7 +112,7 @@ return [
 'create-formbox-tabcontent-basicauth-calloutwarning-content' => 'For Increasing your security solutions, please Do not use this type of authentication as much as possible. Instead of Traditional authentication, Please using by the Key Authentication.',
 'create-formbox-tabcontent-basicauth-username-label-title' => 'Git Username',
 'create-formbox-tabcontent-basicauth-password-label-title' => 'Git Password',
-'create-formbox-boxfooter-submitvalue-input' => 'lunching Web site',
+'create-formbox-boxfooter-submitvalue-input' => 'Lunching web site',
 'create-breadcrumb-dashbord-homeaddress-title' => 'Home',
 'create-breadcrumb-mysitesaddress-title' => 'My Sites',
 'create-breadcrumb-createnewsiteaddress-title' => 'Create New Site',

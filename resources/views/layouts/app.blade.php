@@ -76,8 +76,8 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="lang/fa">فارسی</a></li>
-                            <li><a class="dropdown-item" href="lang/en">English</a></li>
+                            <li><a class="dropdown-item" href="{{route('lang','fa')}}">فارسی</a></li>
+                            <li><a class="dropdown-item" href="{{route('lang','en')}}">English</a></li>
                         </ul>
 
                     </li>
