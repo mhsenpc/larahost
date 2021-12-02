@@ -60,7 +60,7 @@
                             <td>{{$history->user->name}}</td>
                             <td class="text-red">{{$history->command}}</td>
                             <td>{{$history->created_at}}</td>
-                            <td> {!!  ($history->success)?'<span class="command_status bg-green">{{ __('message.commands-history-command-box-table-tbody-status-success')}}</span>':'<span class="command_status bg-red">{{ __('message.commands-history-command-box-table-tbody-status-faile')}}</span>' !!}</td>
+                            <td> {!!  ($history->success)?'<span class="command_status bg-green">{{ __("message.commands-history-command-box-table-tbody-status-success")}}</span>':'<span class="command_status bg-red">{{ __("message.commands-history-command-box-table-tbody-status-faile")}}</span>' !!}</td>
                             <td>
                                 <div class="input-group-btn col-md-1">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
@@ -71,7 +71,7 @@
                                                data-target="#modal-output" data-command="{{$history->command}}" data-output="{{$history->output}}" href="#">{{ __('message.commands-history-command-box-table-tbody-panelbutton-history-output')}}
                                                 </a></li>
                                         <li>
-                                            <a href="#1" onclick="document.getElementById('form_{{$history->id}}').submit()" >{{ __('commands-history-command-box-table-tbody-panelbutton-run-again')}}</a>
+                                            <a href="#1" onclick="document.getElementById('form_{{$history->id}}').submit()" >{{ __('message.commands-history-command-box-table-tbody-panelbutton-run-again')}}</a>
                                             <form method="post"
                                                   id="form_{{$history->id}}"
                                                   action="{{route('sites.exec_command',['site'=>$site])}}">

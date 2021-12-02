@@ -21,7 +21,7 @@
         <!-- /.box-body -->
         <div class="box-footer">
             <button id="show_deployment_modal" class="btn btn-default" data-toggle="modal"
-                    data-target="#modal-last-deployment">{{ __('message.show-contentbox-footer-lastdeploymentreport-button')}}t
+                    data-target="#modal-last-deployment">{{ __('message.show-contentbox-footer-lastdeploymentreport-button')}}
             </button>
         </div>
     </div>
