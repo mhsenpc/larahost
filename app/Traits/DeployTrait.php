@@ -4,6 +4,7 @@
 namespace App\Traits;
 
 
+use App\Events\DeployFailed;
 use App\Events\Site\Created;
 use App\Events\Site\Creating;
 use App\Events\Site\Deployed;
@@ -11,8 +12,10 @@ use App\Events\Site\Deploying;
 use App\Services\CommandLog;
 use App\Services\LaravelDeployCommands;
 use Illuminate\Support\Facades\Log;
-
 trait DeployTrait {
+    /**
+     *
+     */
     public function firstDeploy() {
         Log::debug("first deploy");
         $this->getFilesystem()->createRequiredDirectories();
@@ -28,6 +31,8 @@ trait DeployTrait {
             } else {
                 $commandLog->add("git clone {$this->getModel()->repo} .", "Failed to clone the repository with the provided credentials");
                 $this->getLogWriter()->write($commandLog, false);
+                event(new DeployFailed());
+
             }
         } else {
             $commandLog->add("site new {$this->getName()}", "Unable to setup a new site. Contact Administrator");
@@ -36,6 +41,7 @@ trait DeployTrait {
         }
         Created::dispatch($this->getModel());
         Deployed::dispatch($this->getModel());
+
     }
 
     public function reDeploy() {

@@ -37,7 +37,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         Deployed::class =>[
             SiteDeployedProgress::class
-        ]
+        ],
+        'App\Events\Site\DeployFaluire' => [
+            'App\Listeners\HandleDeployFailure',
+        ],
     ];
 
     /**

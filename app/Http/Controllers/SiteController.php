@@ -33,7 +33,7 @@ class SiteController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        $user_public_key = Auth::user()->getSSHKeysDir() . '/id_rsa.pub';
+        $user_public_key = "iujghfgyhg"; //Auth::user()->getSSHKeysDir() . '/id_rsa.pub';
         $public_key = "";
         if (file_exists($user_public_key)) {
             $public_key = file_get_contents($user_public_key);
