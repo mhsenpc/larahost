@@ -7,7 +7,7 @@
         @if(isset( $site) && \App\Services\ProgressService::isActive("deploy_{$site->name}"))
             Deploying {{$site->name}}
         @else
-            {{$title??''}} | کنترل پنل
+            {{$title??''}} | {{ __('message.app-control-panel')}}
         @endif
     </title>
     <!-- Tell the browser to be responsive to screen width -->
@@ -48,9 +48,9 @@
         <!-- Logo -->
         <a class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini">پنل</span>
+            <span class="logo-mini">{{ __('message.app-logo-mini')}}</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>لاراهاست</b></span>
+            <span class="logo-lg"><b>{{ __('message.app-logo-lg')}}</b></span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
@@ -61,6 +61,29 @@
 
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
+                    
+                    <li class="dropdown">
+                        @php                                             
+                            $locale = App::currentLocale();                        
+                        @endphp  
+                        <a class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                        <i class="fa fa-globe" aria-hidden="true"></i> 
+                            @switch($locale)
+                                @case('fa')
+                                فارسی
+                                @break
+                                @case('en')
+                                english
+                                @break
+                            @endswitch
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{route('lang','fa')}}">فارسی</a></li>
+                            <li><a class="dropdown-item" href="{{route('lang','en')}}">English</a></li>
+                        </ul>
+
+                    </li>
                     <!-- Notifications: style can be found in dropdown.less -->
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -68,19 +91,19 @@
                             <span class="label label-warning">2</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">2 اعلان جدید</li>
+                            <li class="header">2 {{ __('message.app-new-notification')}}</li>
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
                                     <li>
-                                        <a href="#"> <i class="fa fa-info"></i> سرویس ها تا اطلاع ثانوی رایگان هستند </a>
+                                        <a href="#"> <i class="fa fa-info"></i> {{ __('message.app-free-service-notification')}} </a>
                                     </li>
                                     <li>
-                                        <a href="#"> <i class="fa fa-info"></i> به لاراهاست خوش آمدید </a>
+                                        <a href="#"> <i class="fa fa-info"></i> {{ __('message.app-welcome-notification')}} </a>
                                     </li>
                                 </ul>
                             </li>
-                            <li class="footer"><a href="#">نمایش همه</a></li>
+                            <li class="footer"><a href="#">{{ __('message.app-all-notif')}}</a></li>
                         </ul>
                     </li>
 
@@ -97,17 +120,17 @@
 
                                 <p>
                                     {{auth()->user()->name}}
-                                    <small>کاربر سایت</small>
+                                    <small>{{ __('message.app-user-status-title')}}</small>
                                 </p>
                             </li>
 
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-right">
-                                    <a href="#" class="btn btn-default btn-flat">پروفایل</a>
+                                    <a href="#" class="btn btn-default btn-flat">{{ __('message.app-profile')}}</a>
                                 </div>
                                 <div class="pull-left">
-                                    <a href="{{route('logout')}}" class="btn btn-default btn-flat">خروج</a>
+                                    <a href="{{route('logout')}}" class="btn btn-default btn-flat">{{ __('message.app-exit')}}</a>
                                 </div>
                             </li>
                         </ul>
@@ -156,7 +179,7 @@
     <!-- /.content-wrapper -->
 
     <footer class="main-footer text-left">
-        <strong>تمامی حقوق مادی و معنوی این سرویس متعلق به لاراهاست می باشد</strong>
+        <strong>{{ __('message.app-reserved-right-text')}}</strong>
     </footer>
 </div>
 <!-- ./wrapper -->

@@ -1,13 +1,13 @@
 @extends('layouts.single_box')
-@php($title="سایت ها")
-@php($description="لیست تمامی سایت ها")
+@php($title= __('message.admin-site-title'))
+@php($description= __('message.admin-site-description'))
 @section('box_content')
     <table class="table table-bordered">
         <tr>
             <th style="width: 10px">#</th>
-            <th>نام سایت</th>
-            <th>تعداد دامنه ها</th>
-            <th>مالک</th>
+            <th>{{ __('message.admin-site-boxcontent-table-sitenameth')}}</th>
+            <th>{{ __('message.admin-site-boxcontent-table-domainscountth')}}</th>
+            <th>{{ __('message.admin-site-boxcontent-table-vendorth')}}</th>
             <th></th>
         </tr>
 
@@ -27,13 +27,13 @@
 
 @section('breadcrumb')
     <li>
-        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> خانه</a>
+        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.admin-site-breadcrumb-dashbord-homeaddress')}}</a>
     </li>
     <li>
-        <a href="{{route('dashboard')}}"> مدیریت</a>
+        <a href="{{route('dashboard')}}"> {{ __('message.admin-site-breadcrumb-management')}}</a>
     </li>
 
     <li class="active">
-        <a href="{{route('admin.sites.index')}}">لیست سایت ها</a>
+        <a href="{{route('admin.sites.index')}}">{{ __('message.admin-site-breadcrumb-siteslist')}}</a>
     </li>
 @endsection

@@ -1,13 +1,13 @@
 @extends('layouts.single_box')
-@php($title="کاربران سایت")
-@php($description="لیست تمامی کاربرانی که ثبت نام کرده اند")
+@php($title= __('message.admin-users-title'))
+@php($description= __('message.admin-users-description'))
 @section('box_content')
 <table class="table table-bordered">
     <tr>
         <th style="width: 10px">#</th>
-        <th>نام</th>
-        <th>ایمیل</th>
-        <th>سایت ها</th>
+        <th>{{ __('message.admin-users-contentbox-table-nameth')}}</th>
+        <th>{{ __('message.admin-users-contentbox-table-emailth')}}</th>
+        <th>{{ __('message.admin-users-contentbox-table-sitesth')}}</th>
         <th></th>
     </tr>
 
@@ -17,7 +17,7 @@
         <td>{{$user->name}}.</td>
         <td>{{$user->email}}.</td>
         <td>{{$user->sites->count()}}</td>
-        <td><a class="btn btn-primary" href="{{route('admin.users.loginAs',['user_id'=>$user->id])}}">ورود {{$user->name}}</a> </td>
+        <td><a class="btn btn-primary" href="{{route('admin.users.loginAs',['user_id'=>$user->id])}}">{{ __('message.admin-users-contentbox-table-loginastd')}} {{$user->name}}</a> </td>
     </tr>
     @endforeach
 </table>
@@ -26,13 +26,13 @@
 
 @section('breadcrumb')
 <li >
-    <a class="fa fa-dashboard" href="{{route('dashboard')}}"> خانه</a>
+    <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.admin-users-breadcrumb-dashbord-homeaddress')}}</a>
 </li>
 <li >
-    <a  href="{{route('dashboard')}}"> مدیریت</a>
+    <a  href="{{route('dashboard')}}"> {{ __('message.admin-users-breadcrumb-management')}}</a>
 </li>
 
 <li class="active" >
-    <a href="{{route('admin.users.index')}}">لیست کاربران</a>
+    <a href="{{route('admin.users.index')}}">{{ __('message.admin-users-breadcrumb-userslist')}}</a>
 </li>
 @endsection

@@ -1,7 +1,7 @@
 <div class="box align-bottom">
     <div class="box-header with-border">
         <div class="pull-right">
-            کنترل سایت
+            {{ __('message.action-button-site-control')}}
         </div>
 
         <div class="box-tools pull-right">
@@ -20,8 +20,8 @@
                 Files
                 <span class="fa fa-caret-down"></span></button>
             <ul class="dropdown-menu">
-                <li><a href="{{route('sites.env_editor',['site'=>$site])}}">ویرایش فایل ENV</a></li>
-                <li><a href="#">ویرایش تنظیمات Apache</a></li>
+                <li><a href="{{route('sites.env_editor',['site'=>$site])}}">{{ __('message.action-button-edit-env-file')}}</a></li>
+                <li><a href="#">{{ __('message.action-button-edit-apache-setting')}}</a></li>
             </ul>
         </div>
 
@@ -36,8 +36,8 @@
                 <li><a href="{{route('sites.restart_supervisor',['site'=>$site])}}">Restart Supervisor</a></li>
                 <li class="divider"></li>
                 <li>
-                    <a onclick="return confirm('با بازنشانی سرور، تمامی تغییراتی که روی سرور انجام داده بودید به حالت اولیه برمیگردند. آیا اطمینان دارید؟' )"
-                       href="{{route('sites.factory_reset',['site'=>$site])}}">Factory Reset</a></li>
+                    <a onclick="return confirm('{{ __('message.action-button-factory-reset-notif')}}' )"
+                       href="{{route('sites.factory_reset',['site'=>$site])}}">{{ __('message.action-button-factory-reset')}}</a></li>
 
             </ul>
         </div>
@@ -45,8 +45,8 @@
         <div class="input-group-btn col-md-1">
             <form method="post" action="{{route('sites.remove',['site'=> $site])}}">
                 @csrf
-                <input type="submit" class="btn btn-default" value="حذف سایت"
-                       onclick="return confirm('آیا از حذف سایت {{$site->name}} اطمینان دارید؟ این عملیات غیرقابل بازگشت است!' )"/>
+                <input type="submit" class="btn btn-default" value="{{ __('message.action-button-delete-site')}}"
+                       onclick="return confirm('{{ __('message.action-button-delete-site-notif-first')}} {{$site->name}} {{ __('message.action-button-delete-site-notif-second')}}' )"/>
             </form>
         </div>
 

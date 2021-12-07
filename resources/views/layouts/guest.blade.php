@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.css')}}">
     <!-- iCheck -->
     <link rel="stylesheet" href="{{asset('plugins/iCheck/square/blue.css')}}">
+    <!--- styling language choice button -->
+    <link rel="stylesheet" href="{{asset('css/lang.css')}}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

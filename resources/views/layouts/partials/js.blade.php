@@ -23,7 +23,7 @@
 <script src="{{asset('js/app.js')}}"></script>
 <script>
     window.channel.bind('site.created', function(data) {
-        alert("سایت " + data.site_name +" با موفقیت ایجاد شد");
+        alert("{{ __('message.js-pre-alert-text')}} " + data.site_name +" {{ __('message.js-after-alert-text')}}");
         window.location.href= '/sites/' + data.site_name;
     });
 </script>

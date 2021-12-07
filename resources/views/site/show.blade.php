@@ -1,5 +1,5 @@
 @extends('layouts.single_box')
-@php($title="میزکار سایت ".$site->name)
+@php($title=__('message.show-title').$site->name)
 @php($sidebar="layouts.sidebars.site_sidebar")
 
 @section('content')
@@ -15,14 +15,13 @@
         </div>
         <div class="box-body">
             <div class="alert alert-info">
-                اگر انتظار دارید که به محض push کردن در نرم افزار کنترل نسخه، عملیات deploy شروع شود، لازم است که تریگر
-                مربوطه که در بخش Deployment Trigger URL وجود دارد را تنظیم نمایید
+                {{ __('message.show-contentbox-info')}}
             </div>
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
             <button id="show_deployment_modal" class="btn btn-default" data-toggle="modal"
-                    data-target="#modal-last-deployment">دیدن گزارش آخرین Deployment
+                    data-target="#modal-last-deployment">{{ __('message.show-contentbox-footer-lastdeploymentreport-button')}}
             </button>
         </div>
     </div>
@@ -34,8 +33,7 @@
                 <div class="pull-right">
                     Deploy Script
                     <small class="text-muted">
-                        در این بخش می توانید دستوراتی که بعد از هر deploy لازم است در سرور اجرا
-                        شوند را تعیین نمایید
+                        {{ __('message.show-formbox-description')}}
                     </small>
                 </div>
             </div>
@@ -45,7 +43,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                <button type="submit" class="btn btn-success">ذخیره</button>
+                <button type="submit" class="btn btn-success">{{ __('message.show-formbox-footer-submitbutton')}}</button>
             </div>
         </form>
     </div>
@@ -58,17 +56,14 @@
             </div>
         </div>
         <div class="box-body">
-            در صورتی که بخواهید به محض push کردن کدها در نرم افزار سورس کنترل و یا پس از اتمام عملیات تست اتوماتیک توسط
-            نرم افزارهایی همانند Jenkins یا CircleCI، لاراهاست کدهای شما را از سیستم کنترل نسخه دریافت کرده و بطور
-            اتوماتیک روی سایت شما بارگذاری کند کافیست یک درخواست Get و یا Post به آدرس زیر داده شود که این امر باعث شروع
-            عملیات Deploy خودکار می شود
+            {{ __('message.show-deploytriggerurlbox-description')}}
             <div class="alert alert-warning text-left">
                 <a href="{{route('triggerDeployment',['token'=> $site->deploy_token])}}">{{route('triggerDeployment',['token'=> $site->deploy_token])}}</a>
             </div>
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-            <a class="btn btn-success" href="{{route('sites.regenerate_deploy_token',['site'=>$site])}}">تغییر Token</a>
+            <a class="btn btn-success" href="{{route('sites.regenerate_deploy_token',['site'=>$site])}}">{{ __('message.show-deploytriggerurlbox-footer-button')}}</a>
         </div>
     </div>
 
@@ -78,12 +73,12 @@
                 @csrf
                 <div class="box-header with-border">
                     <div class="pull-right">
-                        حالت تعمیر
+                        {{ __('message.show-maintenace-status-formbox-maintenaceup-title')}}
                     </div>
                 </div>
                 <div class="box-body">
                     <div class="alert alert-warning">
-                        <p> در حال حاضر سایت شما در حالت تعمیر قرار دارد</p>
+                        <p> {{ __('message.show-maintenace-status-formbox-warningcontent')}}</p>
                     </div>
                     <p class="text-left text-center"><a target="_blank"
                                                         href="http://{{$site->name}}{{config('larahost.sudomain')}}/{{$maintenace_secret}}">http://{{$site->name}}
@@ -93,7 +88,7 @@
                 <!-- /.box-body -->
                 <div class="box-footer">
                     <button type="submit" class="btn btn-success"
-                    ><span>خروج از حالت تعمیر</span></button>
+                    ><span>{{ __('message.show-maintenace-status-formbox-footer-cancelsubmitbutton')}}</span></button>
                 </div>
             </form>
         </div>
@@ -103,19 +98,19 @@
                 @csrf
                 <div class="box-header with-border">
                     <div class="pull-right">
-                        حالت تعمیر
+                        {{ __('message.show-maintenace-status-formbox-maintenacedown-title')}}
                     </div>
                 </div>
                 <div class="box-body">
                     <div class="alert alert-info">
-                        فعال سازی حالت تعمیر باعث خارج شدن سایت از دسترس عموم می شود
+                        {{ __('message.show-maintenace-status-formbox-infocontent')}}
                     </div>
                     <div class="form-group row"><label for="secret" class="col-md-3 col-form-label text-md-right">عبارت
                             مخفی</label>
                         <div class="col-md-8"><input type="text" id="secret" name="secret" class="form-control dir-ltr"> <span
-                                class="form-text">نکته: فقط لاراول 8 توانایی استفاده از  <a
+                                class="form-text">{{ __('message.show-maintenace-status-formbox-secretinput-text1')}}  <a
                                     href="https://laravel.com/docs/8.x/configuration#bypassing-maintenance-mode"
-                                    target="_blank">عبارت مخفی</a> را دارد.</span></div>
+                                    target="_blank">{{ __('message.show-maintenace-status-formbox-secretinput-link')}}</a> {{ __('message.show-maintenace-status-formbox-secretinput-text2')}}</span></div>
                     </div>
 
                 </div>
@@ -123,7 +118,7 @@
                 <div class="box-footer">
                     <button type="submit" href="{{route('sites.maintenance_down',['site'=>$site])}}"
                             class="btn btn-warning"
-                    ><span>فعال سازی حالت تعمیر</span></button>
+                    ><span>{{ __('message.show-maintenace-status-formbox-footer-activesubmitbutton')}}</span></button>
                 </div>
             </form>
         </div>
@@ -134,14 +129,12 @@
             @csrf
             <div class="box-header with-border">
                 <div class="pull-right">
-                    تغییر Git Remote
+                    {{ __('message.show-maintenace-status-formbox-gitremote-title')}}
                 </div>
             </div>
             <div class="box-body">
                 <div class="alert alert-info">
-                    در این بخش می توانید Git remote Url متصل به سایت خود را تغییر دهید.توجه کنید که آدرس Repository
-                    جدیدی که وارد می کنید دقیقا باید شامل همان repository و همان تاریخچه commit باشد در غیر این صورت
-                    سیستم deploy عمل نخواهد کرد!
+                    {{ __('message.show-maintenace-status-formbox-gitremote-info')}}
                 </div>
                 <div class="form-group row">
                     <label for="repository" class="col-md-3 col-form-label text-right">Repository</label>
@@ -154,7 +147,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                <button class="btn btn-success" type="submit"><span>تغییر Git Remote</span></button>
+                <button class="btn btn-success" type="submit"><span>{{ __('message.show-maintenace-status-formbox-footer-gitremotesubmitbutton')}}</span></button>
             </div>
         </form>
     </div>
@@ -173,7 +166,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">بستن</button>
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{ __('message.show-maintenace-status-deploymentlog-closemodal')}}</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -193,7 +186,7 @@
 
 @section('breadcrumb')
     <li >
-        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> خانه</a>
+        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.show-breadcrumb-dashbord-homeaddress')}}</a>
     </li>
 
     <li >
