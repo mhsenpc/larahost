@@ -20,7 +20,7 @@ class Localization
         if (session()->has( 'locale' ))
         {
             App::setlocale(session()->get('locale'));
-        }
+        }           
         return $next($request);
     }
 }

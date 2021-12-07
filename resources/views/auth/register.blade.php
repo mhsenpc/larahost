@@ -45,8 +45,11 @@
 
         <a href="{{route('login')}}" class="text-center">{{ __('message.register-content-registerbox-loginlink')}}</a>
         <span class="dropdown lang-login">
-                        @php $locale = session()->get('locale'); @endphp
+            @php                                             
+                $locale = App::currentLocale();  
+            @endphp 
                         <a class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            <i class="fa fa-globe" aria-hidden="true"></i> 
                             @switch($locale)
                                 @case('fa')
                                 فارسی
