@@ -1,11 +1,13 @@
 <?php
 
+use App\Events\Site\DeployFailed;
 use App\Http\Controllers\CommandsController;
 use App\Http\Controllers\DeploymentController;
 use App\Http\Controllers\DomainController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\QueueController;
 use App\Http\Controllers\SiteController;
+use App\Models\Site;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 
 Auth::routes();
 Route::middleware(['auth'])->group(function () {

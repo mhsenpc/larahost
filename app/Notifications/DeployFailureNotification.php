@@ -44,13 +44,13 @@ class DeployFailureNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line($this->site->name)
+                     ->greeting(' سلام')
+                    ->line($this->site->name.' عزیز')
                     ->line('متاسفانه در فرآیند دپلوی سایت test مشکلی به وجود آمده است.
 متن خطا به شرح زیر می باشد:.')
                     ->line('failed to clone repository from git')
                     ->line('برای دیدن جزئیات بیشتر روی دکمه زیر کلیک کنید')
-                    ->action('نمایش گزارش دپلوی', url(route('sites.deployments', ['id'=>$this->site->id])));
-
+                    ->action('نمایش گزارش دپلوی', route('sites.deployments', ['site'=>$this->site]));
     }
 
     /**

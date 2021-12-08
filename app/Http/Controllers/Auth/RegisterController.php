@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+
+
+use App\Events\Site\DeployFailed;
 use App\Http\Controllers\Controller;
 use App\Mail\SendEmail;
 use App\Notifications\RegisterNotify;
@@ -76,8 +79,12 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        //Mail::to($data['email'])->send(new SendEmail());
+        Mail::to($data['email'])->send(new SendEmail());
         Notification::send($user,new RegisterNotify($user));
+
+
+
+
         return $user;
     }
 }
