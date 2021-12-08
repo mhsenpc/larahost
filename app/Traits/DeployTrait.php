@@ -19,7 +19,7 @@ trait DeployTrait {
      */
     public function firstDeploy() {
 
-        $message="Failed to clone the repository with the provided credentials";//send event message deployfailed
+
 
         Log::debug("first deploy");
         $this->getFilesystem()->createRequiredDirectories();
@@ -34,14 +34,17 @@ trait DeployTrait {
                 $this->getDomain()->add($this->getName() . config('larahost.sudomain'));
                 $this->getLogWriter()->write($commandLog, true);
             } else {
+                $message="Failed to clone the repository with the provided credentials"; //send event message deployfailed
                 $commandLog->add("git clone {$this->getModel()->repo} .", $message);
                 $this->getLogWriter()->write($commandLog, false);
 
-                event(new DeployFailed($this->getModel(),$message));//send event deployfailed
+                event(new DeployFailed($this->getModel(),$message)); //send event deployfailed
 
             }
         } else {
-            $commandLog->add("site new {$this->getName()}", "Unable to setup a new site. Contact Administrator");
+            $message = "Unable to setup a new site. Contact Administrator";
+            $commandLog->add("site new {$this->getName()}", $message);
+
             $this->getLogWriter()->write($commandLog, false);
 
             event(new DeployFailed($this->getModel(),$message)); //send event deployfailed

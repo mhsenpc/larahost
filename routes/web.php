@@ -21,7 +21,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+Route::get('/test',function(){
+          $message="Failed to clone the repository with the provided credentials";
+          event(new DeployFailed(Site::first(),$message));
+});
 
 Auth::routes();
 Route::middleware(['auth'])->group(function () {
