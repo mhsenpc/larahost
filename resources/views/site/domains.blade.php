@@ -1,5 +1,5 @@
 @extends('layouts.single_box')
-@php($title="دامنه های متصل به سایت")
+@php($title=__('message.domains-title'))
 @php($sidebar="layouts.sidebars.site_sidebar")
 
 @section('content')
@@ -8,15 +8,15 @@
             @csrf
             <div class="box-header with-border">
                 <div class="pull-right">
-                    اتصال دامنه جدید
+                    {{ __('message.domains-formbox-header-title')}}
                 </div>
             </div>
             <div class="box-body">
                 <div class="alert alert-info">
-                    در این بخش می توانید یک یا چند دامنه را به سایت {{$site->name}} متصل کنید
+                    {{ __('message.domains-formbox-body-title1')}} {{$site->name}} {{ __('message.domains-formbox-body-title2')}}
                 </div>
                 <div class="form-group row">
-                    <label for="command" class="col-md-3 col-form-label text-right">نام دامنه</label>
+                    <label for="command" class="col-md-3 col-form-label text-right">{{ __('message.domains-formbox-namedomain-label')}}</label>
                     <div class="col-md-8">
                         <input id="name" required name="name" type="text" class="form-control text-left dir-ltr"
                                placeholder="johndoe.ir">
@@ -26,7 +26,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                <button class="btn btn-success" type="submit"><span>اتصال</span></button>
+                <button class="btn btn-success" type="submit"><span>{{ __('message.domains-formbox-footer-submitbutton')}}</span></button>
             </div>
         </form>
     </div>
@@ -34,7 +34,7 @@
     <div class="box">
         <div class="box-header with-border">
             <div class="pull-right">
-                لیست دامنه های سایت {{$site->name}}
+                {{ __('message.domains-domainlist-title1')}} {{$site->name}} {{ __('message.domains-domainlist-title2')}}
             </div>
         </div>
 
@@ -43,9 +43,9 @@
                 <table class="table">
                     <tr>
                         <th style="width: 10px">#</th>
-                        <th>نام دامنه</th>
-                        <th>تاریخ اتصال</th>
-                        <th>وضعیت</th>
+                        <th>{{ __('message.domains-domainlist-table-nameth')}}</th>
+                        <th>{{ __('message.domains-domainlist-table-connectiondateth')}}</th>
+                        <th>{{ __('message.domains-domainlist-table-statusth')}}</th>
                         <th></th>
                     </tr>
 
@@ -54,7 +54,7 @@
                             <td>{{$key +1 }}.</td>
                             <td>{{$domain->name}}</td>
                             <td>{{$domain->created_at}}</td>
-                            <td><span class="command_status bg-green">متصل</span></td>
+                            <td><span class="command_status bg-green">{{ __('message.domains-domainlist-table-statustd')}}</span></td>
                             <td>
                                 <div class="input-group-btn col-md-1">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
@@ -63,8 +63,8 @@
                                     <ul class="dropdown-menu">
                                         <li>
                                             <a class="btn btn-default"
-                                               onclick="return confirm('آیا از حذف دامنه {{$domain->name}} اطمینان دارید؟ ' )"
-                                               href="{{route('sites.remove_domain',['site'=>$site , 'name'=>$domain->name])}}">حذف</a>
+                                               onclick="return confirm('{{ __('message.domains-domainlist-table-removebutton-alert1')}} {{$domain->name}} {{ __('message.domains-domainlist-table-removebutton-alert2')}} ' )"
+                                               href="{{route('sites.remove_domain',['site'=>$site , 'name'=>$domain->name])}}">{{ __('message.domains-domainlist-table-removebutton-linktitle')}}</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -74,7 +74,7 @@
                 </table>
             @else
                 <div class="alert alert-info Disabled">
-                    تاکنون هیچ دامنه ای برای سایت {{$site->name}} تعریف نشده است
+                    {{ __('message.domains-domainlist-none1')}} {{$site->name}} {{ __('message.domains-domainlist-none2')}}
                 </div>
             @endif
 
@@ -87,27 +87,26 @@
             @csrf
             <div class="box-header with-border">
                 <div class="pull-right">
-                    زیردامنه پیش فرض
+                    {{ __('message.domains-parkdomain-formbox-header')}}
                 </div>
             </div>
             <div class="box-body">
                 @if($site->subdomain_status)
                     <div class="alert alert-info">
-                        بصورت پیش فرض زیردامنه {{$site->name}}{{config('larahost.sudomain')}} به سایت شما متصل گردیده است.
+                        {{ __('message.domains-parkdomain-formbox-status-info1')}} {{$site->name}}{{config('larahost.sudomain')}} {{ __('message.domains-parkdomain-formbox-status-info2')}}
                     </div>
                 @else
                     <div class="alert alert-warning">
-                        در حال حاضر زیردامنه {{$site->name}}{{config('larahost.sudomain')}} توسط شما غیرفعال شده است. شما می توانید آن را
-                        مجددا فعال نمایید
+                        {{ __('message.domains-parkdomain-formbox-status-warning')}} {{$site->name}}{{config('larahost.sudomain')}} {{ __('message.domains-parkdomain-formbox-status-warning2')}}
                     </div>
                 @endif
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
                 @if($site->subdomain_status)
-                    <a class="btn btn-warning" href="{{route('sites.disable_sub_domain',['site'=>$site])}}"><span>قطع اتصال</span></a>
+                    <a class="btn btn-warning" href="{{route('sites.disable_sub_domain',['site'=>$site])}}"><span>{{ __('message.domains-parkdomain-formbox-footer-disablebutton')}}</span></a>
                 @else
-                    <a class="btn btn-success" href="{{route('sites.enable_sub_domain',['site'=>$site])}}"><span>فعال سازی مجدد</span></a>
+                    <a class="btn btn-success" href="{{route('sites.enable_sub_domain',['site'=>$site])}}"><span>{{ __('message.domains-parkdomain-formbox-footer-enablebutton')}}</span></a>
                 @endif
             </div>
         </form>
@@ -116,7 +115,7 @@
 
 @section('breadcrumb')
     <li >
-        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> خانه</a>
+        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.domains-breadcrumb-dashbord-homeaddress')}}</a>
     </li>
 
     <li >

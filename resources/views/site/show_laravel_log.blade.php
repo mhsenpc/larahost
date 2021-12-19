@@ -1,5 +1,5 @@
 @extends('layouts.single_box')
-@php($title="محتویات گزارش ".$file_name)
+@php($title=__('message.show-laravel-log-title').$file_name)
 @php($sidebar="layouts.sidebars.site_sidebar")
 
 @section('box_content')
@@ -8,7 +8,7 @@
 
 @section('breadcrumb')
     <li >
-        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> خانه</a>
+        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.show-laravel-log-breadcrumb-dashbord-homeaddress')}}</a>
     </li>
 
     <li >

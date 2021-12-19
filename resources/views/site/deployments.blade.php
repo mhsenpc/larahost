@@ -1,11 +1,11 @@
 @extends('layouts.single_box')
-@php($title="تاریخچه Deploy")
+@php($title=__('message.deployments-title'))
 @php($sidebar="layouts.sidebars.site_sidebar")
 
 @if(count($deployments) == 0)
 @section('content')
     <div class="alert alert-warning">
-        تاکنون هیچ deployment ای برای این سایت انجام نشده است
+        {{ __('message.deployments-historynone-alert')}}
     </div>
 @endsection
 @else
@@ -13,8 +13,8 @@
     <table class="table">
         <tr>
             <th style="width: 10px">#</th>
-            <th>تاریخ</th>
-            <th>وضعیت</th>
+            <th>{{ __('message.deployments-historycontent-table-historyth')}}</th>
+            <th>{{ __('message.deployments-historycontent-table-statusth')}}</th>
             <th></th>
         </tr>
 
@@ -24,13 +24,13 @@
                 <td>{{$deployment->created_at}}</td>
                 <td>
                     @if($deployment->success)
-                        <span class="bg-success">موفق</span>
+                        <span class="bg-success">{{ __('message.deployments-historycontent-table-successfullstatus')}}</span>
                     @else
-                        <span class="bg-warning">ناموفق</span>
+                        <span class="bg-warning">{{ __('message.deployments-historycontent-table-failedstatus')}}</span>
                     @endif
                 </td>
                 <td><a class="btn btn-default"
-                       href="{{route('deployments.showLog',['deployment_id'=>$deployment->id])}}">نمایش گزارش deploy</a>
+                       href="{{route('deployments.showLog',['deployment_id'=>$deployment->id])}}">{{ __('message.deployments-historycontent-table-report')}}</a>
                 </td>
             </tr>
         @endforeach
@@ -40,7 +40,7 @@
 
 @section('breadcrumb')
     <li >
-        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> خانه</a>
+        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.deployments-breadcrumb-dashbordhome')}}</a>
     </li>
 
     <li >

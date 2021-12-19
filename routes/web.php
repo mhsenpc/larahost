@@ -27,6 +27,7 @@ Route::get('/test',function(){
 });
 
 Auth::routes();
+Route::get('/lang/{locale}', [App\Http\Controllers\LocalizationController::class, 'index'])->name('lang');
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     Route::resource('sites', App\Http\Controllers\SiteController::class);
