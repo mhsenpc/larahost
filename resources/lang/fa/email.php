@@ -8,9 +8,8 @@ return [
     'deploy_failed' => [
         'email-deploy-hello' => 'سلام',
         'welcome-title' => 'خوش آمدید , :name',
-        'errorr-deploy' => 'متاسفانه در فرآیند دپلوی سایت test مشکلی به وجود آمده است.',
-        'errorr-deploy-more' => 'متن خطا به شرح زیر می باشد:',
-        'failed-to-clone-git' => ':message',
+        'error-deploy' => 'متاسفانه در فرآیند دپلوی سایت test مشکلی به وجود آمده است.',
+        'error-deploy-more' => 'متن خطا به شرح زیر می باشد:',
         'deploy-view-report' => 'نمایش گزارش دپلوی'
     ],
 
