@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class RegisterNotify extends Notification
+class RegisterNotification extends Notification
 {
     use Queueable;
 
@@ -16,12 +16,12 @@ class RegisterNotify extends Notification
      *
      * @return void
      */
-    protected $test;
+    protected $user;
 
-    public function __construct($test)
+    public function __construct($user)
     {
         //
-            $this->test = $test;
+            $this->user = $user;
     }
 
     /**
@@ -60,8 +60,8 @@ class RegisterNotify extends Notification
     {
         return [
             //
-            'name'=>$this->test['name'],
-            'email'=>$this->test['email'],
+            'name'=>$this->user['name'],
+            'email'=>$this->user['email'],
 
         ];
     }

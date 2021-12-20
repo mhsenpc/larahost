@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Auth;
 use App\Events\Site\DeployFailed;
 use App\Http\Controllers\Controller;
 use App\Mail\SendEmail;
-use App\Notifications\RegisterNotify;
+use App\Notifications\RegisterNotification;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Services\SSHKeyService;
