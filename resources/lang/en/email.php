@@ -2,11 +2,11 @@
 return [
 
     'register' => [
-        'email-hello' => ':name , سلام',
-        'email-content' => 'ثبت نام شما با موفقیت انجام شد',
+        'email-hello' => ':name , hello',
+        'email-content' => 'registered,successfully',
     ],
     'deploy_failed' => [
-        'email-hello' => 'hello',
+        'email-deploy-hello' => 'hello',
         'welcome-title' => 'welcome , :name',
         'errorr-deploy' => 'Unfortunately, there is a problem with the deploy process of the test site.',
         'errorr-deploy-more' => 'The error text is as follows :',

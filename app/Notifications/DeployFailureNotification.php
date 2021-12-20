@@ -46,7 +46,7 @@ class DeployFailureNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                     ->greeting(__('email.deploy_failed.email-hello'))
+                     ->greeting(__('email.deploy_failed.email-deploy-hello'))
                     ->line(__('email.deploy_failed.welcome-title',['name' => $this->site->name]))
                     ->line(__('email.deploy_failed.errorr-deploy'))
                     ->line(__('email.deploy_failed.failed-to-clone-git',['message' => $this->message]))
