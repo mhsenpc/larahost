@@ -8,7 +8,7 @@ return [
     'deploy_failed' => [
         'email-deploy-hello' => 'سلام',
         'welcome-title' => 'خوش آمدید , :name',
-        'error-deploy' => 'متاسفانه در فرآیند دپلوی سایت test مشکلی به وجود آمده است.',
+        'error-deploy' => 'متاسفانه در فرآیند دپلوی سایت site: مشکلی به وجود آمده است.',
         'error-deploy-more' => 'متن خطا به شرح زیر می باشد:',
         'deploy-view-report' => 'نمایش گزارش دپلوی'
     ],
