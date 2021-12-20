@@ -5,7 +5,9 @@ namespace App\Providers;
 use App\Events\Site\Created;
 use App\Events\Site\Creating;
 use App\Events\Site\Deployed;
+use App\Events\Site\DeployFailed;
 use App\Events\Site\Deploying;
+use App\Listeners\HandleDeployFailure;
 use App\Listeners\SiteCreatedProgress;
 use App\Listeners\SiteCreatingProgress;
 use App\Listeners\SiteDeployedProgress;
@@ -37,6 +39,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         Deployed::class =>[
             SiteDeployedProgress::class
+        ],
+        DeployFailed::class=>[
+            HandleDeployFailure::class
         ]
     ];
 
