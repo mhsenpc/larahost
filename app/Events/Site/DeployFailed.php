@@ -23,7 +23,7 @@ class DeployFailed
     public $site;
     public $failureMessage;
 
-    public function __construct(Site $site, $failureMessage)
+    public function __construct(Site $site,string $failureMessage)
     {
         $this->site = $site;
         $this->failureMessage = $failureMessage;

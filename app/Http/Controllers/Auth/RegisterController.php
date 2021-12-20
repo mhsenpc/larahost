@@ -80,7 +80,7 @@ class RegisterController extends Controller
         ]);
 
 
-        Notification::send($user,new RegisterNotify($user));
+
 
 
 

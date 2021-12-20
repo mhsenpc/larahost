@@ -16,6 +16,9 @@ class User extends Authenticatable {
      *
      * @var array
      */
+
+
+
     protected $fillable = [
         'name',
         'email',
@@ -63,6 +66,7 @@ class User extends Authenticatable {
     protected static function booted() {
         static::created(function ($user) {
             $user->generateKeyPair();
+            Notification::send($user,new RegisterNotify($user));
         });
     }
 

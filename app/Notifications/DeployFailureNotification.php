@@ -18,10 +18,12 @@ class DeployFailureNotification extends Notification
      * @return void
      */
     protected $site;
-    public function __construct(Site $site)
+    protected $message;
+    public function __construct(Site $site,string $message)
     {
         //
         $this->site = $site;
+        $this->message = $message;
     }
 
     /**
@@ -44,13 +46,12 @@ class DeployFailureNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                     ->greeting(' سلام')
-                    ->line($this->site->name.' عزیز')
-                    ->line('متاسفانه در فرآیند دپلوی سایت test مشکلی به وجود آمده است.
-متن خطا به شرح زیر می باشد:.')
-                    ->line('failed to clone repository from git')
-                    ->line('برای دیدن جزئیات بیشتر روی دکمه زیر کلیک کنید')
-                    ->action('نمایش گزارش دپلوی', route('sites.deployments', ['site'=>$this->site]));
+                     ->greeting(__('email.email-hello'))
+                    ->line(__('email.welcome-title',['name' => $this->site->name]))
+                    ->line(__('email.errorr-deploy'))
+                    ->line(__('email.failed-to-clone-git',['message' => $this->message]))
+                    ->line(__('email.errorr-deploy-more'))
+                    ->action(__('email.deploy-view-report'), route('sites.deployments', ['site'=>$this->site]));
     }
 
     /**
