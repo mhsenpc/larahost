@@ -8,9 +8,9 @@
     <title>Document</title>
 </head>
 <body>
-<h1>سلام ,کاربرگرامی..</h1>
+<h1>{{__('email.register.email-hello',['name' => \Illuminate\Support\Facades\Auth::user()->name])}}</h1>
 <p>
-    ثبت نام شما با موفقیت انجام شد
+    {{__('email.register.email-content')}}
 </p>
 </body>
 </html>

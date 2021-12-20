@@ -21,10 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/test',function(){
-          $message="Failed to clone the repository with the provided credentials";
-          event(new DeployFailed(Site::first(),$message));
-});
+
 
 Auth::routes();
 Route::get('/lang/{locale}', [App\Http\Controllers\LocalizationController::class, 'index'])->name('lang');

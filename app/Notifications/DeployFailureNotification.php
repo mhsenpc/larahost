@@ -46,12 +46,12 @@ class DeployFailureNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                     ->greeting(__('email.email-hello'))
-                    ->line(__('email.welcome-title',['name' => $this->site->name]))
-                    ->line(__('email.errorr-deploy'))
-                    ->line(__('email.failed-to-clone-git',['message' => $this->message]))
-                    ->line(__('email.errorr-deploy-more'))
-                    ->action(__('email.deploy-view-report'), route('sites.deployments', ['site'=>$this->site]));
+                     ->greeting(__('email.deploy_failed.email-hello'))
+                    ->line(__('email.deploy_failed.welcome-title',['name' => $this->site->name]))
+                    ->line(__('email.deploy_failed.errorr-deploy'))
+                    ->line(__('email.deploy_failed.failed-to-clone-git',['message' => $this->message]))
+                    ->line(__('email.deploy_failed.errorr-deploy-more'))
+                    ->action(__('email.deploy_failed.deploy-view-report'), route('sites.deployments', ['site'=>$this->site]));
     }
 
     /**
