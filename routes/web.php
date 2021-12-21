@@ -30,29 +30,29 @@ Route::middleware(['auth'])->group(function () {
         Route::post('deploy_commands', [SiteController::class, 'save_deploy_commands'])->name('sites.save_deploy_commands');
         Route::post('remove', [SiteController::class, 'remove'])->name('sites.remove');
         Route::get('sites.factory_reset', [SiteController::class, 'factoryReset'])->name('sites.factory_reset');
-        Route::get('redeploy', [SiteController::class, 'redeploy'])->name('sites.redeploy');
+        Route::get('redeploy', [SiteController::class, 'redeploy'])->name('sites.redeploy')->middleware('demouser.checkaction');
         Route::get('env_editor', [SiteController::class, 'env_editor'])->name('sites.env_editor');
-        Route::post('handle_env_editor', [SiteController::class, 'handle_env_editor'])->name('sites.handle_env_editor');
-        Route::get('regenerate_deploy_token', [SiteController::class, 'regenerateDeployToken'])->name('sites.regenerate_deploy_token');
-        Route::post('maintenance_up', [SiteController::class, 'maintenanceUp'])->name('sites.maintenance_up');
-        Route::post('maintenance_down', [SiteController::class, 'maintenanceDown'])->name('sites.maintenance_down');
-        Route::post('update_git_remote', [SiteController::class, 'updateGitRemote'])->name('sites.update_git_remote');
+        Route::post('handle_env_editor', [SiteController::class, 'handle_env_editor'])->name('sites.handle_env_editor')->middleware('demouser.checkaction');
+        Route::get('regenerate_deploy_token', [SiteController::class, 'regenerateDeployToken'])->name('sites.regenerate_deploy_token')->middleware('demouser.checkaction');
+        Route::post('maintenance_up', [SiteController::class, 'maintenanceUp'])->name('sites.maintenance_up')->middleware('demouser.checkaction');
+        Route::post('maintenance_down', [SiteController::class, 'maintenanceDown'])->name('sites.maintenance_down')->middleware('demouser.checkaction');
+        Route::post('update_git_remote', [SiteController::class, 'updateGitRemote'])->name('sites.update_git_remote')->middleware('demouser.checkaction');
         Route::get('restart_apache', [SiteController::class, 'restartApache'])->name('sites.restart_apache');
         Route::get('restart_mysql', [SiteController::class, 'restartMySql'])->name('sites.restart_mysql');
         Route::get('restart_redis', [SiteController::class, 'restartRedis'])->name('sites.restart_redis');
         Route::get('restart_supervisor', [QueueController::class, 'restartSupervisor'])->name('sites.restart_supervisor');
 
         Route::get('commands', [CommandsController::class, 'index'])->name('sites.commands');
-        Route::post('exec_command', [CommandsController::class, 'execCommand'])->name('sites.exec_command');
+        Route::post('exec_command', [CommandsController::class, 'execCommand'])->name('sites.exec_command')->middleware('demouser.checkaction');
 
         Route::get('domains', [DomainController::class, 'index'])->name('sites.domains');
-        Route::post('park_domain', [DomainController::class, 'parkDomain'])->name('sites.park_domain');
-        Route::get('remove_domain', [DomainController::class, 'removeDomain'])->name('sites.remove_domain');
-        Route::get('enable_sub_domain', [DomainController::class, 'enableSubDomain'])->name('sites.enable_sub_domain');
-        Route::get('disable_sub_domain', [DomainController::class, 'disableSubDomain'])->name('sites.disable_sub_domain');
+        Route::post('park_domain', [DomainController::class, 'parkDomain'])->name('sites.park_domain')->middleware('demouser.checkaction');
+        Route::get('remove_domain', [DomainController::class, 'removeDomain'])->name('sites.remove_domain')->middleware('demouser.checkaction');
+        Route::get('enable_sub_domain', [DomainController::class, 'enableSubDomain'])->name('sites.enable_sub_domain')->middleware('demouser.checkaction');
+        Route::get('disable_sub_domain', [DomainController::class, 'disableSubDomain'])->name('sites.disable_sub_domain')->middleware('demouser.checkaction');
 
         Route::get('workers', [QueueController::class, 'index'])->name('sites.workers');
-        Route::post('create_worker', [QueueController::class, 'createWorker'])->name('sites.create_worker');
+        Route::post('create_worker', [QueueController::class, 'createWorker'])->name('sites.create_worker')->middleware('demouser.checkaction');
         Route::get('remove_worker/{worker_id}', [QueueController::class, 'removeWorker'])->name('sites.remove_worker');
         Route::get('restart_worker/{worker_id}', [QueueController::class, 'restartWorker'])->name('sites.restart_worker');
         Route::get('get_workers_status', [QueueController::class, 'getWorkersStatus'])->name('sites.get_workers_status');
@@ -76,3 +76,4 @@ Route::get('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'
 Route::any('trigger_deployment', [App\Http\Controllers\SiteController::class, 'triggerDeployment'])->name('triggerDeployment');
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+Route::get('/demo-login', [App\Http\Controllers\DemologinController::class, 'index'])->name('demo-login');

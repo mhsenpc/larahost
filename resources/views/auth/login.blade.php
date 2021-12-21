@@ -38,27 +38,27 @@
 
             <a href="{{ route('password.request') }}">{{ __('message.login-content-passwordrequest-link')}}</a><br>
             <a href="{{route('register')}}" class="text-center">{{ __('message.login-content-register-requestlink')}}</a>
-            <span class="dropdown lang-login">            
-                        @php                                                                     
-                            $locale = App::currentLocale();                        
-                        @endphp                                                                                                                                                          
-                        <a class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                            <i class="fa fa-globe" aria-hidden="true"></i> 
-                            @switch($locale)
-                                @case('fa')
-                                فارسی
-                                @break
-                                @case('en')
-                                english
-                                @break
-                            @endswitch
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{route('lang','fa')}}">فارسی</a></li>
-                            <li><a class="dropdown-item" href="{{route('lang','en')}}">English</a></li>
-                        </ul>
-
+            <a href="{{ route('demo-login') }}" class="demo-link btn btn-default text-center">{{ __('message.login-content-demoaccount-button')}}</a>  <br>
+            <span class="dropdown lang-login">
+                @php
+                    $locale = App::currentLocale();
+                @endphp
+                <a class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                    @switch($locale)
+                        @case('fa')
+                        فارسی
+                        @break
+                        @case('en')
+                        english
+                        @break
+                    @endswitch
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{{route('lang','fa')}}">فارسی</a></li>
+                    <li><a class="dropdown-item" href="{{route('lang','en')}}">English</a></li>
+                </ul>
             </span>
         </div>
         <!-- /.login-box-body -->
