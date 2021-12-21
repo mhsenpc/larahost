@@ -30,6 +30,6 @@ class HandleDeployFailure
      */
     public function handle(DeployFailed $event)
     {
-       Notification::send($event->site->user, new DeployFailureNotification($event->site,$event->failureMessag));
+       Notification::send($event->site->user, new DeployFailureNotification($event->site,$event->failureMessage));
     }
 }
