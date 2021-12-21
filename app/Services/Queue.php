@@ -51,7 +51,7 @@ class Queue {
         $worker = Worker::query()->where('site_id', $siteId)->findOrFail($worker_id);
 
         // remove config of worker
-        SuperUserApiService::remove_dir($this->workersDir . "/laravel-worker-{$worker->id}.conf");
+        SuperUserAPIService::remove_dir($this->workersDir . "/laravel-worker-{$worker->id}.conf");
 
         // remove record from db
         $worker->delete();
