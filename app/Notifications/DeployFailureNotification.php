@@ -47,8 +47,8 @@ class DeployFailureNotification extends Notification {
             ->greeting(__('email.deploy_failed.email-deploy-hello'))
             ->line(__('email.deploy_failed.primary-title', ['name' => $this->site->user->name]))
             ->line(__('email.deploy_failed.error-deploy', ['site' => $this->site->name]))
-            ->line($this->message)
             ->line(__('email.deploy_failed.error-deploy-more'))
+            ->line($this->message)
             ->action(__('email.deploy_failed.deploy-view-report'), route('sites.deployments', ['site' => $this->site]));
     }
 
