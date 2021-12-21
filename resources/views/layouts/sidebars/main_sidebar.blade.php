@@ -30,20 +30,20 @@
     <li class="header">{{ __('message.main-sidebar-sidebarmenu-header')}}</li>
     <li>
         <a href="{{route('dashboard')}}">
-            <i class="fa fa-dashboard"></i> <span>{{ __('message.main-sidebar-menu-dashbord-title')}}</span>
+            <i class="fa fa-dashboard"></i> <span>{{ __('message.main-sidebar-menu-dashboard-title')}}</span>
         </a>
     </li>
     <li class="treeview">
         <a href="#">
             <i class="fa fa-files-o"></i>
-            <span>{{ __('message.main-sidebar-menu-dashbord-mysite-link')}}</span>
+            <span>{{ __('message.main-sidebar-menu-dashboard-mysite-link')}}</span>
             <span class="pull-left-container">
                                     <span class="label label-primary pull-left">{{count($user_sites)}}</span>
                                 </span>
         </a>
         <ul class="treeview-menu">
             <li>
-                <a href="{{route('sites.create')}}"><i class="fa fa-plus-circle"></i> {{ __('message.main-sidebar-menu-dashbord-newsite-link')}}</a>
+                <a href="{{route('sites.create')}}"><i class="fa fa-plus-circle"></i> {{ __('message.main-sidebar-menu-dashboard-newsite-link')}}</a>
             </li>
             @foreach($user_sites as $site)
                 <li>
@@ -51,24 +51,24 @@
                 </li>
             @endforeach
             <li>
-                <a href="{{route('sites.index')}}"><i class="fa fa-list"></i> {{ __('message.main-sidebar-menu-dashbord-allsite-link')}}</a>
+                <a href="{{route('sites.index')}}"><i class="fa fa-list"></i> {{ __('message.main-sidebar-menu-dashboard-allsite-link')}}</a>
             </li>
         </ul>
     </li>
     @if(auth()->user()->isAdmin())
         <li>
             <a href="{{route('admin.users.index')}}">
-                <i class="fa fa-list"></i> <span>{{ __('message.main-sidebar-menu-dashbord-userslist-link')}}</span>
+                <i class="fa fa-list"></i> <span>{{ __('message.main-sidebar-menu-dashboard-userslist-link')}}</span>
             </a>
         </li>
         <li>
             <a href="{{route('admin.domains.index')}}">
-                <i class="fa fa-list"></i> <span>{{ __('message.main-sidebar-menu-dashbord-domainslist-link')}}</span>
+                <i class="fa fa-list"></i> <span>{{ __('message.main-sidebar-menu-dashboard-domainslist-link')}}</span>
             </a>
         </li>
         <li>
             <a href="{{route('admin.sites.index')}}">
-                <i class="fa fa-list"></i> <span>{{ __('message.main-sidebar-menu-dashbord-siteslist-link')}}</span>
+                <i class="fa fa-list"></i> <span>{{ __('message.main-sidebar-menu-dashboard-siteslist-link')}}</span>
             </a>
         </li>
     @endif

@@ -33,7 +33,7 @@
 
 @section('breadcrumb')
     <li >
-        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.laravel-logs-breadcrumb-dashbord-homeaddress')}}</a>
+        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.laravel-logs-breadcrumb-dashboard-homeaddress')}}</a>
     </li>
 
     <li >

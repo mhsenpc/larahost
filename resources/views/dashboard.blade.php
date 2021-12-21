@@ -1,5 +1,5 @@
 @extends('layouts.single_box')
-@php($title=__('message.dashbord-title'))
+@php($title=__('message.dashboard-title'))
 @section('box_content')
     @if (session('status'))
         <div class="alert alert-success" role="alert">
@@ -7,7 +7,7 @@
         </div>
     @endif
     <p>        
-        {{ __('message.dashbord-welcome-text')}}
+        {{ __('message.dashboard-welcome-text')}}
     </p>
 
     @isset($isAdmin)
@@ -18,12 +18,12 @@
                 <div class="inner">
                     <h3>{{$sitesCount}}</h3>
 
-                    <p>{{ __('message.dashbord-sitescount-title')}}</p>
+                    <p>{{ __('message.dashboard-sitescount-title')}}</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
                 </div>
-                <a href="{{route('admin.sites.index')}}" class="small-box-footer">{{ __('message.dashbord-moreinfo')}} <i class="fa fa-arrow-circle-left"></i></a>
+                <a href="{{route('admin.sites.index')}}" class="small-box-footer">{{ __('message.dashboard-moreinfo')}} <i class="fa fa-arrow-circle-left"></i></a>
             </div>
         </div>
 
@@ -33,12 +33,12 @@
                 <div class="inner">
                     <h3>{{$usersCount}}</h3>
 
-                    <p>{{ __('message.dashbord-userscount-title')}}</p>
+                    <p>{{ __('message.dashboard-userscount-title')}}</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
                 </div>
-                <a href="{{route('admin.users.index')}}" class="small-box-footer">{{ __('message.dashbord-moreinfo')}} <i class="fa fa-arrow-circle-left"></i></a>
+                <a href="{{route('admin.users.index')}}" class="small-box-footer">{{ __('message.dashboard-moreinfo')}} <i class="fa fa-arrow-circle-left"></i></a>
             </div>
         </div>
         <div class="col-lg-3 col-xs-6">
@@ -47,12 +47,12 @@
                 <div class="inner">
                     <h3>{{$domainsCount}}</h3>
 
-                    <p>{{ __('message.dashbord-domainscount-title')}}</p>
+                    <p>{{ __('message.dashboard-domainscount-title')}}</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-pie-graph"></i>
                 </div>
-                <a href="{{route('admin.domains.index')}}" class="small-box-footer">{{ __('message.dashbord-moreinfo')}} <i class="fa fa-arrow-circle-left"></i></a>
+                <a href="{{route('admin.domains.index')}}" class="small-box-footer">{{ __('message.dashboard-moreinfo')}} <i class="fa fa-arrow-circle-left"></i></a>
             </div>
         </div>
     </div>
@@ -61,6 +61,6 @@
 
 @section('breadcrumb')
     <li class="active">
-        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.dashbord-desktop')}}</a>
+        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.dashboard-desktop')}}</a>
     </li>
 @endsection

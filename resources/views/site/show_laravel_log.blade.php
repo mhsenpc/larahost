@@ -8,7 +8,7 @@
 
 @section('breadcrumb')
     <li >
-        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.show-laravel-log-breadcrumb-dashbord-homeaddress')}}</a>
+        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.show-laravel-log-breadcrumb-dashboard-homeaddress')}}</a>
     </li>
 
     <li >

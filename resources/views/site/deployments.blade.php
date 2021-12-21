@@ -40,7 +40,7 @@
 
 @section('breadcrumb')
     <li >
-        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.deployments-breadcrumb-dashbordhome')}}</a>
+        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.deployments-breadcrumb-dashboardhome')}}</a>
     </li>
 
     <li >
