@@ -11,9 +11,9 @@
             </a>
         </p>
         @if($running)
-            <a><i class="fa fa-circle text-success"></i> {{ __('message.site-sidebar-off')}}</a>
+            <a><i class="fa fa-circle text-success"></i> {{ __('message.site-sidebar-on')}}</a>
         @else
-            <a><i class="fa fa-circle text-danger"></i> {{ __('message.site-sidebar-on')}}</a>
+            <a><i class="fa fa-circle text-danger"></i> {{ __('message.site-sidebar-off')}}</a>
         @endif
     </div>
     <div class="pull-left">
