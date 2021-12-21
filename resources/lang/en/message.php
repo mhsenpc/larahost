@@ -206,7 +206,7 @@ return [
 'show-maintenace-status-formbox-maintenacedown-title' => 'Repair mode',
 'show-maintenace-status-formbox-infocontent' => 'Activating the repair mode will cause the site unavailable.',
 'show-maintenace-status-formbox-secretinput-text1' => 'Note: only Laravel 8 can have usability of',
-'show-maintenace-status-formbox-secretinput-link' => 'secret phrases.',
+'show-maintenace-status-formbox-secretinput-link' => 'secret phrase',
 'show-maintenace-status-formbox-secretinput-text2' => '',
 'show-maintenace-status-formbox-footer-activesubmitbutton' => 'Active Repair mode',
 'show-maintenace-status-formbox-gitremote-title' => 'Changing Git Remote',
