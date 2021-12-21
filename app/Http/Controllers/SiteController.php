@@ -17,6 +17,10 @@ use Faker\Factory as Faker;
 use Illuminate\Support\Facades\Log;
 
 class SiteController extends Controller {
+    public function __construct(){
+        $this->middleware('demouser.checkaction' )->only('store') ;
+    }
+    
     /**
      * Display a listing of the resource.
      *

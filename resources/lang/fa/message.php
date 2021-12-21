@@ -241,6 +241,7 @@ return [
 'login-content-loginbox-form-submitbutton' => 'ورود',
 'login-content-passwordrequest-link' => 'رمز عبورم را فراموش کرده ام.',
 'login-content-register-requestlink' => 'ثبت نام',
+'login-content-demoaccount-button' => 'ورود به حساب کاربری آزمایشی ( دمو اکانت )',
 
 //auth/register
 
@@ -311,8 +312,5 @@ return [
 'admin-users-breadcrumb-dashbord-homeaddress' => 'خانه',
 'admin-users-breadcrumb-management' => 'مدیریت',
 'admin-users-breadcrumb-userslist' => 'لیست کاربران',
-
-
-
 
 ];
