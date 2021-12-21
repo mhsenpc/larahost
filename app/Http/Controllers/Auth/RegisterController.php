@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers\Auth;
 
+
+
+use App\Events\Site\DeployFailed;
 use App\Http\Controllers\Controller;
+use App\Mail\SendEmail;
+use App\Notifications\RegisterNotification;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Services\SSHKeyService;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+
 
 class RegisterController extends Controller
 {
@@ -70,6 +78,12 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+
+
+
+
+
 
         return $user;
     }

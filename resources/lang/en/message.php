@@ -240,7 +240,7 @@ return [
 'login-content-loginbox-form-submitbutton' => 'Login',
 'login-content-passwordrequest-link' => 'Forget my password',
 'login-content-register-requestlink' => 'Register',
-    'login-content-demoaccount-button' => 'try demo account',
+'login-content-demoaccount-button' => 'try demo account',
 
 //auth/register
 

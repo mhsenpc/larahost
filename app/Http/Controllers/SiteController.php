@@ -140,8 +140,8 @@ class SiteController extends Controller {
 
     public function logs(Site $site) {
         $siteObj = new \App\Services\Site($site);
-        $logs_dir = $siteObj->getFilesystem()->getLaravelLogsDir();
-        $logs = scandir($logs_dir);
+        $logs_dir = $siteObj->getFilesystem()->getLaravelLogsDir();  
+        $logs = scandir($logs_dir);        
         $logs = array_diff($logs, array('..', '.', '.gitignore')); //remove invalid files
         if (count($logs) == 1 && substr(reset($logs), -4) == '.log') {
             $file_name = reset($logs);
