@@ -105,8 +105,9 @@
                     <div class="alert alert-info">
                         {{ __('message.show-maintenace-status-formbox-infocontent')}}
                     </div>
-                    <div class="form-group row"><label for="secret" class="col-md-3 col-form-label text-md-right">عبارت
-                            مخفی</label>
+                    <div class="form-group row"><label for="secret" class="col-md-3 col-form-label text-md-right">
+                            {{ __('message.show-maintenace-status-formbox-secretinput-link')}}
+                        </label>
                         <div class="col-md-8"><input type="text" id="secret" name="secret" class="form-control dir-ltr"> <span
                                 class="form-text">{{ __('message.show-maintenace-status-formbox-secretinput-text1')}}  <a
                                     href="https://laravel.com/docs/8.x/configuration#bypassing-maintenance-mode"
