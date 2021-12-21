@@ -28,8 +28,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('deployments', [SiteController::class, 'deployments'])->name('sites.deployments');
         Route::get('logs', [SiteController::class, 'logs'])->name('sites.logs');
         Route::post('deploy_commands', [SiteController::class, 'save_deploy_commands'])->name('sites.save_deploy_commands');
-        Route::post('remove', [SiteController::class, 'remove'])->name('sites.remove');
-        Route::get('sites.factory_reset', [SiteController::class, 'factoryReset'])->name('sites.factory_reset');
+        Route::post('remove', [SiteController::class, 'remove'])->name('sites.remove')->middleware('demouser.checkaction');
+        Route::get('sites.factory_reset', [SiteController::class, 'factoryReset'])->name('sites.factory_reset')->middleware('demouser.checkaction');
         Route::get('redeploy', [SiteController::class, 'redeploy'])->name('sites.redeploy')->middleware('demouser.checkaction');
         Route::get('env_editor', [SiteController::class, 'env_editor'])->name('sites.env_editor');
         Route::post('handle_env_editor', [SiteController::class, 'handle_env_editor'])->name('sites.handle_env_editor')->middleware('demouser.checkaction');
@@ -52,7 +52,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('disable_sub_domain', [DomainController::class, 'disableSubDomain'])->name('sites.disable_sub_domain')->middleware('demouser.checkaction');
 
         Route::get('workers', [QueueController::class, 'index'])->name('sites.workers');
-        Route::post('create_worker', [QueueController::class, 'createWorker'])->name('sites.create_worker')->middleware('demouser.checkaction');
+        Route::post('create_worker', [QueueController::class, 'createWorker'])->name('sites.create_worker');
         Route::get('remove_worker/{worker_id}', [QueueController::class, 'removeWorker'])->name('sites.remove_worker');
         Route::get('restart_worker/{worker_id}', [QueueController::class, 'restartWorker'])->name('sites.restart_worker');
         Route::get('get_workers_status', [QueueController::class, 'getWorkersStatus'])->name('sites.get_workers_status');
@@ -73,7 +73,7 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 Route::get('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
-Route::any('trigger_deployment', [App\Http\Controllers\SiteController::class, 'triggerDeployment'])->name('triggerDeployment');
+Route::any('trigger_deployment', [App\Http\Controllers\SiteController::class, 'triggerDeployment'])->name('triggerDeployment')->middleware('demouser.checkaction');
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
-Route::get('/demo-login', [App\Http\Controllers\DemologinController::class, 'index'])->name('demo-login');
+Route::get('demo-login', [App\Http\Controllers\DemologinController::class, 'index'])->name('demo-login');
