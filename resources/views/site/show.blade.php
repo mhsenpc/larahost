@@ -186,7 +186,7 @@
 
 @section('breadcrumb')
     <li >
-        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.show-breadcrumb-dashbord-homeaddress')}}</a>
+        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.show-breadcrumb-dashboard-homeaddress')}}</a>
     </li>
 
     <li >

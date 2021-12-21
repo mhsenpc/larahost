@@ -6,13 +6,13 @@ return [
 'main-sidebar-userpanel-onlinelink' => 'آنلاین',
 'main-sidebar-form-inputsitename-placeholder' => 'جستجو',
 'main-sidebar-sidebarmenu-header' => 'منو',
-'main-sidebar-menu-dashbord-title' => 'میزکار',
-'main-sidebar-menu-dashbord-mysite-link' => 'سایت های من',
-'main-sidebar-menu-dashbord-newsite-link' => 'سایت جدید',
-'main-sidebar-menu-dashbord-allsite-link' => 'همه سایت ها',
-'main-sidebar-menu-dashbord-userslist-link' => 'لیست کاربران',
-'main-sidebar-menu-dashbord-domainslist-link' => 'لیست دامنه ها',
-'main-sidebar-menu-dashbord-siteslist-link' => 'لیست سایت ها',
+'main-sidebar-menu-dashboard-title' => 'میزکار',
+'main-sidebar-menu-dashboard-mysite-link' => 'سایت های من',
+'main-sidebar-menu-dashboard-newsite-link' => 'سایت جدید',
+'main-sidebar-menu-dashboard-allsite-link' => 'همه سایت ها',
+'main-sidebar-menu-dashboard-userslist-link' => 'لیست کاربران',
+'main-sidebar-menu-dashboard-domainslist-link' => 'لیست دامنه ها',
+'main-sidebar-menu-dashboard-siteslist-link' => 'لیست سایت ها',
 
 //site-sidebar
 
@@ -63,15 +63,15 @@ return [
 'js-pre-alert-text' => 'سایت',
 'js-after-alert-text' => ' با موفقیت ایجاد شد',
 
-//dashbord
+//dashboard
 
-'dashbord-title' => 'داشبورد',
-'dashbord-welcome-text' => 'به لاراهاست خوش آمدید',
-'dashbord-sitescount-title' => 'سایت ها',
-'dashbord-userscount-title' => 'کاربران ثبت شده',
-'dashbord-domainscount-title' => 'دامنه ها',
-'dashbord-moreinfo' => 'اطلاعات بیشتر',
-'dashbord-desktop' => 'میزکار',
+'dashboard-title' => 'داشبورد',
+'dashboard-welcome-text' => 'به لاراهاست خوش آمدید',
+'dashboard-sitescount-title' => 'سایت ها',
+'dashboard-userscount-title' => 'کاربران ثبت شده',
+'dashboard-domainscount-title' => 'دامنه ها',
+'dashboard-moreinfo' => 'اطلاعات بیشتر',
+'dashboard-desktop' => 'میزکار',
 
 //site/commands
 
@@ -113,7 +113,7 @@ return [
 'create-formbox-tabcontent-basicauth-username-label-title' => 'نام کاربری Git',
 'create-formbox-tabcontent-basicauth-password-label-title' => 'رمز عبور Git',
 'create-formbox-boxfooter-submitvalue-input' => 'راه اندازی سایت',
-'create-breadcrumb-dashbord-homeaddress-title' => 'خانه',
+'create-breadcrumb-dashboard-homeaddress-title' => 'خانه',
 'create-breadcrumb-mysitesaddress-title' => 'سایت های من',
 'create-breadcrumb-createnewsiteaddress-title' => 'ایجاد سایت جدید',
 
@@ -126,7 +126,7 @@ return [
 'deployments-historycontent-table-successfullstatus' => 'موفق',
 'deployments-historycontent-table-failedstatus' => 'ناموفق',
 'deployments-historycontent-table-report' => 'نمایش گزارش deploy',
-'deployments-breadcrumb-dashbordhome' => 'خانه',
+'deployments-breadcrumb-dashboardhome' => 'خانه',
 
 //site/domains
 
@@ -154,14 +154,14 @@ return [
 'domains-parkdomain-formbox-status-warning2' => 'توسط شما غیرفعال شده است. شما می توانید آن را مجددا فعال نمایید',
 'domains-parkdomain-formbox-footer-disablebutton' => 'قطع اتصال',
 'domains-parkdomain-formbox-footer-enablebutton' => 'فعال سازی مجدد',
-'domains-breadcrumb-dashbord-homeaddress' => 'خانه',
+'domains-breadcrumb-dashboard-homeaddress' => 'خانه',
 
 //site/env-editor
 
 'env-editor-title' => 'ویرایش فایل env',
 'env-editor-contentbox-none' => 'متاسفانه فایل env پروژه شما پیدا نشد',
 'env-editor-formbox-submitbutton' => 'ذخیره',
-'env-editor-breadcrumb-dashbord-homeaddress' => 'خانه',
+'env-editor-breadcrumb-dashboard-homeaddress' => 'خانه',
 
 //site/index
 
@@ -170,7 +170,7 @@ return [
 'index-tablebox-sitenameth' => 'نام سایت',
 'index-tablebox-subdomain-nameth' => 'زیر دامنه (رایگان)',
 'index-tablebox-progressiveofservice-title' => 'در حال نصب و راه اندازی',
-'index-breadcrumb-dashbord-homeaddress' => 'خانه',
+'index-breadcrumb-dashboard-homeaddress' => 'خانه',
 'index-breadcrumb-mysites' => 'سایت های من',
 
 //site/laravel-logs
@@ -179,18 +179,18 @@ return [
 'laravel-logs-content-none' => 'تا کنون فایل log ای توسط این سایت تولید نشده است',
 'laravel-logs-tablebox-filenameth' => 'نام فایل',
 'laravel-logs-tablebox-showlogsbutton' => 'نمایش محتویات Log',
-'laravel-logs-breadcrumb-dashbord-homeaddress' => 'خانه',
+'laravel-logs-breadcrumb-dashboard-homeaddress' => 'خانه',
 
 //site/show_deployment_log
 
 'show-deployment-log-title' => 'گزارش Deployment',
-'show-deployment-log-breadcrumb-dashbord-homeaddress' => 'خانه',
+'show-deployment-log-breadcrumb-dashboard-homeaddress' => 'خانه',
 
 
 //site/show_laravel_log
 
 'show-laravel-log-title' => 'محتویات گزارش',
-'show-laravel-log-breadcrumb-dashbord-homeaddress' => 'خانه',
+'show-laravel-log-breadcrumb-dashboard-homeaddress' => 'خانه',
 
 //site/show
 
@@ -214,7 +214,7 @@ return [
 'show-maintenace-status-formbox-gitremote-info' => 'در این بخش می توانید Git remote Url متصل به سایت خود را تغییر دهید.توجه کنید که آدرس Repository جدیدی که وارد می کنید دقیقا باید شامل همان repository و همان تاریخچه commit باشد در غیر این صورت سیستم deploy عمل نخواهد کرد!',
 'show-maintenace-status-formbox-footer-gitremotesubmitbutton' => 'تغییر Git Remote',
 'show-maintenace-status-deploymentlog-closemodal' => 'بستن',
-'show-breadcrumb-dashbord-homeaddress' => 'خانه',
+'show-breadcrumb-dashboard-homeaddress' => 'خانه',
 
 //site/workers...
 
@@ -228,7 +228,7 @@ return [
 'workers-listworkercontent-table-effortsth' => 'تلاش ها',
 'workers-listworkercontent-table-none' => 'تاکنون هیچ worker ای برای این سایت تعریف نکرده اید',
 'workers-modalworker-closebutton' => 'بستن',
-'workers-breadcrumb-dashbord-homeaddress' => 'خانه',
+'workers-breadcrumb-dashboard-homeaddress' => 'خانه',
 
 //auth/login
 
@@ -286,7 +286,7 @@ return [
 'admin-domains-boxcontent-table-domainth' => 'دامنه',
 'admin-domains-boxcontent-table-sitenameth' => 'نام سایت',
 'admin-domains-boxcontent-table-vendorth' => 'مالک',
-'admin-domains-breadcrumb-dashbord-homeaddress' => 'خانه',
+'admin-domains-breadcrumb-dashboard-homeaddress' => 'خانه',
 'admin-domains-breadcrumb-management' => 'مدیریت',
 'admin-domains-breadcrumb-domainslist' => 'لیست دامنه ها',
 
@@ -297,7 +297,7 @@ return [
 'admin-site-boxcontent-table-sitenameth' => 'نام سایت',
 'admin-site-boxcontent-table-domainscountth' => 'تعداد دامنه ها',
 'admin-site-boxcontent-table-vendorth' => 'مالک',
-'admin-site-breadcrumb-dashbord-homeaddress' => 'خانه',
+'admin-site-breadcrumb-dashboard-homeaddress' => 'خانه',
 'admin-site-breadcrumb-management' => 'مدیریت',
 'admin-site-breadcrumb-siteslist' => 'لیست سایت ها',
 
@@ -309,7 +309,7 @@ return [
 'admin-users-contentbox-table-emailth' => 'ایمیل',
 'admin-users-contentbox-table-sitesth' => 'سایت ها',
 'admin-users-contentbox-table-loginastd' => 'ورود',
-'admin-users-breadcrumb-dashbord-homeaddress' => 'خانه',
+'admin-users-breadcrumb-dashboard-homeaddress' => 'خانه',
 'admin-users-breadcrumb-management' => 'مدیریت',
 'admin-users-breadcrumb-userslist' => 'لیست کاربران',
 

@@ -21,7 +21,7 @@
 
 @section('breadcrumb')
     <li>
-        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.env-editor-breadcrumb-dashbord-homeaddress')}}</a>
+        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.env-editor-breadcrumb-dashboard-homeaddress')}}</a>
     </li>
 
     <li>
