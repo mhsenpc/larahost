@@ -25,5 +25,8 @@ return [
             'redis'
         ]
     ],
-    'sudomain' => '.lara-host.ir'
+    'sudomain' => '.lara-host.ir',
+	'starting_port' => [
+			'port' => env('STARTING_PORT',10000),
+		],
 ];
