@@ -13,7 +13,7 @@ class Port {
     public function next():int {
         $starting_port = config('larahost.starting_port.port');
         $busy_ports = $this->getBusyPorts();
-		for ( $i=0; $i < 5000; $starting_port++)
+		for ( $starting_port+1; $starting_port < 15000; $starting_port++)
 		{
             if (!in_array($starting_port, $busy_ports)) {
                 return $starting_port;
