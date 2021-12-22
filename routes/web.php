@@ -31,7 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('sites/{site}')->group(function () {
         Route::get('deployments', [SiteController::class, 'deployments'])->name('sites.deployments');
         Route::get('logs', [SiteController::class, 'logs'])->name('sites.logs');
-        Route::post('deploy_commands', [SiteController::class, 'save_deploy_commands'])->name('sites.save_deploy_commands');
+        Route::post('deploy_commands', [SiteController::class, 'save_deploy_commands'])->name('sites.save_deploy_commands')->middleware('demouser.checkaction');
         Route::post('remove', [SiteController::class, 'remove'])->name('sites.remove')->middleware('demouser.checkaction');
         Route::get('sites.factory_reset', [SiteController::class, 'factoryReset'])->name('sites.factory_reset')->middleware('demouser.checkaction');
         Route::get('redeploy', [SiteController::class, 'redeploy'])->name('sites.redeploy')->middleware('demouser.checkaction');
