@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": ">=7.2.0",
+        "alexusmai/laravel-file-manager": "^2.5",
         "czproject/git-php": "^4.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",

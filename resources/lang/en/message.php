@@ -312,4 +312,7 @@ return [
 'admin-users-breadcrumb-management' => 'Management',
 'admin-users-breadcrumb-userslist' => 'Users list',
 
+//file-manager
+'file-manager' => 'file Manager',
+
 ];

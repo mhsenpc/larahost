@@ -231,4 +231,10 @@ class SiteController extends Controller {
         SuperUserAPIService::restart_container("{$site->name}_redis");
         return redirect()->back();
     }
+    public function fileManager(Site $site){
+
+        return view('site.file_manager',compact('site'));
+
+    }
+
 }
