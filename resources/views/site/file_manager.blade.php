@@ -15,7 +15,7 @@
 <body>
 
 @section('breadcrumb')
-    <iframe src="{{ url('sites.file_manager') }}"></iframe>
+    <iframe src="{{ route('sites.show_file_manager', $site->name) }}" style=" width: 583px; height: 300px;"></iframe>
 @endsection
 
 </body>

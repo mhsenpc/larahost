@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('restart_mysql', [SiteController::class, 'restartMySql'])->name('sites.restart_mysql');
         Route::get('restart_redis', [SiteController::class, 'restartRedis'])->name('sites.restart_redis');
         Route::get('file_manager', [SiteController::class, 'fileManager'])->name('sites.file_manager');
+        Route::get('show_file_manager', [SiteController::class, 'show_fileManager'])->name('sites.show_file_manager');
         Route::get('restart_supervisor', [QueueController::class, 'restartSupervisor'])->name('sites.restart_supervisor');
 
         Route::get('commands', [CommandsController::class, 'index'])->name('sites.commands');
