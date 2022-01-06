@@ -11,11 +11,11 @@ trait DestroyTrait {
         // remove domains
         $domains = $this->model->domains()->get();
         foreach ($domains as $domain) {
-            $this->getDomain()->remove($domain);
+            $this->getSubDomain()->remove($domain);
         }
 
         // remove subdomains
-        $this->getDomain()->remove($this->getName(). config('larahost.sudomain'));
+        $this->getSubDomain()->remove($this->getName(). config('larahost.sudomain'));
         $this->getModel()->domains()->delete();
 
         // remove database record

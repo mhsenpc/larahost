@@ -22,7 +22,11 @@ return [
         'reserved_sudomains' => [
             'panel',
             'database',
-            'redis'
+            'redis',
+            'dev',
+            'demo',
+            'admin',
+            'blog'
         ]
     ],
     'sudomain' => '.lara-host.ir',

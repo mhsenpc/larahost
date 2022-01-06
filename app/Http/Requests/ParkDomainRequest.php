@@ -25,7 +25,12 @@ class ParkDomainRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required','unique:domains',new FQDN()]
+            'name' => [
+                'required',
+                'unique:domains',
+                new FQDN(),
+                'not_regex:/.lara\-host\.ir/i',
+            ]
         ];
     }
 }
