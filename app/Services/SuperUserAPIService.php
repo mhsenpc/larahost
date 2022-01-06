@@ -36,7 +36,7 @@ class SuperUserAPIService {
         return self::sendApiRequest(__FUNCTION__, compact('site_name'));
     }
 
-    public static function exec(string $site_name, string $command): array {        
+    public static function exec(string $site_name, string $command): array {
         return self::sendApiRequest(__FUNCTION__, compact('site_name', 'command'));
     }
 

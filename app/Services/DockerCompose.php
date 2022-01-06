@@ -4,8 +4,8 @@
 namespace App\Services;
 
 
+use App\Models\User;
 use App\Singleton\ConnectionInfo;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,17 +23,17 @@ class DockerCompose {
     /**
      * @param int $port
      */
-    public function write(int $port) {
+    public function write(User $user, int $port) {
         $this->addProjectName()
             ->addPort($port)
             ->addDBPassword()
-            ->addDirPaths();
+            ->addDirPaths($user);
         SuperUserAPIService::put_contents($this->filesystem->getDockerComposeDir() . '/docker-compose.yml', $this->lines);
     }
 
-    protected function addDirPaths() {
+    protected function addDirPaths(User $user) {
         $this->lines = str_replace('$source_dir', $this->filesystem->getSourceDir(), $this->lines);
-        $this->lines = str_replace('$ssh_keys_dir', Auth::user()->getSSHKeysDir(), $this->lines);
+        $this->lines = str_replace('$ssh_keys_dir', $user->getSSHKeysDir(), $this->lines);
         $this->lines = str_replace('$workers_dir', $this->filesystem->getWorkersDir(), $this->lines);
         $this->lines = str_replace('$db_dir', $this->filesystem->getProjectBaseDir() . '/' . config('larahost.dir_names.db'), $this->lines);
         return $this;

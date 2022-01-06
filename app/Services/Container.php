@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Contracts\ContainerInterface;
 use App\Contracts\FileSystemInterface;
+use App\Models\User;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 
@@ -18,9 +19,9 @@ class Container implements ContainerInterface {
         $this->fileSystem = $fileSystem;
     }
 
-    public function create(int $port): Container {
+    public function create(User $user,int $port): Container {
         $compose = new DockerCompose($this->siteName, $this->fileSystem);
-        $compose->write($port);
+        $compose->write($user, $port);
         $compose->execute();
         return $this;
     }
