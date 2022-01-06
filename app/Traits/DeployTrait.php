@@ -25,7 +25,7 @@ trait DeployTrait {
             if ($result['success']) {
                 $commandLog->addFrom($result['logs']);
                 $commandLog->addFrom($this->getApplication()->setup());;
-                $this->getDomain()->add($this->getName() . config('larahost.sudomain'));
+                $this->getSubDomain()->add($this->getName());
                 $this->getLogWriter()->write($commandLog, true);
             } else {
                 $message = "Failed to clone the repository with the provided credentials"; //send event message deployfailed

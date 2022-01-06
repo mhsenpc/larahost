@@ -65,7 +65,11 @@ class Site implements SiteInterface {
     }
 
     public function getDomain(): DomainInterface {
-        return new Domain($this->getPort());
+        return new Domain($this->model);
+    }
+
+    public function getSubDomain(): DomainInterface {
+        return new SubDomain($this->getPort());
     }
 
     protected function getLogWriter(){

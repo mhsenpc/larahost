@@ -11,7 +11,7 @@ interface SiteInterface {
 
     public function getContainer(): ContainerInterface;
 
-    public function getDomain(): DomainInterface;
+    public function getSubDomain(): DomainInterface;
 
     public function getApplication(): ApplicationInterface;
 }
