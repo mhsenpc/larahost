@@ -238,9 +238,8 @@ class SiteController extends Controller {
     }
     public function show_fileManager(Site $site){
 
-        $directory = "D:\sites";
-        $files = scandir($directory);
-        return view('site.show_file_manager',compact('site','files'));
+
+        return view('site.show_file_manager',compact('site'));
 
     }
 
