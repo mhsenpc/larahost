@@ -37,15 +37,16 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'root' => 'D:/sites',
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
 
-        'file-disk' => [
+        'filedisk' => [
             'driver' => 'local',
-            'root' => 'D:\sites',
+            'root' => 'D:/sites',
             'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
         ],
 
         's3' => [
