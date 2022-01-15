@@ -43,15 +43,21 @@ class SiteController extends Controller {
             $public_key = file_get_contents($user_public_key);
         }
         $faker = Faker::create();
+        /*
+         *  remove limitation
         $sitesCount = Site::query()->count();
         $allowNewSite = $sitesCount == 0;
+        if (App::environment('local') || Auth::user()->isAdmin()) {
+            $allowNewSite = true;
+        }*/
+        $allowNewSite = true;
 
         if (App::environment('local') || Auth::user()->isAdmin()) {
             $allowNewSite = true;
         }
 
 
-        return view('site.create', compact('public_key', 'faker', 'allowNewSite', 'sitesCount'));
+        return view('site.create', compact('public_key', 'faker', 'allowNewSite'));
     }
 
     /**
