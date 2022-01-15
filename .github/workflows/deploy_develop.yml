@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Deploy Develop
 
 # Controls when the workflow will run
 on:
@@ -28,3 +28,4 @@ jobs:
           echo $(date) > public/version
           cp -r . /root/dev_panel
           chown -R apache:apache /root/dev_panel/
+          cd /root/dev_panel && php artisan migrate
