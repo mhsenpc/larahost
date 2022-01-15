@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Contracts\ContainerInterface;
 use App\Contracts\FileSystemInterface;
+use App\Exceptions\WakeUpTimedOutException;
 use App\Models\User;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
@@ -44,15 +45,14 @@ class Container implements ContainerInterface {
     }
 
     public function waitForWakeUp(int $maxTries = 30) {
-        $i = 0;
-        while (!SuperUserAPIService::exec($this->siteName, "ls -la")['success']) {
-            $i++;
-            sleep(2);
-            if ($i > $maxTries) {
-                return false;
+        for ($i = 0; $i < $maxTries; $i++) {
+            $result = !SuperUserAPIService::exec($this->siteName, "ls -la")['success'];
+            if($result){
+                return true;
             }
+            sleep(1);
         }
-        return true;
+        throw new WakeUpTimedOutException();
     }
 
     public function getSupervisor(): Supervisor {

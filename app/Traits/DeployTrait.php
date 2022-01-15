@@ -19,7 +19,8 @@ trait DeployTrait {
         $this->getFilesystem()->createRequiredDirectories();
         $container = $this->getContainer()->create($this->getUser(),$this->getPort() );
         $commandLog = new CommandLog($this->getName());
-        if ($container->waitForWakeUp()) {
+        try {
+            $container->waitForWakeUp();
             $result = $this->getRepository()->cloneRepo($this->getModel()->repo, $this->getModel()->git_user, $this->getModel()->git_password);
 
             if ($result['success']) {
@@ -35,7 +36,8 @@ trait DeployTrait {
                 event(new DeployFailed($this->getModel(), $message)); //send event deployfailed
 
             }
-        } else {
+        }
+        catch (\Exception $exception){
             $message = "Unable to setup a new site. Contact Administrator";
             $commandLog->add("site new {$this->getName()}", $message);
 
@@ -45,9 +47,9 @@ trait DeployTrait {
 
             Log::critical("failed to create new container {$this->getName()}");
         }
-        Created::dispatch($this->getModel());
-        Deployed::dispatch($this->getModel());
 
+        event(new Created($this->getModel()));
+        event(new Deployed($this->getModel()));
     }
 
     public function reDeploy() {
