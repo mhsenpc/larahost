@@ -64,6 +64,12 @@
             <i class="fa fa-circle"></i> <span>Queue</span>
         </a>
     </li>
+
+    <li>
+        <a href="{{route('sites.file_manager',['site'=>$site])}}">
+            <i class="fa fa-circle"></i> <span>fileManager</span>
+        </a>
+    </li>
 </ul>
 
 <script>

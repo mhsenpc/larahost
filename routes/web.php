@@ -61,6 +61,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('restart_worker/{worker_id}', [QueueController::class, 'restartWorker'])->name('sites.restart_worker');
         Route::get('get_workers_status', [QueueController::class, 'getWorkersStatus'])->name('sites.get_workers_status');
         Route::get('get_worker_log/{worker_id}', [QueueController::class, 'getWorkerLog'])->name('sites.get_worker_log');
+        Route::get('file_manager', [SiteController::class, 'fileManager'])->name('sites.file_manager');
+        Route::get('show_file_manager', [SiteController::class, 'show_fileManager'])->name('sites.show_file_manager');
+
     });
 
     Route::get('deployments/{deployment_id}/log', [DeploymentController::class, 'showLog'])->name('deployments.showLog');
@@ -81,3 +84,7 @@ Route::any('trigger_deployment', [App\Http\Controllers\SiteController::class, 't
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 Route::get('demo-login', [App\Http\Controllers\DemologinController::class, 'index'])->name('demo-login');
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});

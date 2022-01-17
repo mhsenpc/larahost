@@ -313,4 +313,7 @@ return [
 'admin-users-breadcrumb-management' => 'مدیریت',
 'admin-users-breadcrumb-userslist' => 'لیست کاربران',
 
+//file-manager
+'file-manager' => 'مدیریت فایل ها',
+
 ];
