@@ -31,6 +31,6 @@ return [
     ],
     'sudomain' => '.lara-host.ir',
 	'starting_port' => [
-			'port' => env('STARTING_PORT',10000),
+			'port' => env('STARTING_PORT',10001),
 		],
 ];

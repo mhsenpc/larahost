@@ -35,7 +35,7 @@ class DockerCompose {
         $this->lines = str_replace('$source_dir', $this->filesystem->getSourceDir(), $this->lines);
         $this->lines = str_replace('$ssh_keys_dir', $user->getSSHKeysDir(), $this->lines);
         $this->lines = str_replace('$workers_dir', $this->filesystem->getWorkersDir(), $this->lines);
-        $this->lines = str_replace('$db_dir', $this->filesystem->getProjectBaseDir() . '/' . config('larahost.dir_names.db'), $this->lines);
+        $this->lines = str_replace('$db_dir', $this->filesystem->geDBDir(), $this->lines);
         return $this;
     }
 

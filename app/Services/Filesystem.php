@@ -43,6 +43,10 @@ class Filesystem implements FileSystemInterface {
         return $this->getProjectBaseDir() . '/' . config('larahost.dir_names.workers');
     }
 
+    public function geDBDir() {
+        return $this->getProjectBaseDir() . '/' . config('larahost.dir_names.db');
+    }
+
     public function createRequiredDirectories() {
         $repos_dir = config('larahost.repos_dir');
 
@@ -61,6 +65,7 @@ class Filesystem implements FileSystemInterface {
         SuperUserAPIService::new_folder($this->getDeploymentLogsDir());
         SuperUserAPIService::new_folder($this->getDockerComposeDir());
         SuperUserAPIService::new_folder($this->getWorkersDir());
+        SuperUserAPIService::new_folder($this->geDBDir());
     }
 
     public function removeAllSiteFiles(){
