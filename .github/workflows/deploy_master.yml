@@ -28,4 +28,4 @@ jobs:
           echo $(date) > public/version
           cp -r . /root/panel
           chown -R apache:apache /root/panel/
-          cd /root/panel && php artisan migrate
+          cd /root/panel && php artisan migrate --force
