@@ -24,7 +24,6 @@ return [
             'database',
             'redis',
             'dev',
-            'demo',
             'admin',
             'blog'
         ]
