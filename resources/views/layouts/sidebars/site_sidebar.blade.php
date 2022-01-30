@@ -6,14 +6,14 @@
     <div class="pull-right info">
         <p>
             {{$site->name}}
-            <a target="_blank" href="http://{{$site->name}}.lara-host.ir">
+            <a target="_blank" href="http://{{$site->name}}{{config('larahost.sudomain')}}">
                 <i class="fa fa-arrow-circle-right text-green"></i>
             </a>
         </p>
         @if($running)
-            <a><i class="fa fa-circle text-success"></i> روشن</a>
+            <a><i class="fa fa-circle text-success"></i> {{ __('message.site-sidebar-on')}}</a>
         @else
-            <a><i class="fa fa-circle text-danger"></i> خاموش</a>
+            <a><i class="fa fa-circle text-danger"></i> {{ __('message.site-sidebar-off')}}</a>
         @endif
     </div>
     <div class="pull-left">
@@ -22,15 +22,15 @@
 </div>
 <!-- sidebar menu: : style can be found in sidebar.less -->
 <ul class="sidebar-menu" data-widget="tree">
-    <li class="header">منو</li>
+    <li class="header">{{ __('message.site-sidebar-menu-title')}}</li>
     <li>
         <a href="{{route('sites.index')}}">
-            <i class="fa fa-arrow-right"></i> <span>بازگشت به سایت های من</span>
+            <i class="fa fa-arrow-right"></i> <span>{{ __('message.site-sidebar-return-to-my-sites')}}</span>
         </a>
     </li>
     <li>
         <a href="{{route('sites.show',['site'=>$site])}}">
-            <i class="fa fa-circle"></i> <span>میزکار سایت</span>
+            <i class="fa fa-circle"></i> <span>{{ __('message.site-sidebar-site-desktop')}}</span>
         </a>
     </li>
     <li>
@@ -45,17 +45,17 @@
     </li>
     <li>
         <a href="{{route('sites.commands',['site'=> $site])}}">
-            <i class="fa fa-circle"></i> <span>دستورات</span>
+            <i class="fa fa-circle"></i> <span>{{ __('message.site-sidebar-syntax')}}</span>
         </a>
     </li>
     <li>
         <a href="{{route('sites.logs',['site'=>$site])}}">
-            <i class="fa fa-circle"></i> <span>گزارش ها</span>
+            <i class="fa fa-circle"></i> <span>{{ __('message.site-sidebar-reports')}}</span>
         </a>
     </li>
     <li>
         <a href="{{route('sites.domains',['site'=>$site])}}">
-            <i class="fa fa-circle"></i> <span>دامنه ها</span>
+            <i class="fa fa-circle"></i> <span>{{ __('message.site-sidebar-domains')}}</span>
         </a>
     </li>
 

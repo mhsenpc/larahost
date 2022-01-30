@@ -16,4 +16,21 @@ return [
         'php artisan migrate --force',
         'php artisan queue:restart',
     ],
+    'site_prefix' => env('SITE_PREFIX'),
+    'domain' => [
+        'nameserver' => 'ns1.lara-host.ir',
+        'reserved_sudomains' => [
+            'panel',
+            'database',
+            'redis',
+            'dev',
+            'demo',
+            'admin',
+            'blog'
+        ]
+    ],
+    'sudomain' => '.lara-host.ir',
+	'starting_port' => [
+			'port' => env('STARTING_PORT',10001),
+		],
 ];

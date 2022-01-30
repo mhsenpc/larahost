@@ -4,10 +4,7 @@
 namespace App\Http\Controllers\Admin;
 
 
-use App\Models\Domain;
 use App\Models\Site;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class SitesController {
     public function index(){

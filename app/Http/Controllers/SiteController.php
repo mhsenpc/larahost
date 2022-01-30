@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Site\Deploying;
 use App\Jobs\RedeploySiteJob;
-use App\Models\CommandHistory;
 use App\Models\Deployment;
-use App\Models\Domain;
 use App\Models\Site;
-use App\Services\DockerComposeService;
-use App\Services\MaintenanceService;
-use App\Services\PathHelper;
-use App\Services\ReservedNamesService;
-use App\Services\SiteDestroyerService;
-use App\Services\NewSiteService;
+use App\Services\Hosting;
+use App\Services\SiteFactory;
 use App\Services\SuperUserAPIService;
-use App\Services\TokenCreatorService;
+use App\Services\TokenGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Faker\Factory as Faker;
+use Illuminate\Support\Facades\Log;
 
 class SiteController extends Controller {
+    public function __construct(){
+        $this->middleware('demouser.checkaction' )->only('store') ;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -37,18 +37,27 @@ class SiteController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        $user_public_key = PathHelper::getSSHKeysDir(Auth::user()->email) . '/id_rsa.pub';
+        $user_public_key = Auth::user()->getSSHKeysDir() . '/id_rsa.pub';
         $public_key = "";
         if (file_exists($user_public_key)) {
             $public_key = file_get_contents($user_public_key);
         }
         $faker = Faker::create();
-        $sites_count = Site::query()->count();
+        /*
+         *  remove limitation
+        $sitesCount = Site::query()->count();
+        $allowNewSite = $sitesCount == 0;
         if (App::environment('local') || Auth::user()->isAdmin()) {
-            $sites_count = 0;
+            $allowNewSite = true;
+        }*/
+        $allowNewSite = true;
+
+        if (App::environment('local') || Auth::user()->isAdmin()) {
+            $allowNewSite = true;
         }
 
-        return view('site.create', compact('public_key', 'faker', 'sites_count'));
+
+        return view('site.create', compact('public_key', 'faker', 'allowNewSite'));
     }
 
     /**
@@ -59,12 +68,13 @@ class SiteController extends Controller {
      */
     public function store(Request $request) {
         $request->name = strtolower($request->name);
+        $request->name = config('larahost.site_prefix') . $request->name;
 
         $request->validate([
             'name' => 'required|alpha_num|unique:sites',
             'repo' => 'required',
         ]);
-        if (ReservedNamesService::isNameReserved($request->name)) {
+        if (Hosting::isNameReserved($request->name)) {
             return redirect()->back()->withInput()->withErrors(['متاسفانه این نام قبلا استفاده شده است. لطفا نام دیگری انتخاب نمایید']);
         }
 
@@ -76,8 +86,8 @@ class SiteController extends Controller {
         }
 
 
-        $new_site_service = (new NewSiteService(Auth::user()));
-        $site = $new_site_service->newSite($request->name, $request->repo, !empty($request->manual_credentials), $request->username, $request->password);
+        $new_site_service = (new SiteFactory());
+        $new_site_service->getSite(Auth::id(), $request->name, $request->repo, !empty($request->manual_credentials), $request->username, $request->password);
         return redirect(route('sites.index'));
     }
 
@@ -88,9 +98,9 @@ class SiteController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show(Site $site) {
-        $maintance_service = new MaintenanceService($site);
-        $maintenace_status = $maintance_service->isDown();
-        $maintenace_secret = $maintance_service->getSecret();
+        $siteObj = new \App\Services\Site($site);
+        $maintenace_status = $siteObj->getApplication()->getMaintenance()->isDown();
+        $maintenace_secret = $siteObj->getApplication()->getMaintenance()->getSecret();
         return view('site.show', compact('site', 'maintenace_status', 'maintenace_secret'));
     }
 
@@ -122,14 +132,14 @@ class SiteController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function remove(Site $site) {
-        $site_destroyer = new SiteDestroyerService($site);
-        $site_destroyer->destroy();
+        $siteObj = new \App\Services\Site($site);
+        $siteObj->destroy();
         return redirect(route('sites.index'));
     }
 
     public function factoryReset(Site $site) {
-        $docker_compose_service = new DockerComposeService($site);
-        $docker_compose_service->rebuildContainers();
+        $siteObj = new \App\Services\Site($site);
+        $siteObj->getContainer()->rebuildContainers();
         return redirect()->back();
     }
 
@@ -139,14 +149,12 @@ class SiteController extends Controller {
     }
 
     public function logs(Site $site) {
-        $logs_dir = PathHelper::getLaravelLogsDir($site->user->email, $site->name);
+        $siteObj = new \App\Services\Site($site);
+        $logs_dir = $siteObj->getFilesystem()->getLaravelLogsDir();
         $logs = scandir($logs_dir);
-
         $logs = array_diff($logs, array('..', '.', '.gitignore')); //remove invalid files
-
         if (count($logs) == 1 && substr(reset($logs), -4) == '.log') {
             $file_name = reset($logs);
-            $logs_dir = PathHelper::getLaravelLogsDir($site->user->email, $site->name);
             $log_content = file_get_contents($logs_dir . '/' . $file_name);
             return view('site.show_laravel_log', compact('log_content', 'site', 'file_name'));
         } else {
@@ -155,7 +163,9 @@ class SiteController extends Controller {
     }
 
     public function redeploy(Site $site) {
-        RedeploySiteJob::dispatch($site);
+        $siteObj = new \App\Services\Site($site);
+        Deploying::dispatch($site);
+        RedeploySiteJob::dispatch($siteObj);
         return redirect()->back();
     }
 
@@ -166,23 +176,20 @@ class SiteController extends Controller {
     }
 
     public function env_editor(Site $site) {
-        $source_dir = PathHelper::getSourceDir($site->user->email, $site->name);
-        $env = '';
-        if (file_exists($source_dir . '/.env')) {
-            $env = file_get_contents($source_dir . '/.env');
-        }
+        $siteObj = new \App\Services\Site($site);
+        $env = $siteObj->getApplication()->getEnvFile();
 
         return view('site.env_editor', compact('site', 'env'));
     }
 
     public function handle_env_editor(Request $request, Site $site) {
-        $source_dir = PathHelper::getSourceDir($site->user->email, $site->name);
-        file_put_contents($source_dir . '/.env', $request->env);
+        $siteObj = new \App\Services\Site($site);
+        $siteObj->getApplication()->updateEnvFile($request->env);
         return redirect()->back();
     }
 
     public function regenerateDeployToken(Site $site) {
-        $site->deploy_token = TokenCreatorService::generateDeployToken();
+        $site->deploy_token = (new TokenGenerator())->generate();
         $site->save();
         return redirect()->back();
     }
@@ -191,20 +198,22 @@ class SiteController extends Controller {
         $request->validate([
             'token' => 'required|exists:sites,deploy_token'
         ]);
-        $site = Site::query()->withoutGlobalScopes()->where('deploy_token', $request->token)->firstOrFail();
+        $site = SiteFactory::getSiteByDeployToken($request->token);
+        Deploying::dispatch($site->getModel());
         RedeploySiteJob::dispatch($site);
-        return response()->json(['success' => true, 'message' => 'Deployment started for site ' . $site->name]);
+        return response()->json(['success' => true, 'message' => 'Deployment started for site ' . $site->getName()]);
     }
 
     public function maintenanceUp(Site $site) {
-        $maintenance_service = new MaintenanceService($site);
-        $maintenance_service->up();
+        $siteObj = new \App\Services\Site($site);
+        $siteObj->getApplication()->getMaintenance()->up();
         return redirect()->back();
     }
 
     public function maintenanceDown(Request $request, Site $site) {
-        $maintenance_service = new MaintenanceService($site);
-        $maintenance_service->down($request->secret);
+        $siteObj = new \App\Services\Site($site);
+        $siteObj->getApplication()->getMaintenance()->down($request->secret);
+
         return redirect()->back();
     }
 

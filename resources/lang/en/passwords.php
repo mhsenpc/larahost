@@ -13,10 +13,10 @@ return [
     |
     */
 
-    'reset' => 'رمز عبور شما با موفقیت بازنشانی گردید',
-    'sent' => 'ما لینک بازنشانی رمز عبور را برای شما ارسال کردیم',
-    'throttled' => 'لطفا پیش از تلاش مجدد کمی صبر کنید',
-    'token' => 'اعتبار لینک بازنشانی شما منقضی شده است',
-    'user' => "کاربری با این ایمیل یافت نشد",
+    'reset' => 'Your password has been reset!',
+    'sent' => 'We have emailed your password reset link!',
+    'throttled' => 'Please wait before retrying.',
+    'token' => 'This password reset token is invalid.',
+    'user' => "We can't find a user with that email address.",
 
 ];

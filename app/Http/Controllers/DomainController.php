@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ParkDomainRequest;
 use App\Models\Domain;
 use App\Models\Site;
 use App\Rules\FQDN;
-use App\Services\ParkDomainService;
-use App\Services\ReservedNamesService;
-use App\Services\ReverseProxyService;
+use App\Services\Hosting;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -17,29 +16,22 @@ class DomainController extends Controller {
         return view('site.domains', compact('domains', 'site'));
     }
 
-    public function parkDomain(Request $request, Site $site) {
-        $request->validate([
-            'name' => ['required','unique:domains',new FQDN(),Rule::notIn(['lara-host.ir','ns1.lara-host.ir','ns2.lara-host.ir','my.lara-host.ir'])]
-        ]);
-
-        if(ParkDomainService::isDomainPointedToUs($request->name)){
-            ParkDomainService::parkDomain($site,$request->name);
-            return redirect()->back()->withInput(['دامنه '. $request->domain. ' با موفقیت به سرور شما متصل گردید']) ;
-        }
-        else{
-            if (ReservedNamesService::isNameReserved($request->name)) {
-                return redirect()->back()->withInput()->withErrors(['هنوز name server های دامنه شما به سمت سرور ما اشاره نمی کند']);
-            }
+    public function parkDomain(ParkDomainRequest $request, Site $site) {
+        $siteObj = new \App\Services\Site($site);
+        if ($siteObj->getDomain()->isDomainPointedToUs($request->name)) {
+            $siteObj->getDomain()->add($request->name);
+            return redirect()->back()->withInput(['دامنه ' . $request->name . ' با موفقیت به سرور شما متصل گردید']);
+        } else {
+            return redirect()->back()->withInput()->withErrors(['هنوز name server های دامنه شما به سمت سرور ما اشاره نمی کند']);
         }
     }
 
     public function removeDomain(Request $request, Site $site) {
-        $domain = $site->domains()->where('name',$request->name)->firstOrFail();
+        $domain = $site->domains()->where('name', $request->name)->firstOrFail();
         $domain->delete();
 
-        $reverse_proxy_service = new ReverseProxyService($site);
-        $reverse_proxy_service->removeDomainConfig($request->name);
-        $reverse_proxy_service->reloadNginx();
+        $siteObj = new \App\Services\Site($site);
+        $siteObj->getSubDomain()->remove($request->name);
         return redirect()->back();
     }
 
@@ -47,8 +39,9 @@ class DomainController extends Controller {
         $site->subdomain_status = true;
         $site->save();
 
-        $reverse_proxy_service = new ReverseProxyService($site);
-        $reverse_proxy_service->writeNginxConfigs();
+        $siteObj = new \App\Services\Site($site);
+        $domain = $siteObj->getName() . config('larahost.sudomain');
+        $siteObj->getSubDomain()->add($domain);
         return redirect()->back();
     }
 
@@ -56,8 +49,9 @@ class DomainController extends Controller {
         $site->subdomain_status = false;
         $site->save();
 
-        $reverse_proxy_service = new ReverseProxyService($site);
-        $reverse_proxy_service->writeNginxConfigs();
+        $siteObj = new \App\Services\Site($site);
+        $domain = $siteObj->getName() . config('larahost.sudomain');
+        $siteObj->getSubDomain()->remove($domain);
         return redirect()->back();
     }
 

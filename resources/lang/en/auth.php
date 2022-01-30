@@ -13,8 +13,8 @@ return [
     |
     */
 
-    'failed' => 'ایمیل یا رمز عبور صحیح نمی باشد',
-    'password' => 'رمز عبور وارد شده صحیح نمی باشد',
-    'throttle' => 'لطفا :seconds ثانیه صبر کنید.',
+    'failed' => 'These credentials do not match our records.',
+    'password' => 'The provided password is incorrect.',
+    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
 ];

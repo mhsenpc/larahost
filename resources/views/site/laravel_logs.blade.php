@@ -1,12 +1,12 @@
 @extends('layouts.single_box')
-@php($title="گزارش های سایت | " . $site->name)
+@php($title=__('message.laravel-logs-title') . $site->name)
 @php($sidebar="layouts.sidebars.site_sidebar")
 
 
 @if(empty($logs))
 @section('content')
     <div class="alert alert-warning">
-        تا کنون فایل log ای توسط این سایت تولید نشده است
+        {{ __('message.laravel-logs-content-none')}}
     </div>
 @endsection
 @else
@@ -14,7 +14,7 @@
     <table class="table">
         <tr>
             <th style="width: 10px">#</th>
-            <th>نام فایل</th>
+            <th>{{ __('message.laravel-logs-tablebox-filenameth')}}</th>
             <th></th>
         </tr>
         @foreach($logs as $key=> $log)
@@ -22,7 +22,7 @@
                 <td>{{$key +1 }}.</td>
                 <td>{{$log}}</td>
                 <td><a class="btn btn-default"
-                       href="{{route('logs.show',['site_name'=>$site->name ,'file_name'=>$log])}}">نمایش محتویات Log</a>
+                       href="{{route('logs.show',['site_name'=>$site->name ,'file_name'=>$log])}}">{{ __('message.laravel-logs-tablebox-showlogsbutton')}}</a>
                 </td>
             </tr>
         @endforeach
@@ -33,7 +33,7 @@
 
 @section('breadcrumb')
     <li >
-        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> خانه</a>
+        <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.laravel-logs-breadcrumb-dashboard-homeaddress')}}</a>
     </li>
 
     <li >
