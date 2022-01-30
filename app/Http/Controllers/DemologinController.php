@@ -12,6 +12,6 @@ class DemologinController extends Controller {
         $user = User::where('email', 'demo@lara-host.ir')->first();
 
         Auth::loginUsingId($user->id);
-        return route('dashboard');
+        return redirect(route('dashboard'));
     }
 }
