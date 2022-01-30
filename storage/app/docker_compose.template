@@ -1,4 +1,4 @@
-version: "2.0"
+version: "2.2"
 services:
   $project_name:
     image: larahost_php
