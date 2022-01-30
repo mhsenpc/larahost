@@ -7,20 +7,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 
-class DemologinController extends Controller
-{
-    public function index()
-    {
-        if ( !\Auth::check() )
-        {
-            $user = User::where('email', 'demo@lara-host.ir')->first();
-            $user->fresh();
+class DemologinController extends Controller {
+    public function index() {
+        $user = User::where('email', 'demo@lara-host.ir')->first();
 
-            if ( Auth::loginUsingId( $user->id ) )
-            {
-                return redirect()->back();
-            }
-        }
-        return 'Failure';
+        Auth::loginUsingId($user->id);
+        return route('dashboard');
     }
 }
