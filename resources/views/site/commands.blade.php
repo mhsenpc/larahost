@@ -8,19 +8,20 @@
             @csrf
             <div class="box-header with-border">
                 <div class="pull-right">
-                {{ __('message.commands-exec-command')}}                    
+                    {{ __('message.commands-exec-command')}}
                 </div>
             </div>
             <div class="box-body">
                 <div class="alert alert-info">
-                {{ __('message.commands-exec-command-alert1')}}
+                    {{ __('message.commands-exec-command-alert1')}}
                     <span class="text-red">/var/www/html</span>
                     {{ __('message.commands-exec-command-alert2')}}
                     <span class="text-red">root</span>
                     {{ __('message.commands-exec-command-alert3')}}
                 </div>
                 <div class="form-group row">
-                    <label for="command" class="col-md-3 col-form-label text-right">{{ __('message.commands-exec-syntax')}}</label>
+                    <label for="command"
+                           class="col-md-3 col-form-label text-right">{{ __('message.commands-exec-syntax')}}</label>
                     <div class="col-md-8">
                         <input id="command" required name="command" type="text" class="form-control text-left dir-ltr"
                                placeholder="ls -la">
@@ -30,7 +31,8 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                <button class="btn btn-success" type="submit"><span>{{ __('message.commands-exec-button')}}</span></button>
+                <button class="btn btn-success" type="submit"><span>{{ __('message.commands-exec-button')}}</span>
+                </button>
             </div>
         </form>
     </div>
@@ -38,7 +40,7 @@
     <div class="box">
         <div class="box-header with-border">
             <div class="pull-right">
-            {{ __('message.commands-history-command-box-title')}}
+                {{ __('message.commands-history-command-box-title')}}
             </div>
         </div>
 
@@ -60,7 +62,14 @@
                             <td>{{$history->user->name}}</td>
                             <td class="text-red">{{$history->command}}</td>
                             <td>{{$history->created_at}}</td>
-                            <td> {!!  ($history->success)?'<span class="command_status bg-green">{{ __("message.commands-history-command-box-table-tbody-status-success")}}</span>':'<span class="command_status bg-red">{{ __("message.commands-history-command-box-table-tbody-status-faile")}}</span>' !!}</td>
+                            <td>@if($history->success)
+                                    <span
+                                        class="command_status bg-green">{{ __("message.commands-history-command-box-table-tbody-status-success")}}</span>
+                                @else
+                                    <span
+                                        class="command_status bg-red">{{ __("message.commands-history-command-box-table-tbody-status-faile")}}</span>
+                                @endif
+                            </td>
                             <td>
                                 <div class="input-group-btn col-md-1">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
@@ -68,10 +77,13 @@
                                         <span class="fa  fa-ellipsis-v"></span></button>
                                     <ul class="dropdown-menu">
                                         <li><a class="show_output_modal" data-toggle="modal"
-                                               data-target="#modal-output" data-command="{{$history->command}}" data-output="{{$history->output}}" href="#">{{ __('message.commands-history-command-box-table-tbody-panelbutton-history-output')}}
-                                                </a></li>
+                                               data-target="#modal-output" data-command="{{$history->command}}"
+                                               data-output="{{$history->output}}"
+                                               href="#">{{ __('message.commands-history-command-box-table-tbody-panelbutton-history-output')}}
+                                            </a></li>
                                         <li>
-                                            <a href="#1" onclick="document.getElementById('form_{{$history->id}}').submit()" >{{ __('message.commands-history-command-box-table-tbody-panelbutton-run-again')}}</a>
+                                            <a href="#1"
+                                               onclick="document.getElementById('form_{{$history->id}}').submit()">{{ __('message.commands-history-command-box-table-tbody-panelbutton-run-again')}}</a>
                                             <form method="post"
                                                   id="form_{{$history->id}}"
                                                   action="{{route('sites.exec_command',['site'=>$site])}}">
@@ -87,7 +99,7 @@
                 </table>
             @else
                 <div class="alert alert-info Disabled">
-                   {{ __('message.commands-history-command-box-table-tbody-panelbutton-null')}}
+                    {{ __('message.commands-history-command-box-table-tbody-panelbutton-null')}}
                 </div>
             @endif
 
@@ -100,13 +112,15 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">{{ __('message.commands-history-command-resultbox-title')}} <small class="text-muted" id="command-content"></small></h4>
+                    <h4 class="modal-title">{{ __('message.commands-history-command-resultbox-title')}} <small
+                            class="text-muted" id="command-content"></small></h4>
                 </div>
                 <div class="modal-body">
                     <pre class="console"><code id="output-content"></code></pre>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{ __('message.commands-history-command-resultbox-footerbutton')}}</button>
+                    <button type="button" class="btn btn-default pull-left"
+                            data-dismiss="modal">{{ __('message.commands-history-command-resultbox-footerbutton')}}</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -124,11 +138,11 @@
 @stop
 
 @section('breadcrumb')
-    <li >
+    <li>
         <a class="fa fa-dashboard" href="{{route('dashboard')}}"> {{ __('message.commands-breadcrumb-homeaddress')}}</a>
     </li>
 
-    <li >
+    <li>
         <a href="{{route('sites.show',compact('site'))}}"> {{$site->name}}</a>
     </li>
 
